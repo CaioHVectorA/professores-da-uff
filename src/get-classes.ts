@@ -1,7 +1,7 @@
 import puppeteer, { Page } from 'puppeteer';
 import fs from 'fs';
+import { signIn } from './sign-in';
 
-console.log(process.env.Q_USERNAME, process.env.PASSWORD);
 
 // Load courses from JSONL file
 function loadCourses() {
@@ -41,6 +41,7 @@ async function scrapeCourse(page: Page, courseId: number, courseName: string) {
     const classURLs = [] as string[];
     await page.evaluate(() => {
         const elements = document.querySelectorAll('.disciplina-nome a');
+        // @ts-ignore
         return Array.from(elements).map(element => element.href);
     }).then(urls => {
         classURLs.push(...urls);
@@ -51,6 +52,7 @@ async function scrapeCourse(page: Page, courseId: number, courseName: string) {
         await Bun.sleep(2000);
         await page.evaluate(() => {
             const elements = document.querySelectorAll('.disciplina-nome a');
+            //@ts-ignore
             return Array.from(elements).map(element => element.href);
         }).then(urls => {
             classURLs.push(...urls);
@@ -65,40 +67,10 @@ async function scrapeCourse(page: Page, courseId: number, courseName: string) {
     return { courseId, courseName, url: fullUrl };
 }
 
-async function signIn(page: Page) {
-    // Wait for nav-links to be available and click on the 4th one (index 3)
-    await page.waitForSelector('.nav-link');
-    await Bun.sleep(1000);
-
-    const navLinks = await page.$$('.nav-link');
-    if (navLinks[3]) {
-        await navLinks[3].click();
-    }
-
-    // Wait after clicking nav-link
-    await Bun.sleep(2000);
-
-    // Wait for username input and type
-    await page.waitForSelector('#username');
-    await Bun.sleep(500);
-    await page.type('#username', process.env.Q_USERNAME || '');
-
-    // Wait a bit and type password
-    await Bun.sleep(500);
-    await page.type('#password', process.env.PASSWORD || '');
-
-    // Wait before clicking login button
-    await Bun.sleep(1000);
-    await page.click('#kc-login');
-
-    // Wait a moment for page to load after login
-    await Bun.sleep(2000);
-}
-
 async function simpleScrape() {
     // Launch browser
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         defaultViewport: {
             width: 1280,
             height: 800
@@ -133,6 +105,8 @@ async function simpleScrape() {
 
             // Wait between requests to be polite to the server
             await Bun.sleep(2000);
+            fs.writeFileSync('./all-classes-urls.json', JSON.stringify(allClasses, null, 2));
+            fs.writeFileSync('./scraping-results.json', JSON.stringify(results, null, 2));
 
         } catch (error) {
             console.error(`❌ Error processing course ${course.id}: ${course.name}`, error);
@@ -140,8 +114,6 @@ async function simpleScrape() {
     }
 
     // Save results to JSON file
-    fs.writeFileSync('./all-classes-urls.json', JSON.stringify(allClasses, null, 2));
-    fs.writeFileSync('./scraping-results.json', JSON.stringify(results, null, 2));
     console.log(`\n✅ Completed! Processed ${results.length} courses`);
     console.log('📄 Results saved to scraping-results.json');
 

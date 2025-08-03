@@ -1,0 +1,517 @@
+[
+  {
+    "courseId": 1,
+    "courseName": "Biblioteconomia e Documentação",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=1&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 2,
+    "courseName": "História",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=2&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 3,
+    "courseName": "Geografia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=3&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 4,
+    "courseName": "Ciências Econômicas",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=4&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 5,
+    "courseName": "Ciências Sociais",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=5&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 6,
+    "courseName": "Serviço Social",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=6&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 7,
+    "courseName": "Direito",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=7&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 8,
+    "courseName": "Enfermagem e Obstetrícia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=8&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 9,
+    "courseName": "Nutrição",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=9&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 10,
+    "courseName": "Pedagogia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=10&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 14,
+    "courseName": "Arquivologia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=14&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 17,
+    "courseName": "Odontologia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=17&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 18,
+    "courseName": "Medicina Veterinária",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=18&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 21,
+    "courseName": "Letras",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=21&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 22,
+    "courseName": "Ciências Contábeis",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=22&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 23,
+    "courseName": "Administração",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=23&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 25,
+    "courseName": "Física",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=25&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 26,
+    "courseName": "Arquitetura e Urbanismo",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=26&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 27,
+    "courseName": "Engenharia Química",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=27&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 29,
+    "courseName": "Química Industrial",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=29&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 30,
+    "courseName": "Comunicação Social",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=30&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 31,
+    "courseName": "Ciência da Computação",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=31&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 32,
+    "courseName": "Pedagogia (Angra dos Reis)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=32&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 33,
+    "courseName": "Produção Cultural",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=33&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 34,
+    "courseName": "Enfermagem",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=34&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 35,
+    "courseName": "Matemática -Pádua",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=35&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 36,
+    "courseName": "Serviço Social (Campos)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=36&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 37,
+    "courseName": "Engenharia Civil",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=37&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 38,
+    "courseName": "Engenharia Elétrica",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=38&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 39,
+    "courseName": "Engenharia Metalúrgica(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=39&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 40,
+    "courseName": "Engenharia Mecânica",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=40&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 41,
+    "courseName": "Engenharia de Telecomunicações",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=41&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 42,
+    "courseName": "Engenharia de Produção",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=42&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 43,
+    "courseName": "Engenharia Agrícola e Ambiental",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=43&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 44,
+    "courseName": "Ciências Biológicas",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=44&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 45,
+    "courseName": "Engenharia de Produção(V Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=45&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 46,
+    "courseName": "Engenharia Mecânica(V Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=46&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 47,
+    "courseName": "Turismo",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=47&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 48,
+    "courseName": "Biomedicina",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=48&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 49,
+    "courseName": "Estudos de Mídia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=49&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 50,
+    "courseName": "Geofísica",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=50&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 51,
+    "courseName": "Engenharia de Petróleo",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=51&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 53,
+    "courseName": "Administração(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=53&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 54,
+    "courseName": "Estatística",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=54&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 55,
+    "courseName": "Educação Física",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=55&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 57,
+    "courseName": "Cinema e Audiovisual",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=57&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 58,
+    "courseName": "Filosofia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=58&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 59,
+    "courseName": "Relações Internacionais",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=59&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 60,
+    "courseName": "Ciência da Computação(Rio das Ostras)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=60&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 61,
+    "courseName": "Odontologia(Nova Friburgo)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=61&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 62,
+    "courseName": "Produção Cultural(Rio das Ostras)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=62&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 63,
+    "courseName": "Engenharia de Produção(Rio das Ostras)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=63&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 64,
+    "courseName": "Serviço Social(Rio das Ostras)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=64&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 65,
+    "courseName": "Pedagogia(Pádua)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=65&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 66,
+    "courseName": "Disciplina Isolada",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=66&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 67,
+    "courseName": "Empreendedorismo e Inovação",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=67&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 81,
+    "courseName": "Matemática",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=81&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 82,
+    "courseName": "Superior de Tecnol. em Sistemas de Computação",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=82&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 101,
+    "courseName": "Ciências Econômicas(Campos)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=101&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 102,
+    "courseName": "Geografia(Campos)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=102&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 194,
+    "courseName": "Ciências Sociais(Campos)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=194&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 195,
+    "courseName": "Psicologia(Rio das Ostras)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=195&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 221,
+    "courseName": "Administração Pública(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=221&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 222,
+    "courseName": "Ciências Contábeis(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=222&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 241,
+    "courseName": "Física(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=241&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 242,
+    "courseName": "Matemática(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=242&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 243,
+    "courseName": "Química(Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=243&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 244,
+    "courseName": "Biomedicina(Nova Friburgo)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=244&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 245,
+    "courseName": "Fonoaudiologia (Nova Friburgo)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=245&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 261,
+    "courseName": "Psicologia(Campos)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=261&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 262,
+    "courseName": "Física(Pádua)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=262&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 263,
+    "courseName": "Sistemas de Informação",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=263&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 264,
+    "courseName": "Direito ( Macaé)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=264&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 282,
+    "courseName": "Ciências Atuariais",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=282&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 283,
+    "courseName": "Administração Pública",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=283&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 284,
+    "courseName": "Letras",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=284&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 286,
+    "courseName": "História (Campos)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=286&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 287,
+    "courseName": "Direito (Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=287&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 288,
+    "courseName": "Psicologia ( Volta Redonda)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=288&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 302,
+    "courseName": "Computação (Pádua)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=302&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 322,
+    "courseName": "Ciências Naturais(Pádua)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=322&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 342,
+    "courseName": "Superior de Tecnologia em Hotelaria",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=342&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 343,
+    "courseName": "Ciência Ambiental",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=343&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 362,
+    "courseName": "Desenho Industrial",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=362&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 382,
+    "courseName": "Sociologia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=382&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 402,
+    "courseName": "Antropologia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=402&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 403,
+    "courseName": "Artes",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=403&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 422,
+    "courseName": "Geografia ( Angra dos Reis)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=422&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 502,
+    "courseName": "Políticas Públicas (Angra dos Reis)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=502&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 522,
+    "courseName": "Administração ( Macaé)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=522&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 523,
+    "courseName": "Ciências Contábeis ( Macaé)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=523&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 562,
+    "courseName": "Graduação Tecnológica em Processos Gerenciais",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=562&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 582,
+    "courseName": "Superior de Tecnologia em Segurança Pública",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=582&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 662,
+    "courseName": "Engenharia de Produção",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=662&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 682,
+    "courseName": "Licenc. Interdisc. Educação do Campo (Padua)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=682&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 702,
+    "courseName": "Engenharia de Produção (Petrópolis)",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=702&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 722,
+    "courseName": "Jornalismo",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=722&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 742,
+    "courseName": "Administração Pública",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=742&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 762,
+    "courseName": "Engenharia de Materiais",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=762&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 782,
+    "courseName": "Biblioteconomia",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=782&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 802,
+    "courseName": "Ciências Contábeis",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=802&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 822,
+    "courseName": "Desafios Globais",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=822&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  },
+  {
+    "courseId": 842,
+    "courseName": "Educação Bilíngue de Surdos",
+    "url": "https://app.uff.br/graduacao/quadrodehorarios/?utf8=%E2%9C%93&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Banosemestre_eq%5D=20252&q%5Bdisciplina_cod_departamento_eq%5D=&button=&q%5Bidturno_eq%5D=&q%5Bpor_professor%5D=&q%5Bidlocalidade_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=842&q%5Bdisciplina_disciplinas_curriculos_idcurriculo_eq%5D=&q%5Bcurso_ferias_eq%5D=&q%5Bidturmamodalidade_eq%5D="
+  }
+]
