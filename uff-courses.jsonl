@@ -1,0 +1,112 @@
+{"id": 1, "name": "Biblioteconomia e Documentação"}
+{"id": 2, "name": "História"}
+{"id": 3, "name": "Geografia"}
+{"id": 4, "name": "Ciências Econômicas"}
+{"id": 5, "name": "Ciências Sociais"}
+{"id": 6, "name": "Serviço Social"}
+{"id": 7, "name": "Direito"}
+{"id": 8, "name": "Enfermagem e Obstetrícia"}
+{"id": 9, "name": "Nutrição"}
+{"id": 10, "name": "Pedagogia"}
+{"id": 14, "name": "Arquivologia"}
+{"id": 15, "name": "Farmácia"}
+{"id": 16, "name": "Medicina"}
+{"id": 17, "name": "Odontologia"}
+{"id": 18, "name": "Medicina Veterinária"}
+{"id": 20, "name": "Matemática"}
+{"id": 21, "name": "Letras"}
+{"id": 22, "name": "Ciências Contábeis"}
+{"id": 23, "name": "Administração"}
+{"id": 24, "name": "Psicologia"}
+{"id": 25, "name": "Física"}
+{"id": 26, "name": "Arquitetura e Urbanismo"}
+{"id": 27, "name": "Engenharia Química"}
+{"id": 28, "name": "Química"}
+{"id": 29, "name": "Química Industrial"}
+{"id": 30, "name": "Comunicação Social"}
+{"id": 31, "name": "Ciência da Computação"}
+{"id": 32, "name": "Pedagogia (Angra dos Reis)"}
+{"id": 33, "name": "Produção Cultural"}
+{"id": 34, "name": "Enfermagem"}
+{"id": 35, "name": "Matemática -Pádua"}
+{"id": 36, "name": "Serviço Social (Campos)"}
+{"id": 37, "name": "Engenharia Civil"}
+{"id": 38, "name": "Engenharia Elétrica"}
+{"id": 39, "name": "Engenharia Metalúrgica(Volta Redonda)"}
+{"id": 40, "name": "Engenharia Mecânica"}
+{"id": 41, "name": "Engenharia de Telecomunicações"}
+{"id": 42, "name": "Engenharia de Produção"}
+{"id": 43, "name": "Engenharia Agrícola e Ambiental"}
+{"id": 44, "name": "Ciências Biológicas"}
+{"id": 45, "name": "Engenharia de Produção(V Redonda)"}
+{"id": 46, "name": "Engenharia Mecânica(V Redonda)"}
+{"id": 47, "name": "Turismo"}
+{"id": 48, "name": "Biomedicina"}
+{"id": 49, "name": "Estudos de Mídia"}
+{"id": 50, "name": "Geofísica"}
+{"id": 51, "name": "Engenharia de Petróleo"}
+{"id": 52, "name": "Engenharia de Agronegócios(Volta Redonda)"}
+{"id": 53, "name": "Administração(Volta Redonda)"}
+{"id": 54, "name": "Estatística"}
+{"id": 55, "name": "Educação Física"}
+{"id": 56, "name": "Eng. de Recursos Hídricos e Meio Ambiente"}
+{"id": 57, "name": "Cinema e Audiovisual"}
+{"id": 58, "name": "Filosofia"}
+{"id": 59, "name": "Relações Internacionais"}
+{"id": 60, "name": "Ciência da Computação(Rio das Ostras)"}
+{"id": 61, "name": "Odontologia(Nova Friburgo)"}
+{"id": 62, "name": "Produção Cultural(Rio das Ostras)"}
+{"id": 63, "name": "Engenharia de Produção(Rio das Ostras)"}
+{"id": 64, "name": "Serviço Social(Rio das Ostras)"}
+{"id": 65, "name": "Pedagogia(Pádua)"}
+{"id": 66, "name": "Disciplina Isolada"}
+{"id": 67, "name": "Empreendedorismo e Inovação"}
+{"id": 81, "name": "Matemática"}
+{"id": 82, "name": "Superior de Tecnol. em Sistemas de Computação"}
+{"id": 101, "name": "Ciências Econômicas(Campos)"}
+{"id": 102, "name": "Geografia(Campos)"}
+{"id": 194, "name": "Ciências Sociais(Campos)"}
+{"id": 195, "name": "Psicologia(Rio das Ostras)"}
+{"id": 201, "name": "Enfermagem(Rio das Ostras)"}
+{"id": 221, "name": "Administração Pública(Volta Redonda)"}
+{"id": 222, "name": "Ciências Contábeis(Volta Redonda)"}
+{"id": 241, "name": "Física(Volta Redonda)"}
+{"id": 242, "name": "Matemática(Volta Redonda)"}
+{"id": 243, "name": "Química(Volta Redonda)"}
+{"id": 244, "name": "Biomedicina(Nova Friburgo)"}
+{"id": 245, "name": "Fonoaudiologia (Nova Friburgo)"}
+{"id": 261, "name": "Psicologia(Campos)"}
+{"id": 262, "name": "Física(Pádua)"}
+{"id": 263, "name": "Sistemas de Informação"}
+{"id": 264, "name": "Direito ( Macaé)"}
+{"id": 282, "name": "Ciências Atuariais"}
+{"id": 283, "name": "Administração Pública"}
+{"id": 284, "name": "Letras"}
+{"id": 286, "name": "História (Campos)"}
+{"id": 287, "name": "Direito (Volta Redonda)"}
+{"id": 288, "name": "Psicologia ( Volta Redonda)"}
+{"id": 302, "name": "Computação (Pádua)"}
+{"id": 322, "name": "Ciências Naturais(Pádua)"}
+{"id": 342, "name": "Superior de Tecnologia em Hotelaria"}
+{"id": 343, "name": "Ciência Ambiental"}
+{"id": 362, "name": "Desenho Industrial"}
+{"id": 382, "name": "Sociologia"}
+{"id": 402, "name": "Antropologia"}
+{"id": 403, "name": "Artes"}
+{"id": 422, "name": "Geografia ( Angra dos Reis)"}
+{"id": 462, "name": "Segurança Pública"}
+{"id": 502, "name": "Políticas Públicas (Angra dos Reis)"}
+{"id": 522, "name": "Administração ( Macaé)"}
+{"id": 523, "name": "Ciências Contábeis ( Macaé)"}
+{"id": 562, "name": "Graduação Tecnológica em Processos Gerenciais"}
+{"id": 582, "name": "Superior de Tecnologia em Segurança Pública"}
+{"id": 662, "name": "Engenharia de Produção"}
+{"id": 682, "name": "Licenc. Interdisc. Educação do Campo (Padua)"}
+{"id": 702, "name": "Engenharia de Produção (Petrópolis)"}
+{"id": 722, "name": "Jornalismo"}
+{"id": 742, "name": "Administração Pública"}
+{"id": 762, "name": "Engenharia de Materiais"}
+{"id": 782, "name": "Biblioteconomia"}
+{"id": 802, "name": "Ciências Contábeis"}
+{"id": 822, "name": "Desafios Globais"}
+{"id": 842, "name": "Educação Bilíngue de Surdos"}
