@@ -3,6 +3,12 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "start": "bun run index.ts",
+    "get-classes": "bun run index.ts --get-classes-only",
+    "scrape-classes": "bun run index.ts --scrape-only",
+    "scrape-skip": "bun run index.ts --skip-get-classes"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
