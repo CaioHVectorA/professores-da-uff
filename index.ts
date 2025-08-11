@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 import puppeteer from 'puppeteer';
 import fs from 'fs';
-import { signIn } from './src/sign-in';
-import { scrapeClasses } from './src/scrape-classes';
+import { signIn } from './scripts/sign-in';
+import { scrapeClasses } from './scripts/scrape-classes';
 
 // Parse command line arguments
 function parseArgs() {
