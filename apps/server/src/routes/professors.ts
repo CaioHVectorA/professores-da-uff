@@ -19,7 +19,7 @@ export const professorRoutes = new Elysia({ prefix: '/api' })
         const rows = listProfessorsPaged(like, Number(pageSize), offset)
         const total = stmts.countProfessors.get({ q: like })?.c ?? 0
         const data = rows.map((p) => {
-            const subs = stmts.subjectsByProfessor.all({ pid: p.id }).map((s) => s.name)
+            const subs = stmts.subjectsByProfessor.all(p.id).map((s) => s.name)
             return { id: p.id, name: p.name, subjects: subs }
         })
         return { data, page: Number(page), pageSize: Number(pageSize), total }

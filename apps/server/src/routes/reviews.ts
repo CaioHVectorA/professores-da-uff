@@ -60,6 +60,6 @@ export const reviewRoutes = new Elysia({ prefix: '/api' })
     })
     .get('/reviews/:professorId', ({ params }) => {
         const professorId = toNumber((params as any)?.professorId, NaN)
-        const rows = stmts.listReviewsByProfessor.all({ pid: Number(professorId) })
+        const rows = stmts.listReviewsByProfessor.all(Number(professorId))
         return { data: rows }
     })

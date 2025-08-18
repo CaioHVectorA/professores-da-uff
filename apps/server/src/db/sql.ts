@@ -86,7 +86,7 @@ export const stmts = {
     ),
     countProfessors: db.query<{ c: number }, any>('SELECT COUNT(*) as c FROM professors WHERE name LIKE $q'),
     subjectsByProfessor: db.query<{ name: string }, any>(
-        'SELECT s.name as name FROM subjects s JOIN professor_subjects ps ON ps.subject_id = s.id WHERE ps.professor_id = $pid ORDER BY s.name'
+        'SELECT s.name as name FROM subjects s JOIN professor_subjects ps ON ps.subject_id = s.id WHERE ps.professor_id = ? ORDER BY s.name'
     ),
     listProfBySubjectBase: db.query<{ id: number; name: string }, any>(
         'SELECT p.id, p.name FROM professors p JOIN professor_subjects ps ON ps.professor_id = p.id JOIN subjects s ON s.id = ps.subject_id WHERE s.name = $subject ORDER BY p.name'
@@ -111,7 +111,7 @@ export const stmts = {
         anonymous: number
         subject_id: number
     }, any>(
-        'SELECT id, review, created_at, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous, subject_id FROM review WHERE professor_id = $pid ORDER BY created_at DESC'
+        'SELECT id, review, created_at, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous, subject_id FROM review WHERE professor_id = ? ORDER BY created_at DESC'
     )
 }
 
@@ -141,9 +141,9 @@ export function ensureUserId(email_hash: string): number | null {
 export function listProfessorsPaged(q: string, limit: number, offset: number) {
     const lim = clampInt(limit, 1, 100)
     const off = Math.max(0, Math.trunc(offset))
-    const sql = `SELECT id, name FROM professors${q !== "%%" ? `WHERE name LIKE ${q}` : ''} ORDER BY name LIMIT ${lim} OFFSET ${off}`
-    console.log({ sql, q })
-    return db.query<{ id: number; name: string }, any>(sql).all()
+    const sql = `SELECT id, name FROM professors WHERE name LIKE ? ORDER BY name LIMIT ${lim} OFFSET ${off}`
+    dbg('listProfessorsPaged', { sql, q, lim, off })
+    return db.query<{ id: number; name: string }, any>(sql).all(q)
 }
 
 export function listProfBySubjectPaged(subject: string, limit: number, offset: number) {
