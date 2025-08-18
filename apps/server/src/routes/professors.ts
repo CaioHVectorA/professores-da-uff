@@ -36,3 +36,36 @@ export const professorRoutes = new Elysia({ prefix: '/api' })
         const data = rows.map((p) => ({ id: p.id, name: p.name }))
         return { data, page: Number(page), pageSize: Number(pageSize), total, subject }
     })
+    .get('/professors/:professorId/reviews', ({ params, query }) => {
+        const professorId = toNumber((params as any)?.professorId, NaN)
+
+        if (!professorId || isNaN(professorId)) {
+            return { error: 'Invalid professor ID' }
+        }
+
+        const reviews = stmts.listReviewsByProfessor.all(Number(professorId))
+
+        // Get subject names for each review
+        const data = reviews.map((review) => {
+            const subject = stmts.getSubjectById.get(review.subject_id) || { name: 'Unknown' }
+            return {
+                id: review.id,
+                review: review.review,
+                created_at: review.created_at,
+                didatic_quality: review.didatic_quality,
+                material_quality: review.material_quality,
+                exams_difficulty: review.exams_difficulty,
+                personality: review.personality,
+                requires_presence: !!review.requires_presence,
+                exam_method: review.exam_method,
+                anonymous: !!review.anonymous,
+                subject_name: subject.name
+            }
+        })
+
+        return {
+            data,
+            professor_id: Number(professorId),
+            total: data.length
+        }
+    })
