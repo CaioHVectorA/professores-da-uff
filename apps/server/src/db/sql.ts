@@ -94,7 +94,7 @@ export const stmts = {
     countProfBySubject: db.query<{ c: number }, any>(
         'SELECT COUNT(DISTINCT p.id) as c FROM professors p JOIN professor_subjects ps ON ps.professor_id = p.id JOIN subjects s ON s.id = ps.subject_id WHERE s.name = $subject'
     ),
-    getSubjectByName: db.query<{ id: number }, any>('SELECT id FROM subjects WHERE name = $name'),
+    getSubjectByName: db.query<{ id: number }, any>('SELECT id FROM subjects WHERE name = ?'),
     insertReview: db.prepare(
         'INSERT INTO review (professor_id, subject_id, user_id, review, approved, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     ),

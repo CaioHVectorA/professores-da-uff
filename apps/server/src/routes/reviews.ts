@@ -30,7 +30,7 @@ export const reviewRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Invalid payload' }
         }
 
-        const subj = stmts.getSubjectByName.get({ name: subject_name }) as any
+        const subj = stmts.getSubjectByName.get(subject_name) as any
         if (!subj) {
             set.status = 400
             return { error: 'Subject not found' }
