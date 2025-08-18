@@ -11,5 +11,5 @@ const app = new Elysia()
     .use(professorRoutes)
     .use(reviewRoutes)
 
-app.listen(3000)
-console.log('Server running http://localhost:3000')
+app.listen(8080)
+console.log('Server running http://localhost:8080')
