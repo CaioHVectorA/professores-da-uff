@@ -1,12 +1,21 @@
 import { Elysia, t } from 'elysia'
 import cors from '@elysiajs/cors'
-import { addMinutes, emailHash, normalizeEmail, randomToken, sha256, stmts, EMAIL_PEPPER } from '../db/sql'
+import { addMinutes, emailHash, ensureUserId, normalizeEmail, randomToken, sha256, stmts, EMAIL_PEPPER } from '../db/sql'
 import { sendSigninEmail } from '../lib/email'
 
 const DEV_BYPASS = process.env.DEV_AUTH_BYPASS === '1'
 
 function isEmail(str: unknown): str is string {
     return typeof str === 'string' && /.+@.+\..+/.test(str)
+}
+
+async function ensureUserWithRetry(hash: string): Promise<number | null> {
+    for (let i = 0; i < 5; i++) {
+        const id = ensureUserId(hash)
+        if (id) return id
+        if (i < 4) await Bun.sleep(50 * (i + 1))
+    }
+    return null
 }
 
 export const authRoutes = new Elysia({ prefix: '/api/auth' })
@@ -20,17 +29,17 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
         }
 
         const hash = emailHash(normalized)
-        let user = stmts.getUserByEmailHash.get({ email_hash: hash }) as any
-        if (!user) {
-            const r = stmts.insertUser.run(hash)
-            user = { id: Number(r.lastInsertRowid), verified_at: null }
+        const userId = await ensureUserWithRetry(hash)
+        if (!userId) {
+            set.status = 500
+            return { error: 'Failed to ensure user' }
         }
 
         const token = randomToken(24)
         const tokenHash = sha256(token + EMAIL_PEPPER)
         const expires = addMinutes(new Date(), 15).toISOString()
         stmts.insertToken.run(
-            user.id,
+            userId,
             tokenHash,
             'signin',
             expires,

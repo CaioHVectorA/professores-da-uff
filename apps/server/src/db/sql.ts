@@ -1,11 +1,55 @@
 import { Database } from 'bun:sqlite'
 import crypto from 'node:crypto'
 
-const DB_PATH = new URL('../../../../db.db', import.meta.url).pathname
+export const DB_PATH = new URL('../../../../db.db', import.meta.url).pathname
 export const EMAIL_PEPPER = process.env.EMAIL_PEPPER || 'dev-pepper-change-me'
+const DEBUG_AUTH = process.env.DEBUG_AUTH === '1'
+const dbg = (...args: any[]) => {
+    if (DEBUG_AUTH) console.log('[auth]', ...args)
+}
 
 export const db = new Database(DB_PATH)
 db.exec('PRAGMA foreign_keys = ON;')
+// Improve dev stability under hot reload / multiple writers
+try {
+    db.exec('PRAGMA journal_mode = WAL;')
+    db.exec('PRAGMA busy_timeout = 3000;')
+} catch (_) {
+    // ignore
+}
+
+// Ensure minimal auth schema exists (dev-friendly)
+db.exec(`
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email_hash TEXT NOT NULL UNIQUE,
+    verified_at TIMESTAMP DEFAULT NULL,
+    is_admin INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS magic_link_tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    token_hash TEXT NOT NULL UNIQUE,
+    purpose TEXT DEFAULT 'signin',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    used_at TIMESTAMP DEFAULT NULL,
+    request_ip TEXT DEFAULT NULL,
+    user_agent TEXT DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    session_token_hash TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    revoked_at TIMESTAMP DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+`)
+dbg('DB initialized at', DB_PATH)
 
 export const sha256 = (s: string) => crypto.createHash('sha256').update(s).digest('hex')
 export const normalizeEmail = (e: string) => e.trim().toLowerCase()
@@ -16,9 +60,14 @@ export const clampInt = (n: number, min: number, max: number) => Math.max(min, M
 
 export const stmts = {
     getUserByEmailHash: db.query<{ id: number; verified_at: string | null }, any>(
-        'SELECT id, verified_at FROM users WHERE email_hash = $email_hash'
+        'SELECT id, verified_at FROM users WHERE email_hash = ?'
     ),
-    insertUser: db.prepare('INSERT INTO users (email_hash, verified_at) VALUES (?, NULL)'),
+    // Keep simple insert (ignored on conflict) for compatibility
+    insertUser: db.prepare('INSERT OR IGNORE INTO users (email_hash, verified_at) VALUES (?, NULL)'),
+    // Atomic upsert that always returns the row (may not be supported on some SQLite builds)
+    insertOrGetUser: db.query<{ id: number; verified_at: string | null }, any>(
+        'INSERT INTO users (email_hash, verified_at) VALUES ($email_hash, NULL) ON CONFLICT(email_hash) DO UPDATE SET verified_at = verified_at RETURNING id, verified_at'
+    ),
     insertToken: db.prepare(
         'INSERT INTO magic_link_tokens (user_id, token_hash, purpose, expires_at, request_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?)'
     ),
@@ -64,6 +113,28 @@ export const stmts = {
     }, any>(
         'SELECT id, review, created_at, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous, subject_id FROM review WHERE professor_id = $pid ORDER BY created_at DESC'
     )
+}
+
+// Ensure a user exists for the given email_hash and return its id
+export function ensureUserId(email_hash: string): number | null {
+    dbg('ensureUserId: start', email_hash)
+    try {
+        const existing = stmts.getUserByEmailHash.get(email_hash) as any
+        dbg('existing', existing)
+        if (existing?.id) return Number(existing.id)
+        const r = stmts.insertUser.run(email_hash) as any
+        dbg('insertUser.run result', r)
+        if (r && typeof r.changes === 'number' && r.changes === 1) {
+            dbg('inserted new user id', r.lastInsertRowid)
+            return Number(r.lastInsertRowid)
+        }
+        const again = stmts.getUserByEmailHash.get(email_hash) as any
+        dbg('again', again)
+        return again?.id ? Number(again.id) : null
+    } catch (e) {
+        dbg('ensureUserId error', e)
+        return null
+    }
 }
 
 // Helpers with safe integer embedding for pagination

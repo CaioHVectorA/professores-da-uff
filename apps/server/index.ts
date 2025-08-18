@@ -61,40 +61,38 @@ async function sendSigninEmail(to: string, token: string) {
 
 // DB helpers
 const stmts = {
-    getUserByEmailHash: db.query<{ id: number; verified_at: string | null }>(
+    getUserByEmailHash: db.query<{ id: number; verified_at: string | null }, any>(
         'SELECT id, verified_at FROM users WHERE email_hash = $email_hash'
     ),
     insertUser: db.prepare('INSERT INTO users (email_hash, verified_at) VALUES (?, NULL)'),
     insertToken: db.prepare(
         'INSERT INTO magic_link_tokens (user_id, token_hash, purpose, expires_at, request_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?)'
     ),
-    getValidToken: db.query<{
-        id: number
-        user_id: number
-    }>('SELECT id, user_id FROM magic_link_tokens WHERE token_hash = $token_hash AND used_at IS NULL AND datetime(expires_at) > datetime("now")'),
+    getValidToken: db.query<{ id: number; user_id: number }, any>(
+        'SELECT id, user_id FROM magic_link_tokens WHERE token_hash = $token_hash AND used_at IS NULL AND datetime(expires_at) > datetime("now")'
+    ),
     consumeToken: db.prepare('UPDATE magic_link_tokens SET used_at = CURRENT_TIMESTAMP WHERE id = ?'),
     verifyUserNow: db.prepare('UPDATE users SET verified_at = CURRENT_TIMESTAMP WHERE id = ?'),
     createSession: db.prepare(
         'INSERT INTO sessions (user_id, session_token_hash, expires_at) VALUES (?, ?, ?)'
     ),
-    getSession: db.query<{ id: number; user_id: number }>(
+    getSession: db.query<{ id: number; user_id: number }, any>(
         'SELECT id, user_id FROM sessions WHERE session_token_hash = $sth AND revoked_at IS NULL AND datetime(expires_at) > datetime("now")'
     ),
-    listProfessors: db.query<{
-        id: number
-        name: string
-    }>('SELECT id, name FROM professors WHERE name LIKE $q ORDER BY name LIMIT $limit OFFSET $offset'),
-    countProfessors: db.query<{ c: number }>('SELECT COUNT(*) as c FROM professors WHERE name LIKE $q'),
-    subjectsByProfessor: db.query<{ name: string }>(
+    listProfessors: db.query<{ id: number; name: string }, any>(
+        'SELECT id, name FROM professors WHERE name LIKE $q ORDER BY name LIMIT $limit OFFSET $offset'
+    ),
+    countProfessors: db.query<{ c: number }, any>('SELECT COUNT(*) as c FROM professors WHERE name LIKE $q'),
+    subjectsByProfessor: db.query<{ name: string }, any>(
         'SELECT s.name as name FROM subjects s JOIN professor_subjects ps ON ps.subject_id = s.id WHERE ps.professor_id = $pid ORDER BY s.name'
     ),
-    listProfBySubject: db.query<{ id: number; name: string }>(
+    listProfBySubject: db.query<{ id: number; name: string }, any>(
         'SELECT p.id, p.name FROM professors p JOIN professor_subjects ps ON ps.professor_id = p.id JOIN subjects s ON s.id = ps.subject_id WHERE s.name = $subject ORDER BY p.name LIMIT $limit OFFSET $offset'
     ),
-    countProfBySubject: db.query<{ c: number }>(
+    countProfBySubject: db.query<{ c: number }, any>(
         'SELECT COUNT(DISTINCT p.id) as c FROM professors p JOIN professor_subjects ps ON ps.professor_id = p.id JOIN subjects s ON s.id = ps.subject_id WHERE s.name = $subject'
     ),
-    getSubjectByName: db.query<{ id: number }>('SELECT id FROM subjects WHERE name = $name'),
+    getSubjectByName: db.query<{ id: number }, any>('SELECT id FROM subjects WHERE name = $name'),
     insertReview: db.prepare(
         'INSERT INTO review (professor_id, subject_id, user_id, review, approved, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     ),
@@ -110,7 +108,7 @@ const stmts = {
         exam_method: string | null
         anonymous: number
         subject_id: number
-    }>('SELECT id, review, created_at, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous, subject_id FROM review WHERE professor_id = $pid ORDER BY created_at DESC')
+    }, any>('SELECT id, review, created_at, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous, subject_id FROM review WHERE professor_id = $pid ORDER BY created_at DESC')
 }
 
 function requireSessionFromReq(req: Request) {
@@ -127,7 +125,7 @@ const app = new Elysia()
     .onError(({ code, error, set }) => {
         console.error(error)
         set.status = code === 'VALIDATION' ? 400 : 500
-        return { error: error.message }
+        return { error: (error as Error).message ?? String(error) }
     })
 
     // Health
@@ -135,7 +133,7 @@ const app = new Elysia()
 
     // Auth: request magic link
     .post('/api/auth/request', async ({ body, request, set }) => {
-        const email = typeof body?.email === 'string' ? body.email : ''
+        const email = typeof (body as any)?.email === 'string' ? (body as any).email : ''
         const normalized = normalizeEmail(email)
         if (!isEmail(normalized) || !/@(id\.)?uff\.br$/.test(normalized)) {
             set.status = 400
