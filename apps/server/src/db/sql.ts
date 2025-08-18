@@ -72,13 +72,13 @@ export const stmts = {
         'INSERT INTO magic_link_tokens (user_id, token_hash, purpose, expires_at, request_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?)'
     ),
     getValidToken: db.query<{ id: number; user_id: number }, any>(
-        'SELECT id, user_id FROM magic_link_tokens WHERE token_hash = $token_hash AND used_at IS NULL AND datetime(expires_at) > datetime("now")'
+        'SELECT id, user_id FROM magic_link_tokens WHERE token_hash = ? AND used_at IS NULL AND datetime(expires_at) > datetime("now")'
     ),
     consumeToken: db.prepare('UPDATE magic_link_tokens SET used_at = CURRENT_TIMESTAMP WHERE id = ?'),
     verifyUserNow: db.prepare('UPDATE users SET verified_at = CURRENT_TIMESTAMP WHERE id = ?'),
     createSession: db.prepare('INSERT INTO sessions (user_id, session_token_hash, expires_at) VALUES (?, ?, ?)'),
     getSession: db.query<{ id: number; user_id: number }, any>(
-        'SELECT id, user_id FROM sessions WHERE session_token_hash = $sth AND revoked_at IS NULL AND datetime(expires_at) > datetime("now")'
+        'SELECT id, user_id FROM sessions WHERE session_token_hash = ? AND revoked_at IS NULL AND datetime(expires_at) > datetime("now")'
     ),
     // NOTE: limit/offset moved to helpers below to avoid datatype mismatch in some SQLite bindings
     listProfessorsBase: db.query<{ id: number; name: string }, any>(
@@ -154,10 +154,10 @@ export function listProfBySubjectPaged(subject: string, limit: number, offset: n
 }
 
 export function requireSessionFromReq(req: Request) {
-    const token = req.headers.get('authorization')?.replace('Bearer ', '')
+    const token = req.headers.get('Authorization')?.replace('Bearer ', '')
     if (!token) return null
     const sth = sha256(token + EMAIL_PEPPER)
-    const row = stmts.getSession.get({ sth })
+    const row = stmts.getSession.get(sth)
     if (!row) return null
     return row.user_id
 }

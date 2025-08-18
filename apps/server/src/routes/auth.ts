@@ -61,7 +61,10 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
             return { error: 'Token required' }
         }
         const tokenHash = sha256(token + EMAIL_PEPPER)
-        const row = stmts.getValidToken.get({ token_hash: tokenHash }) as any
+        console.log('Verify - token:', token)
+        console.log('Verify - tokenHash:', tokenHash)
+        const row = stmts.getValidToken.get(tokenHash) as any
+        console.log('Verify - row found:', row)
         if (!row) {
             set.status = 400
             return { error: 'Invalid or expired token' }
