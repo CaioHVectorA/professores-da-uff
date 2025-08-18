@@ -141,8 +141,9 @@ export function ensureUserId(email_hash: string): number | null {
 export function listProfessorsPaged(q: string, limit: number, offset: number) {
     const lim = clampInt(limit, 1, 100)
     const off = Math.max(0, Math.trunc(offset))
-    const sql = `SELECT id, name FROM professors WHERE name LIKE $q ORDER BY name LIMIT ${lim} OFFSET ${off}`
-    return db.query<{ id: number; name: string }, any>(sql).all({ q })
+    const sql = `SELECT id, name FROM professors${q !== "%%" ? `WHERE name LIKE ${q}` : ''} ORDER BY name LIMIT ${lim} OFFSET ${off}`
+    console.log({ sql, q })
+    return db.query<{ id: number; name: string }, any>(sql).all()
 }
 
 export function listProfBySubjectPaged(subject: string, limit: number, offset: number) {
