@@ -23,6 +23,7 @@ db.exec(`
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email_hash TEXT NOT NULL UNIQUE,
+    email TEXT,
     verified_at TIMESTAMP DEFAULT NULL,
     is_admin INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -49,6 +50,14 @@ CREATE TABLE IF NOT EXISTS sessions (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 `)
+
+// Add email column if it doesn't exist (for existing databases)
+try {
+    db.exec('ALTER TABLE users ADD COLUMN email TEXT;')
+} catch (e) {
+    // Column already exists or other error, ignore
+}
+
 dbg('DB initialized at', DB_PATH)
 
 export const sha256 = (s: string) => crypto.createHash('sha256').update(s).digest('hex')
@@ -63,10 +72,10 @@ export const stmts = {
         'SELECT id, verified_at FROM users WHERE email_hash = ?'
     ),
     // Keep simple insert (ignored on conflict) for compatibility
-    insertUser: db.prepare('INSERT OR IGNORE INTO users (email_hash, verified_at) VALUES (?, NULL)'),
+    insertUser: db.prepare('INSERT OR IGNORE INTO users (email_hash, email, verified_at) VALUES (?, ?, NULL)'),
     // Atomic upsert that always returns the row (may not be supported on some SQLite builds)
     insertOrGetUser: db.query<{ id: number; verified_at: string | null }, any>(
-        'INSERT INTO users (email_hash, verified_at) VALUES ($email_hash, NULL) ON CONFLICT(email_hash) DO UPDATE SET verified_at = verified_at RETURNING id, verified_at'
+        'INSERT INTO users (email_hash, email, verified_at) VALUES ($email_hash, $email, NULL) ON CONFLICT(email_hash) DO UPDATE SET email = $email, verified_at = verified_at RETURNING id, verified_at'
     ),
     insertToken: db.prepare(
         'INSERT INTO magic_link_tokens (user_id, token_hash, purpose, expires_at, request_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?)'
@@ -79,6 +88,9 @@ export const stmts = {
     createSession: db.prepare('INSERT INTO sessions (user_id, session_token_hash, expires_at) VALUES (?, ?, ?)'),
     getSession: db.query<{ id: number; user_id: number }, any>(
         'SELECT id, user_id FROM sessions WHERE session_token_hash = ? AND revoked_at IS NULL AND datetime(expires_at) > datetime("now")'
+    ),
+    getUserById: db.query<{ id: number; email_hash: string; email: string; verified_at: string | null }, any>(
+        'SELECT id, email_hash, email, verified_at FROM users WHERE id = ?'
     ),
     // NOTE: limit/offset moved to helpers below to avoid datatype mismatch in some SQLite bindings
     listProfessorsBase: db.query<{ id: number; name: string }, any>(
@@ -117,13 +129,13 @@ export const stmts = {
 }
 
 // Ensure a user exists for the given email_hash and return its id
-export function ensureUserId(email_hash: string): number | null {
+export function ensureUserId(email_hash: string, email?: string): number | null {
     dbg('ensureUserId: start', email_hash)
     try {
         const existing = stmts.getUserByEmailHash.get(email_hash) as any
         dbg('existing', existing)
         if (existing?.id) return Number(existing.id)
-        const r = stmts.insertUser.run(email_hash) as any
+        const r = stmts.insertUser.run(email_hash, email || null) as any
         dbg('insertUser.run result', r)
         if (r && typeof r.changes === 'number' && r.changes === 1) {
             dbg('inserted new user id', r.lastInsertRowid)

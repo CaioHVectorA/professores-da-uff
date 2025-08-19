@@ -1,11 +1,13 @@
 import { Elysia } from 'elysia'
 import cors from '@elysiajs/cors'
+import { cookie } from '@elysiajs/cookie'
 import { authRoutes } from './routes/auth'
 import { professorRoutes } from './routes/professors'
 import { reviewRoutes } from './routes/reviews'
 
 const app = new Elysia()
     .use(cors())
+    .use(cookie())
     .get('/api/health', () => ({ ok: true }))
     .use(authRoutes)
     .use(professorRoutes)

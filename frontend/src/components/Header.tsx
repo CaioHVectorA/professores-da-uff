@@ -16,7 +16,7 @@ export default function Header({
     onSearchChange
 }: HeaderProps) {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-    const { user, logout, isAuthenticated } = useAuth()
+    const { user, logout, isAuthenticated, loading } = useAuth()
 
     return (
         <>
@@ -56,9 +56,11 @@ export default function Header({
                         </div>
 
                         <div className="flex items-center space-x-4">
-                            {isAuthenticated ? (
+                            {loading ? (
+                                <div className="animate-pulse bg-gray-200 h-8 w-20 rounded"></div>
+                            ) : isAuthenticated ? (
                                 <div className="flex items-center space-x-4">
-                                    <span className="text-sm text-gray-700">Olá, {user?.email}</span>
+                                    <span className="text-sm text-gray-700">Olá, usuário</span>
                                     <button
                                         onClick={logout}
                                         className="text-sm text-red-600 hover:text-red-500 font-medium"
