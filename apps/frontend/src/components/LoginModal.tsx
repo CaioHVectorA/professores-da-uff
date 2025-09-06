@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { authApi } from '../services/api'
+import api from '../services/api'
 import type { LoginModalProps } from '../types'
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
@@ -16,15 +16,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     setMessage('')
 
     try {
-      const result = await authApi.requestMagicLink(email)
-      if (result.ok) {
-        if (result.redirect_url) {
+      const result = await api.post('/auth/login', { email })
+      if (result.data.ok) {
+        if (result.data.redirect_url) {
           // For localhost, redirect directly to the magic link
-          window.location.href = result.redirect_url
+          window.location.href = result.data.redirect_url
           return
         } else {
           setSent(true)
-          setMessage(result.message || 'Link de acesso enviado para o seu email!')
+          setMessage(result.data.message || 'Link de acesso enviado para o seu email!')
         }
       }
     } catch (error: any) {
@@ -67,10 +67,6 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
           <div className="sm:flex sm:items-start">
             <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-              <h3 className="text-lg font-semibold leading-6 text-gray-900">
-                Entrar na sua conta
-              </h3>
-
               <div className="mt-4">
                 {!sent ? (
                   <form onSubmit={handleSubmit} className="space-y-4">

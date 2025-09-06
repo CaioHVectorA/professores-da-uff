@@ -51,7 +51,7 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
         const isLocalhost = request.headers.get('host')?.includes('localhost') ||
             request.headers.get('host')?.includes('127.0.0.1')
 
-        if (isLocalhost) {
+        if (false) {
             const frontendUrl = 'http://localhost:3000'
             return {
                 ok: true,
@@ -99,8 +99,8 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
             })
         }
 
-        // Redirect to homepage
-        set.redirect = '/?login=success'
+        // Redirect to frontend homepage
+        set.redirect = 'http://localhost:3000/?login=success'
         return
     })
     .post('/verify-token', ({ body, set, cookie }) => {
@@ -111,7 +111,9 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
         }
 
         const tokenHash = sha256(token + EMAIL_PEPPER)
+        console.log('Verifying token:', token, 'hash:', tokenHash)
         const row = stmts.getValidToken.get(tokenHash) as any
+        console.log('Found row:', row)
 
         if (!row) {
             set.status = 400

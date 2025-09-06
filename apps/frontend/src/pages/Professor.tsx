@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Header from '../components/Header'
 import ReviewCard from '../components/ReviewCard'
-import { professorApi } from '../services/api'
+import api from '../services/api'
 import type { Professor, Review } from '../types'
 
 export default function Professor() {
@@ -20,14 +20,14 @@ export default function Professor() {
       try {
         // Load professor info and reviews
         const [professorsResponse, reviewsResponse] = await Promise.all([
-          professorApi.getProfessors('', 1, 1000), // Get all professors to find this one
-          professorApi.getProfessorReviews(parseInt(id))
+          api.get('/professors', { params: { q: '', page: 1, pageSize: 1000 } }), // Get all professors to find this one
+          api.get(`/professors/${parseInt(id)}/reviews`)
         ])
 
         // Find the specific professor
-        const foundProfessor = professorsResponse.data.find(p => p.id === parseInt(id))
+        const foundProfessor = professorsResponse.data.data.find((p: Professor) => p.id === parseInt(id))
         setProfessor(foundProfessor || null)
-        setReviews(reviewsResponse.data)
+        setReviews(reviewsResponse.data.data)
       } catch (error) {
         console.error('Error loading professor data:', error)
       } finally {
@@ -121,7 +121,7 @@ export default function Professor() {
         {/* Professor info */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{professor.name}</h1>
-          
+
           <div className="mb-6">
             <h3 className="text-lg font-medium text-gray-900 mb-3">Disciplinas</h3>
             <div className="flex flex-wrap gap-2">

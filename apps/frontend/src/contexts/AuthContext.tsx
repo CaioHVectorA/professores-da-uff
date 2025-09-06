@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import api from '../services/api'
 import type { User } from '../types'
 
 interface AuthContextType {
   user: User | null
-  login: (token: string) => void
+  login: () => void
   logout: () => void
   isAuthenticated: boolean
 }
@@ -21,26 +23,35 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    // Check if user is logged in on app start
-    const token = localStorage.getItem('auth_token')
-    if (token) {
-      // In a real app, you'd verify the token with the server
-      setIsAuthenticated(true)
-      // For now, we'll create a mock user
-      setUser({
-        id: 1,
-        email: 'user@id.uff.br',
-        verified: true
-      })
-    }
-  }, [])
+    const initAuth = async () => {
+      // Check for login success from magic link redirect
+      const loginSuccess = searchParams.get('login')
+      if (loginSuccess === 'success') {
+        try {
+          // Remove success param from URL
+          searchParams.delete('login')
+          setSearchParams(searchParams, { replace: true })
 
-  const login = (token: string) => {
-    localStorage.setItem('auth_token', token)
+          // Get user info from current session
+          const userInfo = await api.get('/auth/user')
+          setUser(userInfo.data)
+          setIsAuthenticated(true)
+        } catch (error) {
+          console.error('Session validation failed:', error)
+        }
+      }
+      // Removed automatic login check - only login via magic link
+    }
+
+    initAuth()
+  }, [searchParams, setSearchParams])
+
+  const login = () => {
+    // Login is now session-based only
     setIsAuthenticated(true)
-    // In a real app, you'd decode the token or fetch user info
     setUser({
       id: 1,
       email: 'user@id.uff.br',

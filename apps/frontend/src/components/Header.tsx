@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import LoginModal from './LoginModal'
 
@@ -17,6 +17,13 @@ export default function Header({
 }: HeaderProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const { user, logout, isAuthenticated } = useAuth()
+
+  // Close login modal when user becomes authenticated
+  useEffect(() => {
+    if (isAuthenticated && isLoginModalOpen) {
+      setIsLoginModalOpen(false)
+    }
+  }, [isAuthenticated, isLoginModalOpen])
 
   return (
     <>

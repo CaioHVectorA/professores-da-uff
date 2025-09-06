@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Header from '../components/Header'
 import ProfessorCard from '../components/ProfessorCard'
-import { professorApi } from '../services/api'
+import api from '../services/api'
 import type { Professor } from '../types'
 
 export default function Home() {
@@ -16,14 +16,16 @@ export default function Home() {
   const loadProfessors = useCallback(async (query: string = '', pageNum: number = 1, append: boolean = false) => {
     if (!append) setLoading(true)
     try {
-      const response = await professorApi.getProfessors(query, pageNum, 20)
+      const response = await api.get('/professors', {
+        params: { q: query, page: pageNum, pageSize: 20 }
+      })
       if (append) {
-        setProfessors(prev => [...prev, ...response.data])
+        setProfessors(prev => [...prev, ...response.data.data])
       } else {
-        setProfessors(response.data)
+        setProfessors(response.data.data)
       }
-      setTotal(response.total || 0)
-      setHasMore(response.data.length === 20)
+      setTotal(response.data.total || 0)
+      setHasMore(response.data.data.length === 20)
     } catch (error) {
       console.error('Error loading professors:', error)
     } finally {
@@ -57,7 +59,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header 
+      <Header
         title="QuadroScrap - Avaliação de Professores UFF"
         showSearch
         searchValue={searchQuery}
@@ -121,8 +123,8 @@ export default function Home() {
               {searchQuery ? 'Nenhum professor encontrado' : 'Nenhum professor cadastrado'}
             </h3>
             <p className="text-gray-500">
-              {searchQuery 
-                ? 'Tente buscar com outros termos.' 
+              {searchQuery
+                ? 'Tente buscar com outros termos.'
                 : 'Ainda não há professores cadastrados no sistema.'
               }
             </p>

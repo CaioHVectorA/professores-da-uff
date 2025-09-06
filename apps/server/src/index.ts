@@ -6,7 +6,10 @@ import { professorRoutes } from './routes/professors'
 import { reviewRoutes } from './routes/reviews'
 
 const app = new Elysia()
-    .use(cors())
+    .use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    }))
     .use(cookie())
     .get('/api/health', () => ({ ok: true }))
     .use(authRoutes)

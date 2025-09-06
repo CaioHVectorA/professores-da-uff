@@ -81,7 +81,7 @@ export const stmts = {
         'INSERT INTO magic_link_tokens (user_id, token_hash, purpose, expires_at, request_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?)'
     ),
     getValidToken: db.query<{ id: number; user_id: number }, any>(
-        'SELECT id, user_id FROM magic_link_tokens WHERE token_hash = ? AND used_at IS NULL AND datetime(expires_at) > datetime("now")'
+        'SELECT id, user_id FROM magic_link_tokens WHERE token_hash = ? AND datetime(expires_at) > datetime("now")'
     ),
     consumeToken: db.prepare('UPDATE magic_link_tokens SET used_at = CURRENT_TIMESTAMP WHERE id = ?'),
     verifyUserNow: db.prepare('UPDATE users SET verified_at = CURRENT_TIMESTAMP WHERE id = ?'),
