@@ -122,7 +122,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 )}
 
                 {message && !sent && (
-                  <div className={`mt-4 p-3 rounded-md text-sm ${message.includes('Erro') || message.includes('erro')
+                  <div className={`mt-4 p-3 rounded-md text-sm ${message.includes('id') || message.includes('id')
                     ? 'bg-red-50 text-red-700'
                     : 'bg-green-50 text-green-700'
                     }`}>

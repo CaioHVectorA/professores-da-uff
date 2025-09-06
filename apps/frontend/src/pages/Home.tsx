@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Header from '../components/Header'
 import ProfessorCard from '../components/ProfessorCard'
 import { professorApi } from '../services/api'
@@ -11,15 +11,16 @@ export default function Home() {
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [hasMore, setHasMore] = useState(true)
+  const sentinelRef = useRef<HTMLDivElement>(null)
 
-  const loadProfessors = async (query: string = '', pageNum: number = 1) => {
-    setLoading(true)
+  const loadProfessors = useCallback(async (query: string = '', pageNum: number = 1, append: boolean = false) => {
+    if (!append) setLoading(true)
     try {
       const response = await professorApi.getProfessors(query, pageNum, 20)
-      if (pageNum === 1) {
-        setProfessors(response.data)
-      } else {
+      if (append) {
         setProfessors(prev => [...prev, ...response.data])
+      } else {
+        setProfessors(response.data)
       }
       setTotal(response.total || 0)
       setHasMore(response.data.length === 20)
@@ -28,18 +29,31 @@ export default function Home() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    loadProfessors(searchQuery, 1)
+    loadProfessors(searchQuery, 1, false)
     setPage(1)
-  }, [searchQuery])
+  }, [searchQuery, loadProfessors])
 
-  const handleLoadMore = () => {
-    const nextPage = page + 1
-    setPage(nextPage)
-    loadProfessors(searchQuery, nextPage)
-  }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          const nextPage = page + 1
+          setPage(nextPage)
+          loadProfessors(searchQuery, nextPage, true)
+        }
+      },
+      { threshold: 1.0 }
+    )
+
+    if (sentinelRef.current) {
+      observer.observe(sentinelRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [hasMore, loading, page, searchQuery, loadProfessors])
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -91,14 +105,8 @@ export default function Home() {
             </div>
 
             {hasMore && (
-              <div className="mt-8 text-center">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={loading}
-                  className="bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white px-6 py-3 rounded-md font-medium transition-colors"
-                >
-                  {loading ? 'Carregando...' : 'Carregar mais'}
-                </button>
+              <div ref={sentinelRef} className="mt-8 text-center">
+                {loading && <p className="text-gray-500">Carregando mais professores...</p>}
               </div>
             )}
           </>
