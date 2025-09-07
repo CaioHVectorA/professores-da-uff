@@ -26,24 +26,30 @@ export async function GET(request: NextRequest) {
           }
         } : {}),
         ...(subject ? {
-          subjects: {
+          professorSubjects: {
             some: {
-              name: {
-                contains: subject,
-                mode: 'insensitive'
+              subject: {
+                name: {
+                  contains: subject,
+                  mode: 'insensitive'
+                }
               }
             }
           }
         } : {})
       },
       include: {
-        subjects: true,
-        reviews: {
-          select: {
-            didaticQuality: true,
-            materialQuality: true,
-            examsDifficulty: true,
-            personality: true
+        professorSubjects: {
+          include: {
+            subject: true,
+            reviews: {
+              select: {
+                didaticQuality: true,
+                materialQuality: true,
+                examsDifficulty: true,
+                personality: true
+              }
+            }
           }
         }
       },
@@ -56,19 +62,21 @@ export async function GET(request: NextRequest) {
 
     // Transform data to match the expected format
     const transformedProfessors = professors.map(prof => {
-      const reviews = prof.reviews;
+      const allReviews = prof.professorSubjects.flatMap(ps => ps.reviews);
       const averages = {
-        didatic: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.didaticQuality || 0), 0) / reviews.length : 0,
-        material: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.materialQuality || 0), 0) / reviews.length : 0,
-        difficulty: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.examsDifficulty || 0), 0) / reviews.length : 0,
-        personality: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.personality || 0), 0) / reviews.length : 0
+        didatic: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.didaticQuality || 0), 0) / allReviews.length : 0,
+        material: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.materialQuality || 0), 0) / allReviews.length : 0,
+        difficulty: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.examsDifficulty || 0), 0) / allReviews.length : 0,
+        personality: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.personality || 0), 0) / allReviews.length : 0
       };
+
+      const subjects = prof.professorSubjects.map(ps => ({ id: ps.subject.id, name: ps.subject.name }));
 
       return {
         id: prof.id,
         name: prof.name,
-        subjects: prof.subjects.map(s => ({ id: s.id, name: s.name })),
-        reviewCount: reviews.length,
+        subjects,
+        reviewCount: allReviews.length,
         averages
       };
     });
@@ -82,11 +90,13 @@ export async function GET(request: NextRequest) {
           }
         } : {}),
         ...(subject ? {
-          subjects: {
+          professorSubjects: {
             some: {
-              name: {
-                contains: subject,
-                mode: 'insensitive'
+              subject: {
+                name: {
+                  contains: subject,
+                  mode: 'insensitive'
+                }
               }
             }
           }

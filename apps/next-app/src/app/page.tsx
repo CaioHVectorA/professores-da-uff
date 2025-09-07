@@ -6,16 +6,18 @@ import type { Professor, Subject } from '../types';
 
 export default function Home() {
   const [professors, setProfessors] = useState<Professor[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [infiniteLoading, setInfiniteLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchProfessors = async (query: string = '', subject: string = '', pageNum: number = 1, append: boolean = false) => {
+  const fetchProfessors = async (query: string = '', subject: string = '', pageNum: number = 1, append: boolean = false, showLoading: boolean = true) => {
     try {
-      if (!append) setLoading(true);
+      if (showLoading && !append) setInitialLoading(true);
+      if (append) setInfiniteLoading(true);
       const params = new URLSearchParams({
         q: query,
         subject: subject,
@@ -35,44 +37,45 @@ export default function Home() {
     } catch (error) {
       console.error('Failed to fetch professors:', error);
     } finally {
-      setLoading(false);
+      if (showLoading && !append) setInitialLoading(false);
+      if (append) setInfiniteLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProfessors();
+    fetchProfessors('', '', 1, false, true);
     // Load all subjects for filter
     fetch('/api/subjects')
       .then(res => res.json())
       .then(data => setSubjects(data.data))
       .catch(err => console.error('Error loading subjects:', err));
-  }, [page]);
+  }, []);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setPage(1);
-      fetchProfessors(searchQuery, selectedSubject, 1);
+      fetchProfessors(searchQuery, selectedSubject, 1, false, false);
     }, 300);
 
     return () => clearTimeout(debounceTimer);
   }, [searchQuery, selectedSubject]);
 
   const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && hasMore && !loading) {
+    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && hasMore && !infiniteLoading) {
       const nextPage = page + 1;
       setPage(nextPage);
-      fetchProfessors(searchQuery, selectedSubject, nextPage, true);
+      fetchProfessors(searchQuery, selectedSubject, nextPage, true, false);
     }
   };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [page, hasMore, loading, searchQuery, selectedSubject]);
+  }, [page, hasMore, infiniteLoading, searchQuery, selectedSubject]);
 
-  if (loading) {
+  if (initialLoading) {
     return (
-      <div className="bg-gray-50 flex-1">
+      <div className="flex-1">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
@@ -100,7 +103,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-gray-50 flex-1">
+    <div className="flex-1">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
@@ -117,16 +120,19 @@ export default function Home() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
             />
-            <select
+            <input
+              type="text"
+              placeholder="Filtrar por matéria..."
               value={selectedSubject}
               onChange={(e) => setSelectedSubject(e.target.value)}
+              list="subjects"
               className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
-            >
-              <option value="">Todas as matérias</option>
+            />
+            <datalist id="subjects">
               {subjects.map((subject) => (
-                <option key={subject.id} value={subject.name}>{subject.name}</option>
+                <option key={subject.id} value={subject.name} />
               ))}
-            </select>
+            </datalist>
           </div>
         </div>
 
@@ -136,14 +142,18 @@ export default function Home() {
           ))}
         </div>
 
-        {hasMore && (
+        {infiniteLoading && (
           <div className="mt-8 text-center">
-            <button
-              onClick={() => setPage((prev) => prev + 1)}
-              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Carregar mais
-            </button>
+            <div className="inline-flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <span className="ml-2 text-gray-600">Carregando mais...</span>
+            </div>
+          </div>
+        )}
+
+        {!hasMore && professors.length > 0 && (
+          <div className="mt-8 text-center text-gray-600">
+            Não há mais professores para carregar.
           </div>
         )}
       </main>

@@ -32,22 +32,62 @@ export default function LayoutWithSidebar({
     return (
         <>
             <div className="flex min-h-screen">
-                {/* Sidebar sempre aberta */}
-                <div className="w-64 bg-white shadow-lg border-r border-gray-200">
+                {/* Sidebar fixa */}
+                <div className="fixed top-0 left-0 w-64 bg-white shadow-lg border-r border-gray-200 flex flex-col h-screen">
                     <div className="flex flex-col h-full">
                         <div className="flex items-center justify-center h-16 bg-gradient-to-r from-blue-600 to-blue-800">
                             <h2 className="text-xl font-bold text-white">Professores da UFF</h2>
                         </div>
-                        <nav className="flex-1 px-4 py-6 space-y-2">
+
+                        {/* User section */}
+                        <div className="px-4 py-4 border-b border-gray-200">
+                            {isAuthenticated ? (
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                        <User className="h-8 w-8 text-gray-600 mr-3" />
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-900">{user?.email}</p>
+                                            <p className="text-xs text-gray-500">Usuário</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex space-x-2">
+                                        <button
+                                            onClick={() => setIsProfileModalOpen(true)}
+                                            className="p-1 text-gray-600 hover:text-gray-900"
+                                            title="Perfil"
+                                        >
+                                            <User className="h-5 w-5" />
+                                        </button>
+                                        <button
+                                            onClick={logout}
+                                            className="p-1 text-gray-600 hover:text-gray-900"
+                                            title="Sair"
+                                        >
+                                            <LogOut className="h-5 w-5" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={() => setIsLoginModalOpen(true)}
+                                    className="w-full flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                                >
+                                    <User className="mr-3 h-5 w-5" />
+                                    Entrar
+                                </button>
+                            )}
+                        </div>
+
+                        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative">
                                     <a
                                         href={item.disabled ? '#' : item.href}
                                         className={`flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors ${item.active && !item.disabled
-                                                ? 'bg-blue-100 text-blue-700'
-                                                : item.disabled
-                                                    ? 'text-gray-400 cursor-not-allowed'
-                                                    : 'text-gray-700 hover:bg-gray-100'
+                                            ? 'bg-blue-100 text-blue-700'
+                                            : item.disabled
+                                                ? 'text-gray-400 cursor-not-allowed'
+                                                : 'text-gray-700 hover:bg-gray-100'
                                             }`}
                                         onClick={item.disabled ? (e) => e.preventDefault() : undefined}
                                     >
@@ -62,36 +102,11 @@ export default function LayoutWithSidebar({
                                 </div>
                             ))}
                         </nav>
-                        {isAuthenticated && user && (
-                            <div className="px-4 py-4 border-t border-gray-200">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm text-gray-700">
-                                        Olá, {user.email?.split('@')[0]}
-                                    </span>
-                                    <div className="flex space-x-2">
-                                        <button
-                                            onClick={() => setIsProfileModalOpen(true)}
-                                            className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
-                                            title="Perfil"
-                                        >
-                                            <User size={20} />
-                                        </button>
-                                        <button
-                                            onClick={logout}
-                                            className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
-                                            title="Sair"
-                                        >
-                                            <LogOut size={20} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
 
                 {/* Main content */}
-                <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col ml-64 bg-gray-50 min-h-screen">
                     {/* Page content */}
                     <div className="flex-1">
                         {children}

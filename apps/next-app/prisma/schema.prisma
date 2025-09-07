@@ -56,37 +56,44 @@ model Professor {
   id   Int    @id @default(autoincrement())
   name String
 
-  subjects Subject[]
-  reviews  Review[]
+  professorSubjects Professor_Subject[]
 }
 
 model Subject {
-  id          Int    @id @default(autoincrement())
-  name        String
-  professorId Int
+  id   Int    @id @default(autoincrement())
+  name String
 
-  professor Professor @relation(fields: [professorId], references: [id])
-  reviews   Review[]
+  professorSubjects Professor_Subject[]
 }
 
-model Review {
-  id               Int      @id @default(autoincrement())
-  professorId      Int
-  subjectId        Int
-  userId           Int?
-  review           String
-  createdAt        DateTime @default(now())
-  didaticQuality   Int?
-  materialQuality  Int?
-  examsDifficulty  Int?
-  personality      Int?
-  requiresPresence Boolean?
-  examMethod       String?
-  anonymous        Boolean  @default(false)
+model Professor_Subject {
+  id          Int @id @default(autoincrement())
+  professorId Int
+  subjectId   Int
 
   professor Professor @relation(fields: [professorId], references: [id])
   subject   Subject   @relation(fields: [subjectId], references: [id])
-  user      User?     @relation(fields: [userId], references: [id])
+  reviews   Review[]
+
+  @@unique([professorId, subjectId])
+}
+
+model Review {
+  id                 Int      @id @default(autoincrement())
+  professorSubjectId Int
+  userId             Int?
+  review             String
+  createdAt          DateTime @default(now())
+  didaticQuality     Int?
+  materialQuality    Int?
+  examsDifficulty    Int?
+  personality        Int?
+  requiresPresence   Boolean?
+  examMethod         String?
+  anonymous          Boolean  @default(false)
+
+  professorSubject Professor_Subject @relation(fields: [professorSubjectId], references: [id])
+  user             User?             @relation(fields: [userId], references: [id])
 }
 
 model Course {
