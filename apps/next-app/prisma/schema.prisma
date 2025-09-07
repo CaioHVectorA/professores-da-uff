@@ -18,9 +18,13 @@ model User {
   verifiedAt DateTime?
   isAdmin    Boolean   @default(false)
   createdAt  DateTime  @default(now())
+  courseId   Int?
+  course     Course?   @relation(fields: [courseId], references: [id])
 
   magicLinkTokens MagicLinkToken[]
   sessions        Session[]
+  reviews         Review[]
+  reports         Report[]
 }
 
 model MagicLinkToken {
@@ -69,6 +73,7 @@ model Review {
   id               Int      @id @default(autoincrement())
   professorId      Int
   subjectId        Int
+  userId           Int?
   review           String
   createdAt        DateTime @default(now())
   didaticQuality   Int?
@@ -81,4 +86,22 @@ model Review {
 
   professor Professor @relation(fields: [professorId], references: [id])
   subject   Subject   @relation(fields: [subjectId], references: [id])
+  user      User?     @relation(fields: [userId], references: [id])
+}
+
+model Course {
+  id   Int    @id
+  name String @unique
+
+  users User[]
+}
+
+model Report {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  experience String
+  suggestion String
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }

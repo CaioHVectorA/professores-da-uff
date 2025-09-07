@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { getUserFromSession } from '@/lib/auth'
 
 const prisma = new PrismaClient()
 
@@ -9,11 +10,13 @@ export async function GET(
 ) {
   try {
     const professorId = parseInt(params.id)
+    const user = await getUserFromSession(request)
 
     const reviews = await prisma.review.findMany({
       where: { professorId },
       include: {
-        subject: true
+        subject: true,
+        user: true
       },
       orderBy: { createdAt: 'desc' }
     })
@@ -29,7 +32,9 @@ export async function GET(
       requires_presence: review.requiresPresence,
       exam_method: review.examMethod,
       anonymous: review.anonymous,
-      subject_name: review.subject.name
+      subject_name: review.subject.name,
+      user_id: (user && review.userId === user.id) ? review.userId : null,
+      user_name: review.user ? review.user.email?.split('@')[0] : null
     }))
 
     return NextResponse.json({
@@ -49,6 +54,7 @@ export async function POST(
 ) {
   try {
     const professorId = parseInt(params.id)
+    const user = await getUserFromSession(request)
     const body = await request.json()
 
     const {
@@ -63,13 +69,30 @@ export async function POST(
       anonymous = false
     } = body
 
-    // For now, assume user is authenticated (you'll need to implement user auth)
-    // const userId = getUserFromSession(request)
+    if (!anonymous && !user) {
+      return NextResponse.json({ error: 'Authentication required for non-anonymous reviews' }, { status: 401 })
+    }
+
+    // Check if user already reviewed this professor (only for non-anonymous)
+    if (!anonymous && user) {
+      const existingReview = await prisma.review.findFirst({
+        where: {
+          professorId,
+          userId: user.id,
+          anonymous: false
+        }
+      })
+
+      if (existingReview) {
+        return NextResponse.json({ error: 'You have already reviewed this professor' }, { status: 400 })
+      }
+    }
 
     const newReview = await prisma.review.create({
       data: {
         professorId,
         subjectId,
+        userId: (!anonymous && user) ? user.id : null,
         review,
         didaticQuality,
         materialQuality,

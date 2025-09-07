@@ -52,41 +52,33 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
           )}
         </div>
 
-        {professor.averages && (
+        {professor.averages && professor.reviewCount && professor.reviewCount > 0 ? (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-gray-700">Médias das avaliações:</p>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div>
-                <span className="text-gray-600">Didática:</span>
                 <div className="flex items-center">
                   {renderStars(professor.averages.didatic)}
-                  <span className="ml-1 text-gray-500">({professor.averages.didatic.toFixed(1)})</span>
                 </div>
               </div>
               <div>
-                <span className="text-gray-600">Material:</span>
                 <div className="flex items-center">
                   {renderStars(professor.averages.material)}
-                  <span className="ml-1 text-gray-500">({professor.averages.material.toFixed(1)})</span>
                 </div>
               </div>
               <div>
-                <span className="text-gray-600">Dificuldade:</span>
                 <div className="flex items-center">
                   {renderStars(professor.averages.difficulty)}
-                  <span className="ml-1 text-gray-500">({professor.averages.difficulty.toFixed(1)})</span>
                 </div>
               </div>
               <div>
-                <span className="text-gray-600">Personalidade:</span>
                 <div className="flex items-center">
                   {renderStars(professor.averages.personality)}
-                  <span className="ml-1 text-gray-500">({professor.averages.personality.toFixed(1)})</span>
                 </div>
               </div>
             </div>
-            <p className="text-xs text-gray-500">{professor.reviewCount} avaliações</p>
           </div>
+        ) : (
+          <p className="text-sm text-gray-500">Não tem avaliações</p>
         )}
       </div>
     </Link>

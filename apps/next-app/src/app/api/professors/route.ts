@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url, 'http://localhost:3000');
     const searchParams = url.searchParams;
     const q = searchParams.get('q') || '';
+    const subject = searchParams.get('subject') || '';
     const page = parseInt(searchParams.get('page') || '1');
     const pageSize = parseInt(searchParams.get('pageSize') || '20');
 
@@ -17,12 +18,24 @@ export async function GET(request: NextRequest) {
 
     // Fetch professors with subjects and averages
     const professors = await prisma.professor.findMany({
-      where: q ? {
-        name: {
-          contains: q,
-          mode: 'insensitive'
-        }
-      } : {},
+      where: {
+        ...(q ? {
+          name: {
+            contains: q,
+            mode: 'insensitive'
+          }
+        } : {}),
+        ...(subject ? {
+          subjects: {
+            some: {
+              name: {
+                contains: subject,
+                mode: 'insensitive'
+              }
+            }
+          }
+        } : {})
+      },
       include: {
         subjects: true,
         reviews: {
@@ -61,12 +74,24 @@ export async function GET(request: NextRequest) {
     });
 
     const total = await prisma.professor.count({
-      where: q ? {
-        name: {
-          contains: q,
-          mode: 'insensitive'
-        }
-      } : {}
+      where: {
+        ...(q ? {
+          name: {
+            contains: q,
+            mode: 'insensitive'
+          }
+        } : {}),
+        ...(subject ? {
+          subjects: {
+            some: {
+              name: {
+                contains: subject,
+                mode: 'insensitive'
+              }
+            }
+          }
+        } : {})
+      }
     });
 
     return NextResponse.json({

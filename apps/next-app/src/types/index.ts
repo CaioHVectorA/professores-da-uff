@@ -28,6 +28,8 @@ export interface Review {
   exam_method: string
   anonymous: boolean
   subject_name: string
+  user_id?: number | null
+  user_name?: string | null
 }
 
 export interface User {
@@ -35,4 +37,17 @@ export interface User {
   email: string
   verifiedAt: string | null
   isAdmin: boolean
+}
+
+export interface Course {
+  id: number
+  name: string
+}
+
+export interface Report {
+  id: number
+  userId: number
+  experience: string
+  suggestion: string
+  createdAt: string
 }

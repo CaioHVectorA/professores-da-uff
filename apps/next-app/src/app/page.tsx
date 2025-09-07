@@ -1,27 +1,36 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from '../components/Header';
 import ProfessorCard from '../components/ProfessorCard';
-import type { Professor } from '../types';
+import type { Professor, Subject } from '../types';
 
 export default function Home() {
   const [professors, setProfessors] = useState<Professor[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  const fetchProfessors = async (query: string = '') => {
+  const fetchProfessors = async (query: string = '', subject: string = '', pageNum: number = 1, append: boolean = false) => {
     try {
-      setLoading(true);
+      if (!append) setLoading(true);
       const params = new URLSearchParams({
         q: query,
-        page: '1',
+        subject: subject,
+        page: pageNum.toString(),
         pageSize: '20',
       });
       const res = await fetch(`/api/professors?${params}`);
       if (res.ok) {
         const data = await res.json();
-        setProfessors(data.data);
+        if (append) {
+          setProfessors(prev => [...prev, ...data.data]);
+        } else {
+          setProfessors(data.data);
+        }
+        setHasMore(data.data.length === 20);
       }
     } catch (error) {
       console.error('Failed to fetch professors:', error);
@@ -32,15 +41,34 @@ export default function Home() {
 
   useEffect(() => {
     fetchProfessors();
-  }, []);
+    // Load all subjects for filter
+    fetch('/api/subjects')
+      .then(res => res.json())
+      .then(data => setSubjects(data.data))
+      .catch(err => console.error('Error loading subjects:', err));
+  }, [page]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      fetchProfessors(searchQuery);
+      setPage(1);
+      fetchProfessors(searchQuery, selectedSubject, 1);
     }, 300);
 
     return () => clearTimeout(debounceTimer);
-  }, [searchQuery]);
+  }, [searchQuery, selectedSubject]);
+
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && hasMore && !loading) {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      fetchProfessors(searchQuery, selectedSubject, nextPage, true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [page, hasMore, loading, searchQuery, selectedSubject]);
 
   if (loading) {
     return (
@@ -81,11 +109,25 @@ export default function Home() {
           <p className="text-gray-600">
             Encontre e avalie professores da Universidade Federal Fluminense
           </p>
-          {searchQuery && (
-            <p className="text-sm text-gray-500 mt-2">
-              Resultados para "{searchQuery}"
-            </p>
-          )}
+          <div className="mt-4 flex flex-col sm:flex-row gap-4">
+            <input
+              type="text"
+              placeholder="Buscar professores..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+            />
+            <select
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+            >
+              <option value="">Todas as matérias</option>
+              {subjects.map((subject) => (
+                <option key={subject.id} value={subject.name}>{subject.name}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -93,6 +135,17 @@ export default function Home() {
             <ProfessorCard key={professor.id} professor={professor} />
           ))}
         </div>
+
+        {hasMore && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => setPage((prev) => prev + 1)}
+              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Carregar mais
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );

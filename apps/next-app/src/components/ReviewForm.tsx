@@ -19,7 +19,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
         personality: 0,
         requiresPresence: false,
         examMethod: '',
-        anonymous: false
+        anonymous: true
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -80,13 +80,14 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                 <select
                     value={formData.subjectId}
                     onChange={(e) => setFormData(prev => ({ ...prev, subjectId: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
                     required
                 >
                     <option value="">Selecione uma disciplina</option>
                     {subjects.map((subject) => (
                         <option key={subject.id} value={subject.id.toString()}>{subject.name}</option>
                     ))}
+                    <option value="outro">Outro</option>
                 </select>
             </div>
 
@@ -98,7 +99,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                     value={formData.review}
                     onChange={(e) => setFormData(prev => ({ ...prev, review: e.target.value }))}
                     rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
                     placeholder="Escreva sua avaliação..."
                     required
                 />
@@ -112,6 +113,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                     <div className="flex space-x-1">
                         {renderStars('didaticQuality', formData.didaticQuality)}
                     </div>
+                    <p className="text-xs text-gray-500 mt-1">Qualidade do ensino e clareza das explicações</p>
                 </div>
 
                 <div>
@@ -121,15 +123,17 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                     <div className="flex space-x-1">
                         {renderStars('materialQuality', formData.materialQuality)}
                     </div>
+                    <p className="text-xs text-gray-500 mt-1">Qualidade dos materiais didáticos fornecidos</p>
                 </div>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Dificuldade das Provas
+                        Avaliações acessíveis
                     </label>
                     <div className="flex space-x-1">
                         {renderStars('examsDifficulty', formData.examsDifficulty)}
                     </div>
+                    <p className="text-xs text-gray-500 mt-1">Facilidade de compreensão das avaliações</p>
                 </div>
 
                 <div>
@@ -139,6 +143,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                     <div className="flex space-x-1">
                         {renderStars('personality', formData.personality)}
                     </div>
+                    <p className="text-xs text-gray-500 mt-1">Atitude e relacionamento com os alunos</p>
                 </div>
             </div>
 
@@ -149,7 +154,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                 <select
                     value={formData.examMethod}
                     onChange={(e) => setFormData(prev => ({ ...prev, examMethod: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
                 >
                     <option value="">Selecione</option>
                     <option value="Prova escrita">Prova escrita</option>
@@ -168,7 +173,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                         onChange={(e) => setFormData(prev => ({ ...prev, requiresPresence: e.target.checked }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="ml-2 text-sm text-gray-700">Presença obrigatória</span>
+                    <span className="ml-2 text-sm text-gray-700">Cobra presença?</span>
                 </label>
 
                 <label className="flex items-center">
@@ -178,7 +183,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                         onChange={(e) => setFormData(prev => ({ ...prev, anonymous: e.target.checked }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="ml-2 text-sm text-gray-700">Avaliação anônima</span>
+                    <span className="ml-2 text-sm text-gray-700">Anonimato</span>
                 </label>
             </div>
 

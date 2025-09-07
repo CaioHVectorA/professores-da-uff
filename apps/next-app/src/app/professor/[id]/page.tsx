@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import Header from '../../../components/Header'
-import ReviewForm from '../../../components/ReviewForm'
-import type { Professor, Review } from '../../../types'
+import { useAuth } from '@/contexts/AuthContext'
+import ReviewForm from '@/components/ReviewForm'
+import type { Professor, Review } from '@/types'
 
 export default function ProfessorPage() {
   const params = useParams()
@@ -12,6 +12,9 @@ export default function ProfessorPage() {
   const [professor, setProfessor] = useState<Professor | null>(null)
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
+  const [hasUserReviewed, setHasUserReviewed] = useState(false)
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+  const { user } = useAuth()
 
   useEffect(() => {
     if (!id) return
@@ -42,6 +45,9 @@ export default function ProfessorPage() {
 
           setProfessor(foundProfessor ? { ...foundProfessor, subjects } : null)
           setReviews(reviewsData.data)
+
+          // Check if user has already reviewed
+          setHasUserReviewed(user ? reviewsData.data.some((r: Review) => r.user_id === user.id) : false)
         }
       } catch (error) {
         console.error('Error loading professor data:', error)
@@ -51,7 +57,7 @@ export default function ProfessorPage() {
     }
 
     loadData()
-  }, [id])
+  }, [id, user?.id])
 
   if (loading) {
     return (
@@ -113,105 +119,148 @@ export default function ProfessorPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Avaliações</h3>
-
-          {reviews.length === 0 ? (
-            <p className="text-gray-600">Nenhuma avaliação ainda.</p>
-          ) : (
-            <div className="space-y-6">
-              {reviews.map((review) => (
-                <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0 last:pb-0">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <p className="text-gray-900 mb-2">{review.review}</p>
-                      <div className="text-sm text-gray-600">
-                        <span className="font-medium">Disciplina:</span> {review.subject_name}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <span className="font-medium text-gray-700">Didática:</span>
-                      <div className="flex items-center mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`w-4 h-4 ${i < (review.didatic_quality || 0)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
-                              }`}
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-700">Material:</span>
-                      <div className="flex items-center mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`w-4 h-4 ${i < (review.material_quality || 0)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
-                              }`}
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-700">Dificuldade:</span>
-                      <div className="flex items-center mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`w-4 h-4 ${i < (review.exams_difficulty || 0)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
-                              }`}
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-700">Personalidade:</span>
-                      <div className="flex items-center mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`w-4 h-4 ${i < (review.personality || 0)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
-                              }`}
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 text-xs text-gray-500">
-                    Avaliação criada em {new Date(review.created_at).toLocaleDateString('pt-BR')}
-                  </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              {!hasUserReviewed && (
+                <div className="mb-6 text-center">
+                  <button
+                    onClick={() => setIsReviewModalOpen(true)}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    {reviews.length === 0 ? 'Seja o primeiro a avaliar!' : 'FAÇA SUA AVALIAÇÃO'}
+                  </button>
                 </div>
-              ))}
+              )}
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Avaliações</h3>
+
+              {reviews.length === 0 ? (
+                <p className="text-gray-600">Ainda não há avaliações.</p>
+              ) : (
+                <div className="space-y-6">
+                  {reviews.map((review) => (
+                    <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0 last:pb-0">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <p className="text-gray-900 mb-2">{review.review}</p>
+                          <div className="text-sm text-gray-600">
+                            <span className="font-medium">Disciplina:</span> {review.subject_name}
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">
+                            Por: {review.user_id === user?.id ? 'Você' : review.anonymous ? 'Um aluno anônimo' : (review.user_name || 'Usuário')}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                          <span className="font-medium text-gray-700">Didática:</span>
+                          <div className="flex items-center mt-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span
+                                key={i}
+                                className={`w-4 h-4 ${i < (review.didatic_quality || 0)
+                                  ? 'text-yellow-400'
+                                  : 'text-gray-300'
+                                  }`}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-700">Material:</span>
+                          <div className="flex items-center mt-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span
+                                key={i}
+                                className={`w-4 h-4 ${i < (review.material_quality || 0)
+                                  ? 'text-yellow-400'
+                                  : 'text-gray-300'
+                                  }`}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-700">Avaliações acessíveis:</span>
+                          <div className="flex items-center mt-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span
+                                key={i}
+                                className={`w-4 h-4 ${i < (review.exams_difficulty || 0)
+                                  ? 'text-yellow-400'
+                                  : 'text-gray-300'
+                                  }`}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-700">Personalidade:</span>
+                          <div className="flex items-center mt-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span
+                                key={i}
+                                className={`w-4 h-4 ${i < (review.personality || 0)
+                                  ? 'text-yellow-400'
+                                  : 'text-gray-300'
+                                  }`}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 text-xs text-gray-500">
+                        Avaliação criada em {new Date(review.created_at).toLocaleDateString('pt-BR')}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
 
-        {/* Form to create new review */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mt-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Criar Avaliação</h3>
-          <ReviewForm professorId={professor.id} subjects={professor.subjects as { id: number; name: string }[]} onReviewCreated={() => window.location.reload()} />
-        </div>
+        {hasUserReviewed && user && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+            <p className="text-blue-800 text-sm">Você já avaliou este professor.</p>
+          </div>
+        )}
+
+        {/* Review Modal */}
+        {isReviewModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Criar Avaliação</h2>
+                <button
+                  onClick={() => setIsReviewModalOpen(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </button>
+              </div>
+              <ReviewForm
+                professorId={professor.id}
+                subjects={professor.subjects as { id: number; name: string }[]}
+                onReviewCreated={() => {
+                  setIsReviewModalOpen(false)
+                  window.location.reload()
+                }}
+              />
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )
