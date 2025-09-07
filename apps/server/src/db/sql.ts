@@ -174,7 +174,7 @@ export function listProfBySubjectPaged(subject: string, limit: number, offset: n
 export function requireSessionFromReq(req: Request) {
     // Try Authorization header first
     let token = req.headers.get('Authorization')?.replace('Bearer ', '')
-    
+
     // If not found, try cookie
     if (!token) {
         const cookieHeader = req.headers.get('cookie')
@@ -189,7 +189,7 @@ export function requireSessionFromReq(req: Request) {
             token = cookies['auth_token']
         }
     }
-    
+
     if (!token) return null
     const sth = sha256(token + EMAIL_PEPPER)
     const row = stmts.getSession.get(sth)

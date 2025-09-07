@@ -21,9 +21,8 @@ const StarRating = ({ rating, label }: { rating: number; label: string }) => {
         {[1, 2, 3, 4, 5].map((star) => (
           <svg
             key={star}
-            className={`h-4 w-4 ${
-              star <= rating ? 'text-yellow-400' : 'text-gray-300'
-            }`}
+            className={`h-4 w-4 ${star <= rating ? 'text-yellow-400' : 'text-gray-300'
+              }`}
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -39,9 +38,8 @@ const StarRating = ({ rating, label }: { rating: number; label: string }) => {
 export default function ReviewCard({ review, isUserReview = false }: ReviewCardProps) {
   return (
     <div
-      className={`bg-white rounded-lg shadow-sm border p-6 ${
-        isUserReview ? 'border-blue-500 border-2' : 'border-gray-200'
-      }`}
+      className={`bg-white rounded-lg shadow-sm border p-6 ${isUserReview ? 'border-blue-500 border-2' : 'border-gray-200'
+        }`}
     >
       <div className="flex justify-between items-start mb-4">
         <div>
