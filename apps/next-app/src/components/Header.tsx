@@ -109,13 +109,12 @@ export default function Header({
               <div key={item.name} className="relative">
                 <a
                   href={item.disabled ? '#' : item.href}
-                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors ${
-                    item.active && !item.disabled
+                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors ${item.active && !item.disabled
                       ? 'bg-blue-100 text-blue-700'
                       : item.disabled
-                      ? 'text-gray-400 cursor-not-allowed'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
+                        ? 'text-gray-400 cursor-not-allowed'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
                   onClick={item.disabled ? (e) => e.preventDefault() : undefined}
                 >
                   <item.icon className="mr-3 h-5 w-5" />
