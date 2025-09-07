@@ -21,15 +21,23 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
     useEffect(() => {
         if (isOpen) {
-            // Load courses from uff-courses.jsonl
-            fetch('/uff-courses.jsonl')
-                .then(res => res.text())
-                .then(text => {
-                    const lines = text.trim().split('\n')
-                    const parsedCourses = lines.map(line => JSON.parse(line))
-                    setCourses(parsedCourses)
-                })
+            // Load courses
+            fetch('/api/courses')
+                .then(res => res.json())
+                .then(data => setCourses(data.data))
                 .catch(err => console.error('Error loading courses:', err))
+
+            // Load user data
+            fetch('/api/user/course')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.data?.courseId) {
+                        setFormData(prev => ({ ...prev, courseId: data.data.courseId.toString() }))
+                    }
+                })
+                .catch(err => console.error('Error loading user course:', err))
+
+            // Do not load previous report to keep experience and suggestion empty
         }
     }, [isOpen])
 
@@ -38,7 +46,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         setIsSubmitting(true)
 
         try {
-            // Update user course
+            // Update user course only if selected
             if (formData.courseId) {
                 await fetch('/api/user/course', {
                     method: 'PUT',
@@ -47,15 +55,17 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 })
             }
 
-            // Create report
-            await fetch('/api/reports', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    experience: formData.experience,
-                    suggestion: formData.suggestion
+            // Create report only if has content
+            if (formData.experience.trim() || formData.suggestion.trim()) {
+                await fetch('/api/reports', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        experience: formData.experience,
+                        suggestion: formData.suggestion
+                    })
                 })
-            })
+            }
 
             onClose()
         } catch (error) {
@@ -68,9 +78,10 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
                 <h2 className="text-xl font-bold mb-4">Perfil</h2>
+                <p className="text-sm text-gray-600 mb-4">Tudo é opcional. Você pode preencher apenas o que desejar.</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import LoginModal from './LoginModal'
 import ProfileModal from './ProfileModal'
-import { Users, FileText, BookOpen, LogOut, User } from 'lucide-react'
+import { Users, FileText, BookOpen, LogOut, User, Settings } from 'lucide-react'
 
 interface LayoutWithSidebarProps {
     children: React.ReactNode
@@ -44,10 +44,8 @@ export default function LayoutWithSidebar({
                             {isAuthenticated ? (
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                        <User className="h-8 w-8 text-gray-600 mr-3" />
                                         <div>
                                             <p className="text-sm font-medium text-gray-900">{user?.email}</p>
-                                            <p className="text-xs text-gray-500">Usuário</p>
                                         </div>
                                     </div>
                                     <div className="flex space-x-2">
@@ -56,7 +54,7 @@ export default function LayoutWithSidebar({
                                             className="p-1 text-gray-600 hover:text-gray-900"
                                             title="Perfil"
                                         >
-                                            <User className="h-5 w-5" />
+                                            <Settings className="h-5 w-5" />
                                         </button>
                                         <button
                                             onClick={logout}

@@ -4,6 +4,25 @@ import { getUserFromSession } from '@/lib/auth'
 
 const prisma = new PrismaClient()
 
+export async function GET(request: NextRequest) {
+    try {
+        const user = await getUserFromSession(request)
+        if (!user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        const userWithCourse = await prisma.user.findUnique({
+            where: { id: user.id },
+            include: { course: true }
+        })
+
+        return NextResponse.json({ data: userWithCourse })
+    } catch (error) {
+        console.error('Error fetching user course:', error)
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+}
+
 export async function PUT(request: NextRequest) {
     try {
         const user = await getUserFromSession(request)

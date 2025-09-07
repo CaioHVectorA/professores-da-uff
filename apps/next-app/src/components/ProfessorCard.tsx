@@ -56,21 +56,25 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
           <div className="space-y-2">
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div>
+                <p className="text-gray-600 mb-1">Didática</p>
                 <div className="flex items-center">
                   {renderStars(professor.averages.didatic)}
                 </div>
               </div>
               <div>
+                <p className="text-gray-600 mb-1">Material</p>
                 <div className="flex items-center">
                   {renderStars(professor.averages.material)}
                 </div>
               </div>
               <div>
+                <p className="text-gray-600 mb-1">Dificuldade</p>
                 <div className="flex items-center">
                   {renderStars(professor.averages.difficulty)}
                 </div>
               </div>
               <div>
+                <p className="text-gray-600 mb-1">Personalidade</p>
                 <div className="flex items-center">
                   {renderStars(professor.averages.personality)}
                 </div>
