@@ -1,8 +1,19 @@
+export interface Subject {
+  id: number
+  name: string
+}
+
 export interface Professor {
   id: number
   name: string
-  subjects: string[]
+  subjects: Subject[] | string[]
   reviewCount?: number
+  averages?: {
+    didatic: number
+    material: number
+    difficulty: number
+    personality: number
+  }
 }
 
 export interface Review {

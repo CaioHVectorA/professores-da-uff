@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     // Optional: Check if user is authenticated for personalized results
     const user = await getUserFromSession(request)
 
-    // Fetch professors with subjects
+    // Fetch professors with subjects and averages
     const professors = await prisma.professor.findMany({
       where: q ? {
         name: {
@@ -25,8 +25,13 @@ export async function GET(request: NextRequest) {
       } : {},
       include: {
         subjects: true,
-        _count: {
-          select: { reviews: true }
+        reviews: {
+          select: {
+            didaticQuality: true,
+            materialQuality: true,
+            examsDifficulty: true,
+            personality: true
+          }
         }
       },
       skip: (page - 1) * pageSize,
@@ -37,12 +42,23 @@ export async function GET(request: NextRequest) {
     });
 
     // Transform data to match the expected format
-    const transformedProfessors = professors.map(prof => ({
-      id: prof.id,
-      name: prof.name,
-      subjects: prof.subjects.map(s => s.name),
-      reviewCount: prof._count.reviews
-    }));
+    const transformedProfessors = professors.map(prof => {
+      const reviews = prof.reviews;
+      const averages = {
+        didatic: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.didaticQuality || 0), 0) / reviews.length : 0,
+        material: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.materialQuality || 0), 0) / reviews.length : 0,
+        difficulty: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.examsDifficulty || 0), 0) / reviews.length : 0,
+        personality: reviews.length > 0 ? reviews.reduce((sum, r) => sum + (r.personality || 0), 0) / reviews.length : 0
+      };
+
+      return {
+        id: prof.id,
+        name: prof.name,
+        subjects: prof.subjects.map(s => ({ id: s.id, name: s.name })),
+        reviewCount: reviews.length,
+        averages
+      };
+    });
 
     const total = await prisma.professor.count({
       where: q ? {

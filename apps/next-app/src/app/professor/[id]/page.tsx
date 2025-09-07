@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Header from '../../../components/Header'
+import ReviewForm from '../../../components/ReviewForm'
 import type { Professor, Review } from '../../../types'
 
 export default function ProfessorPage() {
@@ -30,7 +31,16 @@ export default function ProfessorPage() {
 
           // Find the specific professor
           const foundProfessor = professorsData.data.find((p: Professor) => p.id === parseInt(id))
-          setProfessor(foundProfessor || null)
+
+          // Load subjects for this professor
+          const subjectsResponse = await fetch(`/api/professors/${id}/subjects`)
+          let subjects = []
+          if (subjectsResponse.ok) {
+            const subjectsData = await subjectsResponse.json()
+            subjects = subjectsData.data
+          }
+
+          setProfessor(foundProfessor ? { ...foundProfessor, subjects } : null)
           setReviews(reviewsData.data)
         }
       } catch (error) {
@@ -45,8 +55,7 @@ export default function ProfessorPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
+      <div className="bg-gray-50 flex-1">
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
@@ -65,8 +74,7 @@ export default function ProfessorPage() {
 
   if (!professor) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
+      <div className="bg-gray-50 flex-1">
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Professor não encontrado</h2>
@@ -78,20 +86,30 @@ export default function ProfessorPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div className="bg-gray-50 flex-1">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">{professor.name}</h2>
           <div className="flex flex-wrap gap-2">
-            {professor.subjects.map((subject, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
-              >
-                {subject}
-              </span>
-            ))}
+            {Array.isArray(professor.subjects) && professor.subjects.length > 0 && (
+              typeof professor.subjects[0] === 'string'
+                ? (professor.subjects as string[]).map((subject, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
+                  >
+                    {subject}
+                  </span>
+                ))
+                : (professor.subjects as { id: number; name: string }[]).map((subject) => (
+                  <span
+                    key={subject.id}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
+                  >
+                    {subject.name}
+                  </span>
+                ))
+            )}
           </div>
         </div>
 
@@ -121,8 +139,8 @@ export default function ProfessorPage() {
                           <span
                             key={i}
                             className={`w-4 h-4 ${i < (review.didatic_quality || 0)
-                                ? 'text-yellow-400'
-                                : 'text-gray-300'
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
                               }`}
                           >
                             ★
@@ -137,8 +155,8 @@ export default function ProfessorPage() {
                           <span
                             key={i}
                             className={`w-4 h-4 ${i < (review.material_quality || 0)
-                                ? 'text-yellow-400'
-                                : 'text-gray-300'
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
                               }`}
                           >
                             ★
@@ -153,8 +171,8 @@ export default function ProfessorPage() {
                           <span
                             key={i}
                             className={`w-4 h-4 ${i < (review.exams_difficulty || 0)
-                                ? 'text-yellow-400'
-                                : 'text-gray-300'
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
                               }`}
                           >
                             ★
@@ -169,8 +187,8 @@ export default function ProfessorPage() {
                           <span
                             key={i}
                             className={`w-4 h-4 ${i < (review.personality || 0)
-                                ? 'text-yellow-400'
-                                : 'text-gray-300'
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
                               }`}
                           >
                             ★
@@ -181,12 +199,18 @@ export default function ProfessorPage() {
                   </div>
 
                   <div className="mt-4 text-xs text-gray-500">
-                    {new Date(review.created_at).toLocaleDateString('pt-BR')}
+                    Avaliação criada em {new Date(review.created_at).toLocaleDateString('pt-BR')}
                   </div>
                 </div>
               ))}
             </div>
           )}
+        </div>
+
+        {/* Form to create new review */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mt-6">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Criar Avaliação</h3>
+          <ReviewForm professorId={professor.id} subjects={professor.subjects as { id: number; name: string }[]} onReviewCreated={() => window.location.reload()} />
         </div>
       </main>
     </div>
