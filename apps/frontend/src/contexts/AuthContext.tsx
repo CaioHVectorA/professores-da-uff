@@ -34,16 +34,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Remove success param from URL
           searchParams.delete('login')
           setSearchParams(searchParams, { replace: true })
-
-          // Get user info from current session
-          const userInfo = await api.get('/auth/user')
-          setUser(userInfo.data)
-          setIsAuthenticated(true)
         } catch (error) {
-          console.error('Session validation failed:', error)
+          console.error('Failed to update URL:', error)
         }
       }
-      // Removed automatic login check - only login via magic link
+
+      // Always check for existing session
+      try {
+        const userInfo = await api.get('/auth/user')
+        setUser(userInfo.data)
+        setIsAuthenticated(true)
+      } catch (error) {
+        // Not authenticated, that's ok
+        setIsAuthenticated(false)
+        setUser(null)
+      }
     }
 
     initAuth()

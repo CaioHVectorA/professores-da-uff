@@ -84,7 +84,7 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
 
         const session = randomToken(32)
         const sessionHash = sha256(session + EMAIL_PEPPER)
-        const expires = addMinutes(new Date(), 60 * 24 * 30).toISOString()
+        const expires = '9999-12-31T23:59:59.999Z' // Never expires
         stmts.createSession.run(row.user_id, sessionHash, expires)
 
         // Set session cookie using the cookie object
@@ -94,7 +94,7 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'lax',
-                maxAge: 60 * 60 * 24 * 30, // 30 days
+                maxAge: 60 * 60 * 24 * 365 * 100, // 100 years
                 path: '/'
             })
         }
@@ -125,7 +125,7 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
 
         const session = randomToken(32)
         const sessionHash = sha256(session + EMAIL_PEPPER)
-        const expires = addMinutes(new Date(), 60 * 24 * 30).toISOString()
+        const expires = '9999-12-31T23:59:59.999Z' // Never expires
         stmts.createSession.run(row.user_id, sessionHash, expires)
 
         // Set session cookie
@@ -135,7 +135,7 @@ export const authRoutes = new Elysia({ prefix: '/api/auth' })
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'lax',
-                maxAge: 60 * 60 * 24 * 30, // 30 days
+                maxAge: 60 * 60 * 24 * 365 * 100, // 100 years
                 path: '/'
             })
         }

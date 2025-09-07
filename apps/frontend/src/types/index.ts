@@ -16,6 +16,7 @@ export interface Review {
   exam_method: string
   anonymous: boolean
   subject_name: string
+  user_id: number
 }
 
 export interface User {

@@ -2,6 +2,7 @@ import type { Review } from '../types'
 
 interface ReviewCardProps {
   review: Review
+  isUserReview?: boolean
 }
 
 const formatDate = (dateString: string) => {
@@ -35,9 +36,13 @@ const StarRating = ({ rating, label }: { rating: number; label: string }) => {
   )
 }
 
-export default function ReviewCard({ review }: ReviewCardProps) {
+export default function ReviewCard({ review, isUserReview = false }: ReviewCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div
+      className={`bg-white rounded-lg shadow-sm border p-6 ${
+        isUserReview ? 'border-blue-500 border-2' : 'border-gray-200'
+      }`}
+    >
       <div className="flex justify-between items-start mb-4">
         <div>
           <h4 className="text-lg font-medium text-gray-900">{review.subject_name}</h4>

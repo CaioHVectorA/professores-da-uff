@@ -111,6 +111,9 @@ export const stmts = {
     insertReview: db.prepare(
         'INSERT INTO review (professor_id, subject_id, user_id, review, approved, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     ),
+    checkUserReviewExists: db.query<{ count: number }, any>(
+        'SELECT COUNT(*) as count FROM review WHERE professor_id = ? AND user_id = ?'
+    ),
     listReviewsByProfessor: db.query<{
         id: number
         review: string
@@ -123,8 +126,10 @@ export const stmts = {
         exam_method: string | null
         anonymous: number
         subject_id: number
+        user_id: number
+        subject_name: string
     }, any>(
-        'SELECT id, review, created_at, didatic_quality, material_quality, exams_difficulty, personality, requires_presence, exam_method, anonymous, subject_id FROM review WHERE professor_id = ? ORDER BY created_at DESC'
+        'SELECT r.id, r.review, r.created_at, r.didatic_quality, r.material_quality, r.exams_difficulty, r.personality, r.requires_presence, r.exam_method, r.anonymous, r.subject_id, r.user_id, s.name as subject_name FROM review r JOIN subjects s ON r.subject_id = s.id WHERE r.professor_id = ? ORDER BY r.created_at DESC'
     )
 }
 
@@ -167,7 +172,24 @@ export function listProfBySubjectPaged(subject: string, limit: number, offset: n
 }
 
 export function requireSessionFromReq(req: Request) {
-    const token = req.headers.get('Authorization')?.replace('Bearer ', '')
+    // Try Authorization header first
+    let token = req.headers.get('Authorization')?.replace('Bearer ', '')
+    
+    // If not found, try cookie
+    if (!token) {
+        const cookieHeader = req.headers.get('cookie')
+        if (cookieHeader) {
+            const cookies: Record<string, string> = {}
+            cookieHeader.split(';').forEach(cookie => {
+                const [key, value] = cookie.trim().split('=')
+                if (key && value) {
+                    cookies[key] = value
+                }
+            })
+            token = cookies['auth_token']
+        }
+    }
+    
     if (!token) return null
     const sth = sha256(token + EMAIL_PEPPER)
     const row = stmts.getSession.get(sth)

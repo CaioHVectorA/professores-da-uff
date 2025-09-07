@@ -36,6 +36,13 @@ export const reviewRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Subject not found' }
         }
 
+        // Check if user has already reviewed this professor
+        const existingReview = stmts.checkUserReviewExists.get(professor_id, userId) as any
+        if (existingReview.count > 0) {
+            set.status = 400
+            return { error: 'Você já avaliou este professor' }
+        }
+
         const approved = !!payload?.approved
         const requires_presence = !!payload?.requires_presence
         const exam_method = typeof payload?.exam_method === 'string' ? payload.exam_method : null
