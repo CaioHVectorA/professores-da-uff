@@ -22,7 +22,7 @@ export function StarRating({ value, onChange, max = 5, className }: StarRatingPr
                         key={i}
                         type="button"
                         className={cn(
-                            "text-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 rounded",
+                            "text-3xl w-8 h-8 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded",
                             isFilled ? "text-yellow-500" : "text-gray-300"
                         )}
                         onMouseEnter={() => setHoverValue(starValue)}

@@ -17,7 +17,7 @@ export function StaticStars({ value, max = 5, className }: StaticStarsProps) {
                     <span
                         key={i}
                         className={cn(
-                            "text-lg",
+                            "text-xl w-6 h-6",
                             isFilled ? "text-yellow-500" : "text-gray-300"
                         )}
                     >

@@ -12,9 +12,58 @@ export async function GET(request: NextRequest) {
     const subject = searchParams.get('subject') || '';
     const page = parseInt(searchParams.get('page') || '1');
     const pageSize = parseInt(searchParams.get('pageSize') || '20');
+    const id = searchParams.get('id');
 
     // Optional: Check if user is authenticated for personalized results
     const user = await getUserFromSession(request)
+
+    // If id is provided, return single professor
+    if (id) {
+      const professorId = parseInt(id);
+      const professor = await prisma.professor.findUnique({
+        where: { id: professorId },
+        include: {
+          professorSubjects: {
+            include: {
+              subject: true,
+              reviews: {
+                select: {
+                  didaticQuality: true,
+                  materialQuality: true,
+                  examsDifficulty: true,
+                  personality: true
+                }
+              }
+            }
+          }
+        }
+      });
+
+      if (!professor) {
+        return NextResponse.json({ error: 'Professor not found' }, { status: 404 });
+      }
+
+      // Transform data to match the expected format
+      const allReviews = professor.professorSubjects.flatMap(ps => ps.reviews);
+      const averages = {
+        didatic: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.didaticQuality || 0), 0) / allReviews.length : 0,
+        material: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.materialQuality || 0), 0) / allReviews.length : 0,
+        difficulty: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.examsDifficulty || 0), 0) / allReviews.length : 0,
+        personality: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.personality || 0), 0) / allReviews.length : 0
+      };
+
+      const subjects = professor.professorSubjects.map(ps => ({ id: ps.subject.id, name: ps.subject.name }));
+
+      const transformedProfessor = {
+        id: professor.id,
+        name: professor.name,
+        subjects,
+        reviewCount: allReviews.length,
+        averages
+      };
+
+      return NextResponse.json({ data: [transformedProfessor] });
+    }
 
     // Fetch professors with subjects and averages
     const professors = await prisma.professor.findMany({

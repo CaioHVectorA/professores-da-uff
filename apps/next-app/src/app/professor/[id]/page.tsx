@@ -23,17 +23,14 @@ export default function ProfessorPage() {
       setLoading(true)
       try {
         // Load professor info and reviews
-        const [professorsResponse, reviewsResponse] = await Promise.all([
-          fetch('/api/professors?q=&page=1&pageSize=1000'),
+        const [professorResponse, reviewsResponse] = await Promise.all([
+          fetch(`/api/professors?id=${id}`),
           fetch(`/api/professors/${id}/reviews`)
         ])
 
-        if (professorsResponse.ok && reviewsResponse.ok) {
-          const professorsData = await professorsResponse.json()
+        if (professorResponse.ok && reviewsResponse.ok) {
+          const professorData = await professorResponse.json()
           const reviewsData = await reviewsResponse.json()
-
-          // Find the specific professor
-          const foundProfessor = professorsData.data.find((p: Professor) => p.id === parseInt(id))
 
           // Load subjects for this professor
           const subjectsResponse = await fetch(`/api/professors/${id}/subjects`)
@@ -43,7 +40,7 @@ export default function ProfessorPage() {
             subjects = subjectsData.data
           }
 
-          setProfessor(foundProfessor ? { ...foundProfessor, subjects } : null)
+          setProfessor(professorData.data && professorData.data.length > 0 ? { ...professorData.data[0], subjects } : null)
           setReviews(reviewsData.data)
 
           // Check if user has already reviewed
@@ -95,140 +92,203 @@ export default function ProfessorPage() {
     <div className="bg-gray-50 flex-1">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">{professor.name}</h2>
-          <div className="flex flex-wrap gap-2">
-            {Array.isArray(professor.subjects) && professor.subjects.length > 0 && (
-              typeof professor.subjects[0] === 'string'
-                ? (professor.subjects as string[]).map((subject, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
-                  >
-                    {subject}
-                  </span>
-                ))
-                : (professor.subjects as { id: number; name: string }[]).map((subject) => (
-                  <span
-                    key={subject.id}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
-                  >
-                    {subject.name}
-                  </span>
-                ))
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              {!hasUserReviewed && (
-                <div className="mb-6 text-center">
+          <div>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-3xl font-bold text-gray-900">{professor.name}</h2>
+                {!hasUserReviewed && (
                   <button
                     onClick={() => setIsReviewModalOpen(true)}
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
                   >
                     {reviews.length === 0 ? 'Seja o primeiro a avaliar!' : 'FAÇA SUA AVALIAÇÃO'}
                   </button>
-                </div>
-              )}
-
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Avaliações</h3>
-
-              {reviews.length === 0 ? (
-                <p className="text-gray-600">Ainda não há avaliações.</p>
-              ) : (
-                <div className="space-y-6">
-                  {reviews.map((review) => (
-                    <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0 last:pb-0">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <p className="text-gray-900 mb-2">{review.review}</p>
-                          <div className="text-sm text-gray-600">
-                            <span className="font-medium">Disciplina:</span> {review.subject_name}
-                          </div>
-                          <div className="text-sm text-gray-500 mt-1">
-                            Por: {review.user_id === user?.id ? 'Você' : review.anonymous ? 'Um aluno anônimo' : (review.user_name || 'Usuário')}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        <div>
-                          <span className="font-medium text-gray-700">Didática:</span>
-                          <div className="flex items-center mt-1">
-                            {[...Array(5)].map((_, i) => (
-                              <span
-                                key={i}
-                                className={`w-4 h-4 ${i < (review.didatic_quality || 0)
-                                  ? 'text-yellow-400'
-                                  : 'text-gray-300'
-                                  }`}
-                              >
-                                ★
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <span className="font-medium text-gray-700">Material:</span>
-                          <div className="flex items-center mt-1">
-                            {[...Array(5)].map((_, i) => (
-                              <span
-                                key={i}
-                                className={`w-4 h-4 ${i < (review.material_quality || 0)
-                                  ? 'text-yellow-400'
-                                  : 'text-gray-300'
-                                  }`}
-                              >
-                                ★
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <span className="font-medium text-gray-700">Avaliações acessíveis:</span>
-                          <div className="flex items-center mt-1">
-                            {[...Array(5)].map((_, i) => (
-                              <span
-                                key={i}
-                                className={`w-4 h-4 ${i < (review.exams_difficulty || 0)
-                                  ? 'text-yellow-400'
-                                  : 'text-gray-300'
-                                  }`}
-                              >
-                                ★
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <span className="font-medium text-gray-700">Personalidade:</span>
-                          <div className="flex items-center mt-1">
-                            {[...Array(5)].map((_, i) => (
-                              <span
-                                key={i}
-                                className={`w-4 h-4 ${i < (review.personality || 0)
-                                  ? 'text-yellow-400'
-                                  : 'text-gray-300'
-                                  }`}
-                              >
-                                ★
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 text-xs text-gray-500">
-                        Avaliação criada em {new Date(review.created_at).toLocaleDateString('pt-BR')}
-                      </div>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {Array.isArray(professor.subjects) && professor.subjects.length > 0 && (
+                  typeof professor.subjects[0] === 'string'
+                    ? (professor.subjects as string[]).map((subject, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
+                      >
+                        {subject}
+                      </span>
+                    ))
+                    : (professor.subjects as { id: number; name: string }[]).map((subject) => (
+                      <span
+                        key={subject.id}
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
+                      >
+                        {subject.name}
+                      </span>
+                    ))
+                )}
+              </div>
+              <div className="mb-4">
+                <span className="text-lg font-semibold text-gray-900">Total de Avaliações: {reviews.length}</span>
+              </div>
+              {reviews.length > 0 && professor.averages && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-700 mb-2">Didática</div>
+                    <div className="flex justify-center mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <span
+                          key={i}
+                          className={`w-6 h-6 ${i < Math.round(professor.averages?.didatic || 0)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                            }`}
+                        >
+                          ★
+                        </span>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-700 mb-2">Material</div>
+                    <div className="flex justify-center mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <span
+                          key={i}
+                          className={`w-6 h-6 ${i < Math.round(professor.averages?.material || 0)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                            }`}
+                        >
+                          ★
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-700 mb-2">Dificuldade</div>
+                    <div className="flex justify-center mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <span
+                          key={i}
+                          className={`w-6 h-6 ${i < Math.round(professor.averages?.difficulty || 0)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                            }`}
+                        >
+                          ★
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-700 mb-2">Personalidade</div>
+                    <div className="flex justify-center mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <span
+                          key={i}
+                          className={`w-6 h-6 ${i < Math.round(professor.averages?.personality || 0)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                            }`}
+                        >
+                          ★
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
           </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Avaliações ({reviews.length})</h3>
+
+          {reviews.length === 0 ? (
+            <p className="text-gray-600">Ainda não há avaliações para este professor.</p>
+          ) : (
+            <div className="space-y-6">
+              {reviews.map((review) => (
+                <div key={review.id} className="border-b border-gray-100 pb-6 last:border-b-0 last:pb-0">
+                  <div className="mb-4">
+                    <p className="text-gray-900 mb-3 leading-relaxed">{review.review}</p>
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                      <span><strong>Disciplina:</strong> {review.subject_name}</span>
+                      <span><strong>Por:</strong> {review.user_id === user?.id ? 'Você' : review.anonymous ? 'Anônimo' : (review.user_name || 'Usuário')}</span>
+                      <span className="text-gray-500">{new Date(review.created_at).toLocaleDateString('pt-BR')}</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                      <div className="text-xs font-medium text-gray-700 mb-1">Didática</div>
+                      <div className="flex justify-center">
+                        {[...Array(5)].map((_, i) => (
+                          <span
+                            key={i}
+                            className={`w-6 h-6 ${i < (review.didatic_quality || 0)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                              }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-medium text-gray-700 mb-1">Material</div>
+                      <div className="flex justify-center">
+                        {[...Array(5)].map((_, i) => (
+                          <span
+                            key={i}
+                            className={`w-6 h-6 ${i < (review.material_quality || 0)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                              }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-medium text-gray-700 mb-1">Dificuldade</div>
+                      <div className="flex justify-center">
+                        {[...Array(5)].map((_, i) => (
+                          <span
+                            key={i}
+                            className={`w-6 h-6 ${i < (review.exams_difficulty || 0)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                              }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-medium text-gray-700 mb-1">Personalidade</div>
+                      <div className="flex justify-center">
+                        {[...Array(5)].map((_, i) => (
+                          <span
+                            key={i}
+                            className={`w-6 h-6 ${i < (review.personality || 0)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                              }`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {hasUserReviewed && user && (
@@ -239,25 +299,27 @@ export default function ProfessorPage() {
 
         {/* Review Modal */}
         {isReviewModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Criar Avaliação</h2>
-                <button
-                  onClick={() => setIsReviewModalOpen(false)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  ✕
-                </button>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold text-gray-900">Criar Avaliação</h2>
+                  <button
+                    onClick={() => setIsReviewModalOpen(false)}
+                    className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+                <ReviewForm
+                  professorId={professor.id}
+                  subjects={professor.subjects as { id: number; name: string }[]}
+                  onReviewCreated={() => {
+                    setIsReviewModalOpen(false)
+                    window.location.reload()
+                  }}
+                />
               </div>
-              <ReviewForm
-                professorId={professor.id}
-                subjects={professor.subjects as { id: number; name: string }[]}
-                onReviewCreated={() => {
-                  setIsReviewModalOpen(false)
-                  window.location.reload()
-                }}
-              />
             </div>
           </div>
         )}

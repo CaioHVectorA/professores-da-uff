@@ -10,16 +10,20 @@ export async function GET(
     try {
         const professorId = parseInt(params.id)
 
-        const subjects = await prisma.subject.findMany({
+        const subjects = await prisma.professor_Subject.findMany({
             where: { professorId },
-            select: {
-                id: true,
-                name: true
+            include: {
+                subject: true
             }
         })
 
+        const transformedSubjects = subjects.map(ps => ({
+            id: ps.subject.id,
+            name: ps.subject.name
+        }))
+
         return NextResponse.json({
-            data: subjects
+            data: transformedSubjects
         })
     } catch (error) {
         console.error('Error fetching subjects:', error)

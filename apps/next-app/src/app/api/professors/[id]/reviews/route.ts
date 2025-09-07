@@ -13,9 +13,17 @@ export async function GET(
     const user = await getUserFromSession(request)
 
     const reviews = await prisma.review.findMany({
-      where: { professorId },
+      where: {
+        professorSubject: {
+          professorId
+        }
+      },
       include: {
-        subject: true,
+        professorSubject: {
+          include: {
+            subject: true
+          }
+        },
         user: true
       },
       orderBy: { createdAt: 'desc' }
@@ -32,7 +40,7 @@ export async function GET(
       requires_presence: review.requiresPresence,
       exam_method: review.examMethod,
       anonymous: review.anonymous,
-      subject_name: review.subject.name,
+      subject_name: review.professorSubject.subject.name,
       user_id: (user && review.userId === user.id) ? review.userId : null,
       user_name: review.user ? review.user.email?.split('@')[0] : null
     }))
@@ -73,25 +81,36 @@ export async function POST(
       return NextResponse.json({ error: 'Authentication required for non-anonymous reviews' }, { status: 401 })
     }
 
-    // Check if user already reviewed this professor (only for non-anonymous)
+    // Find the Professor_Subject
+    const professorSubject = await prisma.professor_Subject.findFirst({
+      where: {
+        professorId,
+        subjectId
+      }
+    })
+
+    if (!professorSubject) {
+      return NextResponse.json({ error: 'Professor does not teach this subject' }, { status: 400 })
+    }
+
+    // Check if user already reviewed this professor-subject combination (only for non-anonymous)
     if (!anonymous && user) {
       const existingReview = await prisma.review.findFirst({
         where: {
-          professorId,
+          professorSubjectId: professorSubject.id,
           userId: user.id,
           anonymous: false
         }
       })
 
       if (existingReview) {
-        return NextResponse.json({ error: 'You have already reviewed this professor' }, { status: 400 })
+        return NextResponse.json({ error: 'You have already reviewed this professor for this subject' }, { status: 400 })
       }
     }
 
     const newReview = await prisma.review.create({
       data: {
-        professorId,
-        subjectId,
+        professorSubjectId: professorSubject.id,
         userId: (!anonymous && user) ? user.id : null,
         review,
         didaticQuality,
@@ -103,7 +122,11 @@ export async function POST(
         anonymous
       },
       include: {
-        subject: true
+        professorSubject: {
+          include: {
+            subject: true
+          }
+        }
       }
     })
 
@@ -119,7 +142,7 @@ export async function POST(
         requires_presence: newReview.requiresPresence,
         exam_method: newReview.examMethod,
         anonymous: newReview.anonymous,
-        subject_name: newReview.subject.name
+        subject_name: newReview.professorSubject.subject.name
       }
     }, { status: 201 })
   } catch (error) {

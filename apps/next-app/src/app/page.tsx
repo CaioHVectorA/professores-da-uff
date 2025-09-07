@@ -16,6 +16,7 @@ export default function Home() {
 
   const fetchProfessors = async (query: string = '', subject: string = '', pageNum: number = 1, append: boolean = false, showLoading: boolean = true) => {
     try {
+      console.log('Fetching professors with:', { query, subject, pageNum, append, showLoading });
       if (showLoading && !append) setInitialLoading(true);
       if (append) setInfiniteLoading(true);
       const params = new URLSearchParams({
@@ -24,15 +25,26 @@ export default function Home() {
         page: pageNum.toString(),
         pageSize: '20',
       });
+      console.log('Request params:', params.toString());
       const res = await fetch(`/api/professors?${params}`);
+      console.log('Response status:', res.status);
       if (res.ok) {
         const data = await res.json();
+        console.log('Fetched data:', data);
         if (append) {
-          setProfessors(prev => [...prev, ...data.data]);
+          setProfessors(prev => {
+            const newProfessors = [...prev, ...data.data];
+            console.log('Appended professors, new length:', newProfessors.length);
+            return newProfessors;
+          });
         } else {
+          console.log('Setting professors to:', data.data.length, 'items');
           setProfessors(data.data);
         }
         setHasMore(data.data.length === 20);
+        console.log('Has more:', data.data.length === 20);
+      } else {
+        console.error('Fetch failed with status:', res.status);
       }
     } catch (error) {
       console.error('Failed to fetch professors:', error);

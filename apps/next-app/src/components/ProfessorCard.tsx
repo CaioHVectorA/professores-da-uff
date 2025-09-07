@@ -10,7 +10,7 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
     return [...Array(5)].map((_, i) => (
       <span
         key={i}
-        className={`w-4 h-4 ${i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+        className={`w-6 h-6 ${i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'}`}
       >
         ★
       </span>
