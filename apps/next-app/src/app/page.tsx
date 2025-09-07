@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header
-        title="QuadroScrap - Avaliação de Professores UFF"
+        title="Professores da UFF"
         showSearch={true}
         searchValue={searchQuery}
         onSearchChange={setSearchQuery}

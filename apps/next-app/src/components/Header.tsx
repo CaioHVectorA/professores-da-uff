@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import LoginModal from './LoginModal'
+import { Menu, X, Users, FileText, BookOpen } from 'lucide-react'
 
 interface HeaderProps {
   title?: string
@@ -12,21 +13,34 @@ interface HeaderProps {
 }
 
 export default function Header({
-  title = "QuadroScrap",
+  title = "Professores da UFF",
   showSearch = false,
   searchValue = "",
   onSearchChange
 }: HeaderProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { user, isAuthenticated, logout, isLoading } = useAuth()
+
+  const navItems = [
+    { name: 'Professores', href: '/', icon: Users, active: true },
+    { name: 'Provas', href: '/provas', icon: FileText, disabled: true },
+    { name: 'Conteúdos', href: '/conteudos', icon: BookOpen, disabled: true }
+  ]
 
   return (
     <>
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg border-b border-blue-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-600">{title}</h1>
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="mr-4 p-2 rounded-md text-white hover:bg-blue-700 transition-colors"
+              >
+                {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+              <h1 className="text-2xl font-bold text-white">{title}</h1>
               {showSearch && (
                 <div className="ml-8 flex-1 max-w-lg">
                   <div className="relative">
@@ -58,15 +72,15 @@ export default function Header({
             </div>
             <div className="flex items-center space-x-4">
               {isLoading ? (
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
               ) : isAuthenticated && user ? (
                 <div className="flex items-center space-x-4">
-                  <span className="text-sm text-gray-700">
+                  <span className="text-sm text-white">
                     Olá, {user.email?.split('@')[0]}
                   </span>
                   <button
                     onClick={logout}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                    className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md text-sm font-medium transition-colors"
                   >
                     Sair
                   </button>
@@ -74,7 +88,7 @@ export default function Header({
               ) : (
                 <button
                   onClick={() => setIsLoginModalOpen(true)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                  className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Login
                 </button>
@@ -83,6 +97,49 @@ export default function Header({
           </div>
         </div>
       </header>
+
+      {/* Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
+        <div className="flex flex-col h-full">
+          <div className="flex items-center justify-center h-16 bg-gradient-to-r from-blue-600 to-blue-800">
+            <h2 className="text-xl font-bold text-white">Menu</h2>
+          </div>
+          <nav className="flex-1 px-4 py-6 space-y-2">
+            {navItems.map((item) => (
+              <div key={item.name} className="relative">
+                <a
+                  href={item.disabled ? '#' : item.href}
+                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                    item.active && !item.disabled
+                      ? 'bg-blue-100 text-blue-700'
+                      : item.disabled
+                      ? 'text-gray-400 cursor-not-allowed'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                  onClick={item.disabled ? (e) => e.preventDefault() : undefined}
+                >
+                  <item.icon className="mr-3 h-5 w-5" />
+                  {item.name}
+                </a>
+                {item.disabled && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 rounded-md opacity-0 hover:opacity-100 transition-opacity">
+                    <span className="text-xs text-gray-600 bg-white px-2 py-1 rounded shadow">Em desenvolvimento</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}

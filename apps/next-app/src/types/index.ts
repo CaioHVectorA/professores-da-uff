@@ -2,6 +2,7 @@ export interface Professor {
   id: number
   name: string
   subjects: string[]
+  reviewCount?: number
 }
 
 export interface Review {

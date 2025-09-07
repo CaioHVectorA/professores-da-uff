@@ -1,20 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { PrismaClient } from '@prisma/client'
 import { getUserFromSession } from '@/lib/auth'
 
-// Mock data
-const mockProfessors = [
-  {
-    id: 1,
-    name: "Prof. João Silva",
-    subjects: ["Matemática", "Cálculo"]
-  },
-  {
-    id: 2,
-    name: "Prof. Maria Santos",
-    subjects: ["Física", "Mecânica"]
-  },
-  // Add more
-]
+const prisma = new PrismaClient()
 
 export async function GET(request: NextRequest) {
   try {
@@ -27,24 +15,52 @@ export async function GET(request: NextRequest) {
     // Optional: Check if user is authenticated for personalized results
     const user = await getUserFromSession(request)
 
-    // Filter by query
-    let filtered = mockProfessors;
-    if (q) {
-      filtered = mockProfessors.filter(p => p.name.toLowerCase().includes(q.toLowerCase()));
-    }
+    // Fetch professors with subjects
+    const professors = await prisma.professor.findMany({
+      where: q ? {
+        name: {
+          contains: q,
+          mode: 'insensitive'
+        }
+      } : {},
+      include: {
+        subjects: true,
+        _count: {
+          select: { reviews: true }
+        }
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      orderBy: {
+        name: 'asc'
+      }
+    });
 
-    // Paginate
-    const offset = (page - 1) * pageSize;
-    const paginated = filtered.slice(offset, offset + pageSize);
+    // Transform data to match the expected format
+    const transformedProfessors = professors.map(prof => ({
+      id: prof.id,
+      name: prof.name,
+      subjects: prof.subjects.map(s => s.name),
+      reviewCount: prof._count.reviews
+    }));
+
+    const total = await prisma.professor.count({
+      where: q ? {
+        name: {
+          contains: q,
+          mode: 'insensitive'
+        }
+      } : {}
+    });
 
     return NextResponse.json({
-      data: paginated,
+      data: transformedProfessors,
       page,
       pageSize,
-      total: filtered.length
+      total
     });
   } catch (error) {
-    console.error('Error parsing URL:', error);
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    console.error('Error fetching professors:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
