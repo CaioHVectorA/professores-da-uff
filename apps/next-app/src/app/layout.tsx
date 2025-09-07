@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import LayoutWithSidebar from "@/components/LayoutWithSidebar";
@@ -30,9 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <LayoutWithSidebar>{children}</LayoutWithSidebar>
-        </AuthProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <AuthProvider>
+            <LayoutWithSidebar>{children}</LayoutWithSidebar>
+          </AuthProvider>
+        </Suspense>
       </body>
     </html>
   );

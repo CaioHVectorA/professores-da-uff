@@ -27,18 +27,18 @@ async function checkDuplicates() {
 
     console.log('\nChecking for duplicate subjects per professor...')
 
-    const subjects = await prisma.subject.findMany({
-        select: { id: true, name: true, professorId: true }
+    const profSubjects = await prisma.professor_Subject.findMany({
+        select: { professorId: true, subject: { select: { id: true, name: true } } }
     })
 
     const profSubjectMap = new Map<string, number[]>()
 
-    subjects.forEach(sub => {
-        const key = `${sub.professorId}-${sub.name}`
+    profSubjects.forEach(ps => {
+        const key = `${ps.professorId}-${ps.subject.name}`
         if (!profSubjectMap.has(key)) {
             profSubjectMap.set(key, [])
         }
-        profSubjectMap.get(key)!.push(sub.id)
+        profSubjectMap.get(key)!.push(ps.subject.id)
     })
 
     const subDuplicates = Array.from(profSubjectMap.entries()).filter(([_, ids]) => ids.length > 1)

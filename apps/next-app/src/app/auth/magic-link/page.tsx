@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
-export default function MagicLink() {
+function MagicLinkContent() {
     const searchParams = useSearchParams()
     const router = useRouter()
     const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -87,5 +87,13 @@ export default function MagicLink() {
                 </p>
             </div>
         </div>
+    )
+}
+
+export default function MagicLink() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <MagicLinkContent />
+        </Suspense>
     )
 }

@@ -5,10 +5,11 @@ const prisma = new PrismaClient()
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const professorId = parseInt(params.id)
+        const { id } = await params;
+        const professorId = parseInt(id)
 
         const subjects = await prisma.professor_Subject.findMany({
             where: { professorId },

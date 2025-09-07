@@ -6,10 +6,11 @@ const prisma = new PrismaClient()
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const professorId = parseInt(params.id)
+    const { id } = await params;
+    const professorId = parseInt(id)
     const user = await getUserFromSession(request)
 
     const reviews = await prisma.review.findMany({
@@ -58,10 +59,11 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const professorId = parseInt(params.id)
+    const { id } = await params;
+    const professorId = parseInt(id)
     const user = await getUserFromSession(request)
     const body = await request.json()
 

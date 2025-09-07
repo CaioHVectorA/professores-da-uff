@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   eslint: {
     ignoreDuringBuilds: true
+  },
+  turbopack: {
+    root: __dirname
   }
 };
 
