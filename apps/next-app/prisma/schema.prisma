@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  emailHash  String    @unique
+  email      String?
+  verifiedAt DateTime?
+  isAdmin    Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+
+  magicLinkTokens MagicLinkToken[]
+  sessions        Session[]
+}
+
+model MagicLinkToken {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  tokenHash String    @unique
+  purpose   String?   @default("signin")
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+  usedAt    DateTime?
+  requestIp String?
+  userAgent String?
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Session {
+  id               Int       @id @default(autoincrement())
+  userId           Int
+  sessionTokenHash String    @unique
+  createdAt        DateTime  @default(now())
+  expiresAt        DateTime
+  revokedAt        DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Professor {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  subjects Subject[]
+  reviews  Review[]
+}
+
+model Subject {
+  id          Int    @id @default(autoincrement())
+  name        String
+  professorId Int
+
+  professor Professor @relation(fields: [professorId], references: [id])
+  reviews   Review[]
+}
+
+model Review {
+  id               Int      @id @default(autoincrement())
+  professorId      Int
+  subjectId        Int
+  review           String
+  createdAt        DateTime @default(now())
+  didaticQuality   Int?
+  materialQuality  Int?
+  examsDifficulty  Int?
+  personality      Int?
+  requiresPresence Boolean?
+  examMethod       String?
+  anonymous        Boolean  @default(false)
+
+  professor Professor @relation(fields: [professorId], references: [id])
+  subject   Subject   @relation(fields: [subjectId], references: [id])
+}
