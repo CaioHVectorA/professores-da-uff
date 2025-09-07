@@ -20,7 +20,7 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
           {professor.subjects.map((subject, index) => (
             <span
               key={index}
-              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-50 text-primary-700"
+              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
             >
               {subject}
             </span>

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
+import LoginModal from './LoginModal'
 
 interface HeaderProps {
   title?: string
@@ -16,6 +18,7 @@ export default function Header({
   onSearchChange
 }: HeaderProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const { user, isAuthenticated, logout, isLoading } = useAuth()
 
   return (
     <>
@@ -23,7 +26,7 @@ export default function Header({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-primary-600">{title}</h1>
+              <h1 className="text-2xl font-bold text-blue-600">{title}</h1>
               {showSearch && (
                 <div className="ml-8 flex-1 max-w-lg">
                   <div className="relative">
@@ -45,7 +48,7 @@ export default function Header({
                     <input
                       type="text"
                       placeholder="Buscar professores..."
-                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       value={searchValue}
                       onChange={(e) => onSearchChange?.(e.target.value)}
                     />
@@ -54,17 +57,36 @@ export default function Header({
               )}
             </div>
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setIsLoginModalOpen(true)}
-                className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-              >
-                Login
-              </button>
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+              ) : isAuthenticated && user ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-gray-700">
+                    Olá, {user.email?.split('@')[0]}
+                  </span>
+                  <button
+                    onClick={logout}
+                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                  >
+                    Sair
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setIsLoginModalOpen(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                >
+                  Login
+                </button>
+              )}
             </div>
           </div>
         </div>
       </header>
-      {/* LoginModal will be added later */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
     </>
   )
 }
