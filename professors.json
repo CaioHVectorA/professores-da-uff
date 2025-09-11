@@ -286,14 +286,16 @@
   },
   "Tathianna Prado Dawes": {
     "subjects": [
-      "Libras I"
+      "Libras I",
+      "Língua Brasileira de Sinais II"
     ],
     "processedClasses": [
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430593",
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430601",
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430602",
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430603",
-      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430594"
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430594",
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000435270"
     ]
   },
   "Daniele Pereira dos Santos Magon": {
@@ -551,11 +553,13 @@
   },
   "Helen Pereira Ferreira": {
     "subjects": [
-      "Didatica"
+      "Didatica",
+      "Currículo(S) e Formação de Professores"
     ],
     "processedClasses": [
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430770",
-      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430767"
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430767",
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000435305"
     ]
   },
   "Alice Akemi Yamasaki": {
@@ -1352,14 +1356,16 @@
   },
   "Gildete da Silva Amorim Mendes Francisco": {
     "subjects": [
-      "Libras I"
+      "Libras I",
+      "Educação de Surdos I"
     ],
     "processedClasses": [
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430614",
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430606",
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430612",
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430613",
-      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430607"
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430607",
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000435274"
     ]
   },
   "Alexandre Santos de Moraes": {
@@ -1870,11 +1876,13 @@
   "Rosane Barbosa Marendino": {
     "subjects": [
       "Tópicos Especiais em Sociologia da Educação",
-      "Pesquisa e Prática Educativa I"
+      "Pesquisa e Prática Educativa I",
+      "Psicologia da Educação para Surdos"
     ],
     "processedClasses": [
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000430519",
-      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000432418"
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000432418",
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000435304"
     ]
   },
   "Luis Paulo Batista da Silva": {
@@ -21057,6 +21065,14 @@
     ],
     "processedClasses": [
       "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000435996"
+    ]
+  },
+  "Fabio Andre Cardoso Coelho": {
+    "subjects": [
+      "Leitura e Produção de Textos Escritos da Educação Básica I"
+    ],
+    "processedClasses": [
+      "https://app.uff.br/graduacao/quadrodehorarios/turmas/100000435276"
     ]
   }
 }

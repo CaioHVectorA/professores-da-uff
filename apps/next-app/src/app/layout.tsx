@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import LayoutWithSidebar from "@/components/LayoutWithSidebar";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
             <LayoutWithSidebar>{children}</LayoutWithSidebar>
           </AuthProvider>
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );

@@ -60,7 +60,7 @@ async function scrapeClass(page: Page, actualClass: string, retryCount = 0) {
 
     try {
         await page.goto(actualClass);
-        await Bun.sleep(2000);
+        await Bun.sleep(1000); // Reduced from 2000
         const content = await page.content();
         if (content.includes("Sessão expirada!")) {
             await signIn(page);
@@ -111,7 +111,7 @@ async function scrapeClass(page: Page, actualClass: string, retryCount = 0) {
         processedClasses.add(actualClass);
 
         // Wait for the page to load completely
-        await Bun.sleep(2000);
+        await Bun.sleep(1000); // Reduced from 2000
         console.log(`📚 Processed class: ${actualClass} - Subject: ${subjectName || 'Unknown'}`);
     } catch (error) {
         console.error(`❌ Error processing class ${actualClass}:`, error);
@@ -134,23 +134,35 @@ export async function scrapeClasses(page: Page, courseId: number, courseName: st
     let processedCount = 0;
     let skippedCount = 0;
 
-    for (const actualClass of classes) {
-        if (processedClasses.has(actualClass)) {
-            skippedCount++;
-            console.log(`⏭️  Skipping (${skippedCount}/${processedClasses.size}): ${actualClass}`);
-            continue;
-        }
-
-        processedCount++;
-        console.log(`🔍 Processing (${processedCount}/${classes.length - processedClasses.size}): ${actualClass}`);
-        await scrapeClass(page, actualClass);
-
-        // Salva o progresso a cada classe processada
-        await saveProfessorsData();
-
-        // Pequena pausa entre requests
-        await Bun.sleep(1000);
+    // Concurrency limit
+    const concurrencyLimit = 3; // Lower for scraping to be gentle
+    const chunks = [];
+    for (let i = 0; i < classes.length; i += concurrencyLimit) {
+        chunks.push(classes.slice(i, i + concurrencyLimit));
     }
+
+    for (const chunk of chunks) {
+        const promises = chunk.map(async (actualClass) => {
+            if (processedClasses.has(actualClass)) {
+                skippedCount++;
+                console.log(`⏭️  Skipping (${skippedCount}/${processedClasses.size}): ${actualClass}`);
+                return;
+            }
+
+            processedCount++;
+            console.log(`🔍 Processing (${processedCount}/${classes.length - processedClasses.size}): ${actualClass}`);
+            await scrapeClass(page, actualClass);
+        });
+        await Promise.allSettled(promises);
+
+        // Save progress after each chunk
+        await saveProfessorsData();
+        // Shorter pause between chunks
+        await Bun.sleep(500);
+    }
+
+    // Final save
+    await saveProfessorsData();
 
     console.log(`\n✅ Scraping completed!`);
     console.log(`📊 Statistics:`);
@@ -172,4 +184,4 @@ async function saveProfessorsData() {
     }
 
     await fs.writeFile('professors.json', JSON.stringify(data, null, 2));
-}    
+}

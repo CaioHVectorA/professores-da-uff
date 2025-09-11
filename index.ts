@@ -75,6 +75,13 @@ function loadCourses() {
     return courses;
 }
 
+// Define type for course result
+interface CourseResult {
+    courseId: number;
+    courseName: string;
+    url: string;
+}
+
 // Function to scrape a specific course (from get-classes.ts)
 async function scrapeCourse(page: any, courseId: number, courseName: string, allClasses: string[]) {
     console.log(`\n🎓 Processing Course ID ${courseId}: ${courseName}`);
@@ -99,7 +106,7 @@ async function scrapeCourse(page: any, courseId: number, courseName: string, all
 
     // Navigate to the course-specific URL
     await page.goto(fullUrl);
-    await Bun.sleep(3000);
+    await Bun.sleep(1500); // Reduced from 3000
     const classURLs = [] as string[];
     await page.evaluate(() => {
         const elements = document.querySelectorAll('.disciplina-nome a');
@@ -112,7 +119,7 @@ async function scrapeCourse(page: any, courseId: number, courseName: string, all
     let hasNextPage = await page.$('.page-link[rel="next"]');
     while (hasNextPage) {
         await hasNextPage.click();
-        await Bun.sleep(2000);
+        await Bun.sleep(1000); // Reduced from 2000
         await page.evaluate(() => {
             const elements = document.querySelectorAll('.disciplina-nome a');
             //@ts-ignore
@@ -135,27 +142,33 @@ async function runGetClasses(page: any) {
     console.log(`📚 Loaded ${courses.length} courses to process`);
 
     // Results array to store data
-    const results = [];
+    const results: CourseResult[] = [];
     const allClasses = [] as string[];
 
-    // For loop to process each course
-    for (let i = 0; i < courses.length; i++) {
-        const course = courses[i];
-
-        try {
-            console.log(`\n🔄 Processing ${i + 1}/${courses.length}`);
-            const result = await scrapeCourse(page, course.id, course.name, allClasses);
-            results.push(result);
-
-            // Wait between requests to be polite to the server
-            await Bun.sleep(2000);
-            fs.writeFileSync('./all-classes-urls.json', JSON.stringify(allClasses, null, 2));
-            fs.writeFileSync('./scraping-results.json', JSON.stringify(results, null, 2));
-
-        } catch (error) {
-            console.error(`❌ Error processing course ${course.id}: ${course.name}`, error);
-        }
+    // Concurrency limit to avoid overwhelming the server
+    const concurrencyLimit = 5;
+    const chunks = [];
+    for (let i = 0; i < courses.length; i += concurrencyLimit) {
+        chunks.push(courses.slice(i, i + concurrencyLimit));
     }
+
+    for (const chunk of chunks) {
+        const promises = chunk.map(async (course) => {
+            try {
+                const result = await scrapeCourse(page, course.id, course.name, allClasses);
+                results.push(result);
+                // Shorter delay between requests
+                await Bun.sleep(1000);
+            } catch (error) {
+                console.error(`❌ Error processing course ${course.id}: ${course.name}`, error);
+            }
+        });
+        await Promise.allSettled(promises);
+    }
+
+    // Write files once at the end
+    fs.writeFileSync('./all-classes-urls.json', JSON.stringify(allClasses, null, 2));
+    fs.writeFileSync('./scraping-results.json', JSON.stringify(results, null, 2));
 
     console.log(`\n✅ Get-classes completed! Processed ${results.length} courses`);
     console.log('📄 Results saved to scraping-results.json and all-classes-urls.json');

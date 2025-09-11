@@ -1,20 +1,8 @@
 import type { Page } from "puppeteer";
 
 export async function signIn(page: Page) {
-    // Wait for nav-links to be available and click on the 4th one (index 3)
-    await page.waitForSelector('.nav-link');
-    await Bun.sleep(1000);
-
-    const navLinks = await page.$$('.nav-link');
-    if (navLinks[3]) {
-        await navLinks[3].click();
-    }
-
-    // Wait after clicking nav-link
-    await Bun.sleep(2000);
-
     // Wait for username input and type
-    await page.waitForSelector('#username');
+    await page.waitForSelector('#username', { timeout: 10000 });
     await Bun.sleep(500);
     await page.type('#username', process.env.Q_USERNAME || '');
 
