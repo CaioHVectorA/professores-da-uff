@@ -18,7 +18,7 @@ async function scrapePage(page: Page, url: string, allProfessorsMap: Record<stri
 
     const rows = await page.$$('#tabela-turmas tbody tr');
     let newProfessorsCount = 0;
-
+    console.log(`[${new Date().toISOString()}] Scraping ${rows.length} rows from ${url}`);
     for (const row of rows) {
         const tds = await row.$$('td');
         if (tds.length < 2) continue;
