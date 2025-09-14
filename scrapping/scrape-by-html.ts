@@ -1,7 +1,7 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
 import { signIn } from '../scripts/sign-in';
 
-async function scrapePage(page: any, url: string, allProfessorsMap: Record<string, string[]>): Promise<number> {
+async function scrapePage(page: Page, url: string, allProfessorsMap: Record<string, string[]>): Promise<number> {
     await page.goto(url, { waitUntil: 'networkidle2' });
 
     // Check if logged in by waiting for table
@@ -52,16 +52,15 @@ async function scrapePage(page: any, url: string, allProfessorsMap: Record<strin
     return newProfessorsCount;
 }
 
-async function getLastPage(page: any): Promise<number> {
+async function getLastPage(page: Page): Promise<number> {
     const baseUrl = 'https://app.uff.br/graduacao/quadrodehorarios/?button=&q%5Banosemestre_eq%5D=20252&q%5Bcurso_ferias_eq%5D=&q%5Bdisciplina_cod_departamento_eq%5D=&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Bidlocalidade_eq%5D=&q%5Bidturmamodalidade_eq%5D=&q%5Bidturno_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=&page=1';
     console.log(`[${new Date().toISOString()}] Fetching last page number...`);
     await page.goto(baseUrl, { waitUntil: 'networkidle2' });
     await page.waitForSelector('.pagination .page-link', { timeout: 10000 });
 
-    const lastLink = await page.$('.pagination .page-link[href*="page="]:last-of-type');
+    const lastLink = await page.$$('.pagination .page-link[href*="page="]:nth-last-child(-n+1)');
     if (!lastLink) return 1;
-
-    const href = await lastLink.evaluate((el: any) => el.getAttribute('href'));
+    const href = await lastLink[lastLink.length - 1]?.evaluate((el: any) => el.getAttribute('href'));
     const match = href?.match(/page=(\d+)/);
     const lastPage = match ? parseInt(match[1]) : 1;
     console.log(`[${new Date().toISOString()}] Last page found: ${lastPage}`);
@@ -72,23 +71,26 @@ async function scrapeProfessors() {
     const startTime = Date.now();
     console.log(`[${new Date().toISOString()}] Starting scraping process...`);
 
-    const browser = await puppeteer.launch({ headless: true, protocolTimeout: 60000 });
-    const page1 = await browser.newPage();
-    const page2 = await browser.newPage();
+    const browser1 = await puppeteer.launch({ headless: true, protocolTimeout: 60000 });
+    const page1 = await browser1.newPage();
+
+    const browser2 = await puppeteer.launch({ headless: true, protocolTimeout: 60000 });
+    const page2 = await browser2.newPage();
 
     try {
-        // Login on both pages
-        console.log(`[${new Date().toISOString()}] Logging in on page 1...`);
+        // Login on browser 1
+        console.log(`[${new Date().toISOString()}] Logging in on browser 1...`);
         await page1.goto('https://app.uff.br/', { waitUntil: 'networkidle2' });
         await signIn(page1);
         await page1.goto('https://app.uff.br/graduacao/quadrodehorarios/', { waitUntil: 'networkidle2' });
 
-        console.log(`[${new Date().toISOString()}] Logging in on page 2...`);
+        // Login on browser 2
+        console.log(`[${new Date().toISOString()}] Logging in on browser 2...`);
         await page2.goto('https://app.uff.br/', { waitUntil: 'networkidle2' });
         await signIn(page2);
         await page2.goto('https://app.uff.br/graduacao/quadrodehorarios/', { waitUntil: 'networkidle2' });
 
-        // Get last page
+        // Get last page using page1
         const lastPage = await getLastPage(page1);
         console.log(`[${new Date().toISOString()}] Total pages: ${lastPage}`);
 
@@ -155,7 +157,8 @@ async function scrapeProfessors() {
     } catch (error) {
         console.error(`[${new Date().toISOString()}] Error during scraping:`, error);
     } finally {
-        await browser.close();
+        await browser1.close();
+        await browser2.close();
     }
 }
 
