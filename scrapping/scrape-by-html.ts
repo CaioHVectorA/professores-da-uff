@@ -3,14 +3,14 @@ import { signIn } from '../scripts/sign-in';
 import * as fs from 'fs';
 import * as path from 'path';
 const MAX_RETRIES = 50;
-const BROWSERS_NUM = 5;
+const BROWSERS_NUM = 1;
 const headless = true
 const SCRAPING_DIR = './subjects-new-scrapping';
 
 async function scrapePage(page: Page, url: string, allProfessorsMap: Record<string, string[]>): Promise<number> {
     console.log(`[${new Date().toISOString()}] Navigating to ${url}`);
     await page.goto(url, { waitUntil: 'networkidle2' });
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for page to stabilize
+    await new Promise(resolve => setTimeout(resolve, 500)); // Reduced wait time
 
     // Check if logged in by waiting for table
     try {
@@ -19,10 +19,10 @@ async function scrapePage(page: Page, url: string, allProfessorsMap: Record<stri
         // If not, re-login
         console.log(`[${new Date().toISOString()}] Session expired, re-logging in...`);
         await page.goto('https://app.uff.br/', { waitUntil: 'networkidle2' });
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500));
         await signIn(page);
         await page.goto(url, { waitUntil: 'networkidle2' });
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500));
         await page.waitForSelector('#tabela-turmas tbody tr', { timeout: 10000 });
     }
 
@@ -47,32 +47,61 @@ async function scrapePage(page: Page, url: string, allProfessorsMap: Record<stri
 
     // Now process each subject by navigating to its page
     for (const { subject, href } of subjectsData) {
-        await page.goto(href, { waitUntil: 'networkidle2' });
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for page to stabilize
-        try {
-            await page.waitForSelector('#tabela-alteracao-professores-turma tbody tr td:first-child', { timeout: 10000 });
-        } catch {
-            console.log(`[${new Date().toISOString()}] No professor data found for subject ${subject} at ${href}`);
+        let professorName = '';
+        let attempts = 0;
+        const maxAttempts = 3;
+
+        while (attempts < maxAttempts) {
+            await page.goto(href, { waitUntil: 'networkidle2' });
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Reduced wait time
+
+            try {
+                await page.waitForSelector('#tabela-alteracao-professores-turma tbody tr td:first-child', { timeout: 5000 });
+                const professor = await page.$('#tabela-alteracao-professores-turma tbody tr td:first-child');
+                professorName = professor ? await professor.evaluate((el: any) => el.textContent?.trim() || '') : '';
+
+                // Check if we got a valid professor name
+                if (professorName && professorName !== 'Sem professor alocado' && professorName !== '') {
+                    break; // Success, exit retry loop
+                } else {
+                    console.log(`[${new Date().toISOString()}] Invalid professor data for ${subject} (attempt ${attempts + 1}): "${professorName}". Retrying...`);
+                }
+            } catch (e) {
+                console.log(`[${new Date().toISOString()}] Error getting professor for ${subject} (attempt ${attempts + 1}): ${(e as Error).message}. Retrying...`);
+            }
+
+            // If not successful, re-login
+            if (attempts < maxAttempts - 1) {
+                console.log(`[${new Date().toISOString()}] Re-logging in for ${subject}...`);
+                await page.goto('https://app.uff.br/', { waitUntil: 'networkidle2' });
+                await new Promise(resolve => setTimeout(resolve, 500));
+                await signIn(page);
+                await page.goto(href, { waitUntil: 'networkidle2' });
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+
+            attempts++;
+        }
+
+        if (!professorName || professorName === 'Sem professor alocado' || professorName === '') {
+            console.log(`[${new Date().toISOString()}] Failed to get professor for ${subject} after ${maxAttempts} attempts. Skipping.`);
             continue;
         }
-        const professor = await page.$('#tabela-alteracao-professores-turma tbody tr td:first-child')
-        const professorName = professor ? await professor.evaluate((el: any) => el.textContent?.trim() || '') : '';
-        if (professorName) {
-            const professors = professorName.split(',').map((p: string) => p.trim()).filter((p: string) => p);
 
-            for (const prof of professors) {
-                if (!allProfessorsMap[prof]) {
-                    allProfessorsMap[prof] = [];
-                    newProfessorsCount++;
-                }
-                if (!allProfessorsMap[prof].includes(subject)) {
-                    allProfessorsMap[prof].push(subject);
-                }
+        const professors = professorName.split(',').map((p: string) => p.trim()).filter((p: string) => p);
+
+        for (const prof of professors) {
+            if (!allProfessorsMap[prof]) {
+                allProfessorsMap[prof] = [];
+                newProfessorsCount++;
+            }
+            if (!allProfessorsMap[prof].includes(subject)) {
+                allProfessorsMap[prof].push(subject);
             }
         }
         // Go back to the list page
         await page.goto(url, { waitUntil: 'networkidle2' });
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500)); // Reduced delay
     }
     console.log(`[${new Date().toISOString()}] Finished scraping ${url}, new professors found: ${newProfessorsCount}`);
     return newProfessorsCount;
@@ -82,7 +111,7 @@ async function getLastPage(page: Page): Promise<number> {
     const baseUrl = 'https://app.uff.br/graduacao/quadrodehorarios/?button=&q%5Banosemestre_eq%5D=20252&q%5Bcurso_ferias_eq%5D=&q%5Bdisciplina_cod_departamento_eq%5D=&q%5Bdisciplina_nome_or_disciplina_codigo_cont%5D=&q%5Bidlocalidade_eq%5D=&q%5Bidturmamodalidade_eq%5D=&q%5Bidturno_eq%5D=&q%5Bvagas_turma_curso_idcurso_eq%5D=&page=1';
     console.log(`[${new Date().toISOString()}] Fetching last page number...`);
     await page.goto(baseUrl, { waitUntil: 'networkidle2' });
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for page to stabilize
+    await new Promise(resolve => setTimeout(resolve, 500)); // Reduced wait time
     await page.waitForSelector('.pagination .page-link', { timeout: 10000 });
 
     const lastLink = await page.$$('.pagination .page-link[href*="page="]:nth-last-child(-n+1)');
@@ -156,7 +185,7 @@ async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: num
         }
 
         // Small delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 200)); // Reduced delay for acceleration
     }
 
     // Final save for this browser
@@ -191,7 +220,7 @@ async function scrapeProfessors() {
         await page.goto('https://app.uff.br/graduacao/quadrodehorarios/sessions/new', { waitUntil: 'networkidle2' });
         await signIn(page);
         await page.goto('https://app.uff.br/graduacao/quadrodehorarios/', { waitUntil: 'networkidle2' });
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for page to stabilize
+        await new Promise(resolve => setTimeout(resolve, 500)); // Reduced wait time
     }
 
     try {
@@ -253,8 +282,8 @@ async function main() {
             retries++;
             console.error(`[${new Date().toISOString()}] Fatal error on attempt ${retries}/${MAX_RETRIES}:`, error);
             if (retries < MAX_RETRIES) {
-                console.log(`[${new Date().toISOString()}] Retrying in 30 seconds...`);
-                await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds before retry
+                console.log(`[${new Date().toISOString()}] Retrying in 10 seconds...`);
+                await new Promise(resolve => setTimeout(resolve, 10000)); // Reduced retry delay
             } else {
                 console.error(`[${new Date().toISOString()}] Max retries reached. Exiting.`);
             }

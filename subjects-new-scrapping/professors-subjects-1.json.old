@@ -569,12 +569,14 @@
   },
   {
     "Rafael Seabra Louro": [
-      "ANESTESIOLOGIA"
+      "ANESTESIOLOGIA",
+      "CIRURGIA ORAL MENOR"
     ]
   },
   {
     "Eduardo Seixas Cardoso": [
-      "ANESTESIOLOGIA E INTRODUÇÃO À CIRURGIA"
+      "ANESTESIOLOGIA E INTRODUÇÃO À CIRURGIA",
+      "CIRURGIA CLÍNICA"
     ]
   },
   {
@@ -646,7 +648,8 @@
   },
   {
     "Ana Paula Poll": [
-      "ANTROPOLOGIA"
+      "ANTROPOLOGIA",
+      "CIDADANIA E DIREITOS SOCIAIS NO BRASIL"
     ]
   },
   {
@@ -846,7 +849,8 @@
   },
   {
     "Mariana Baltar Freire": [
-      "ANÁLISE DE FILMES I"
+      "ANÁLISE DE FILMES I",
+      "CINEMA E ESTÉTICA I"
     ]
   },
   {
@@ -1094,7 +1098,8 @@
   },
   {
     "Roberto Goncalves Pacheco": [
-      "ARQUITETURAS DE COMPUTADORES"
+      "ARQUITETURAS DE COMPUTADORES",
+      "CIRCUITOS DIGITAIS"
     ]
   },
   {
@@ -1144,7 +1149,8 @@
   },
   {
     "Telma Lasmar Goncalves": [
-      "ARTE NO BRASIL APLICADA AO TURISMO"
+      "ARTE NO BRASIL APLICADA AO TURISMO",
+      "CERIMONIAL, PROTOCOLO E ETIQUETA"
     ]
   },
   {
@@ -1658,7 +1664,8 @@
   },
   {
     "Rita Leal Paixão": [
-      "BIOETICA"
+      "BIOETICA",
+      "BIOÉTICA"
     ]
   },
   {
@@ -1718,7 +1725,8 @@
       "BIOLOGIA CELULAR E MOLECULAR",
       "BIOLOGIA CELULAR I",
       "BIOLOGIA CELULAR IV",
-      "BIOQUÍMICA FUNDAMENTAL"
+      "BIOQUÍMICA FUNDAMENTAL",
+      "BIOQUÍMICA METABÓLICA"
     ]
   },
   {
@@ -1734,7 +1742,8 @@
     "Evelize Folly das Chagas": [
       "BIOLOGIA CELULAR E MOLECULAR",
       "BIOLOGIA MOLECULAR I",
-      "BIOQUÍMICA FUNDAMENTAL"
+      "BIOQUÍMICA FUNDAMENTAL",
+      "BIOQUÍMICA VII"
     ]
   },
   {
@@ -1743,25 +1752,30 @@
       "BIOLOGIA CELULAR III",
       "BIOLOGIA CELULAR IV",
       "BIOLOGIA CELULAR V",
-      "BIOLOGIA MOLECULAR I"
+      "BIOLOGIA MOLECULAR I",
+      "BIOSSEGURANÇA"
     ]
   },
   {
     "Rafael Brito da Silva": [
       "BIOLOGIA CELULAR I",
-      "BIOLOGIA CELULAR III"
+      "BIOLOGIA CELULAR III",
+      "BIOQUÍMICA V"
     ]
   },
   {
     "Carolina Nascimento Spiegel": [
       "BIOLOGIA CELULAR I",
       "BIOLOGIA CELULAR III",
-      "BIOLOGIA CELULAR- A"
+      "BIOLOGIA CELULAR- A",
+      "BIOQUÍMICA VI"
     ]
   },
   {
     "Izabel Christina Nunes de Palmer Paixao": [
-      "BIOLOGIA CELULAR I"
+      "BIOLOGIA CELULAR I",
+      "BIOQUÍMICA METABÓLICA",
+      "BIOQUÍMICA V"
     ]
   },
   {
@@ -1775,12 +1789,15 @@
     "Aislan de Carvalho Vivarini": [
       "BIOLOGIA CELULAR III",
       "BIOLOGIA MOLECULAR I",
-      "BIOQUÍMICA FUNDAMENTAL"
+      "BIOQUÍMICA FUNDAMENTAL",
+      "BIOQUÍMICA METABÓLICA"
     ]
   },
   {
     "Luiz Mors Cabral": [
-      "BIOLOGIA CELULAR V"
+      "BIOLOGIA CELULAR V",
+      "BIOQUÍMICA VI",
+      "BIOTECNOLOGIA"
     ]
   },
   {
@@ -1873,17 +1890,340 @@
   },
   {
     "Helena Carla Castro Cardoso de Almeida": [
-      "BIOQUÍMICA FUNDAMENTAL"
+      "BIOQUÍMICA FUNDAMENTAL",
+      "BIOQUÍMICA V"
     ]
   },
   {
     "Mariana Renovato Martins": [
-      "BIOQUÍMICA FUNDAMENTAL"
+      "BIOQUÍMICA FUNDAMENTAL",
+      "BIOQUÍMICA METABÓLICA",
+      "BIOQUÍMICA V",
+      "BIOQUÍMICA VII"
     ]
   },
   {
     "Wendel Mattos Pompilho": [
       "BIOQUÍMICA GERAL"
+    ]
+  },
+  {
+    "Manuel Gustavo Leitao Ribeiro": [
+      "BIOQUÍMICA METABÓLICA",
+      "BIOQUÍMICA V"
+    ]
+  },
+  {
+    "Andre Lopes Fuly": [
+      "BIOQUÍMICA METABÓLICA",
+      "BIOQUÍMICA VI"
+    ]
+  },
+  {
+    "Flavia Thiebaut Andrade Zanon Barroso": [
+      "BIOQUÍMICA VII"
+    ]
+  },
+  {
+    "Patricia Burth": [
+      "BIOQUÍMICA-A"
+    ]
+  },
+  {
+    "Catia Lacerda Sodre": [
+      "BIOQUÍMICA-A"
+    ]
+  },
+  {
+    "Ane Claudia Fernandes Nunes": [
+      "BIOTECNOLOGIA APLICADA À SAÚDE"
+    ]
+  },
+  {
+    "Cristina Moll Huther": [
+      "BIOTECNOLOGIA BÁSICA",
+      "BIOTECNOLOGIA GERAL"
+    ]
+  },
+  {
+    "Geraldo Renato de Paula": [
+      "BIOTECNOLOGIA MOLECULAR FARMACÊUTICA"
+    ]
+  },
+  {
+    "Wantuil Rodrigues Araujo Filho": [
+      "BIOÉTICA"
+    ]
+  },
+  {
+    "Janie Garcia da Silva": [
+      "BOTÂNICA AGRÍCOLA",
+      "BOTÂNICA AMBIENTAL"
+    ]
+  },
+  {
+    "Arno Fritz das Neves Brandes": [
+      "BOTÂNICA ECOLÓGICA I",
+      "BOTÂNICA IV",
+      "BOTÂNICA V"
+    ]
+  },
+  {
+    "Ana Joffily Coutinho": [
+      "BOTÂNICA ECOLÓGICA I",
+      "BOTÂNICA IV",
+      "BOTÂNICA V"
+    ]
+  },
+  {
+    "Odara Horta Boscolo": [
+      "BOTÂNICA II"
+    ]
+  },
+  {
+    "Joao Paulo Santos Condack": [
+      "BOTÂNICA II",
+      "BOTÂNICA III"
+    ]
+  },
+  {
+    "Adriana Quintella Lobao": [
+      "BOTÂNICA III"
+    ]
+  },
+  {
+    "Daniela Bueno Sudatti": [
+      "BOTÂNICA MARINHA I"
+    ]
+  },
+  {
+    "Selma Ribeiro de Paiva": [
+      "BOTÂNICA V"
+    ]
+  },
+  {
+    "Barbara Elisabeth Teixeira Costa": [
+      "BROMATOLOGIA"
+    ]
+  },
+  {
+    "Francisco Marcelo Garritano Barone do Nascimento": [
+      "CALCULO FINANCEIRO APLICADO À ATUÁRIA"
+    ]
+  },
+  {
+    "Mauricio Rodrigues Silva": [
+      "CALCULO NUMERICO"
+    ]
+  },
+  {
+    "Welton Alves de Menezes": [
+      "CALCULO VETORIAL"
+    ]
+  },
+  {
+    "Emerson Souza Freire": [
+      "CALCULO VETORIAL"
+    ]
+  },
+  {
+    "Ronaldo de Moraes Brilhante": [
+      "CANTEIRO DE CONSERVAÇÃO",
+      "CANTEIRO ESCOLA DE TÉCNICAS VERNACULARES PARA HABITAÇÃO DE INTERESSE SOCIAL (HIS)"
+    ]
+  },
+  {
+    "Ronaldo Santos Santana": [
+      "CAPACITAÇÃO DOCENTE EM EDUCAÇÃO ESPECIAL: ATIVIDADES TEÓRICO-PRÁTICAS PARA O ENSINO DE QUÍMICA"
+    ]
+  },
+  {
+    "Ulisses Oliveira Costa": [
+      "CARACTERIZAÇÃO DE POLÍMEROS, PROPRIEDADES E PRODUTOS"
+    ]
+  },
+  {
+    "Rodrigo Pinto de Siqueira": [
+      "CARACTERIZAÇÃO MICROESTRUTURAL DOS MATERIAIS"
+    ]
+  },
+  {
+    "Renata Nunes Jardim Reis": [
+      "CARIOLOGIA"
+    ]
+  },
+  {
+    "Juliana Magalhaes Menezes": [
+      "CARTOGRAFIA"
+    ]
+  },
+  {
+    "Julia Celia Mercedes Strauch": [
+      "CARTOGRAFIA"
+    ]
+  },
+  {
+    "Leonardo Scharth Loureiro Silva": [
+      "CARTOGRAFIA"
+    ]
+  },
+  {
+    "Fernando de Souza Antunes": [
+      "CARTOGRAFIA APLICADA"
+    ]
+  },
+  {
+    "Danielle Pereira Cintra Gomes da Silva": [
+      "CARTOGRAFIA BÁSICA",
+      "CARTOGRAFIA ESCOLAR"
+    ]
+  },
+  {
+    "Daniel Luiz Poio Roberti": [
+      "CARTOGRAFIA ESCOLAR I"
+    ]
+  },
+  {
+    "Matheus Francoy Alpes": [
+      "CASOS CLÍNICOS EM LINGUAGEM ORAL INFANTIL"
+    ]
+  },
+  {
+    "Tatiana Bagetti": [
+      "CASOS CLÍNICOS EM LINGUAGEM ORAL INFANTIL"
+    ]
+  },
+  {
+    "William David Vieira": [
+      "CELEBRIDADES E CULTURA MIDIÁTICA"
+    ]
+  },
+  {
+    "Saulo Barroso Rocha": [
+      "CENÁRIOS E TENDÊNCIAS"
+    ]
+  },
+  {
+    "Jorge Juarez Trujillo": [
+      "CERÂMICAS REFRATÁRIAS"
+    ]
+  },
+  {
+    "Evandro Menezes de Carvalho": [
+      "CHINA: ESTRUTURA JURÍDICO-POLÍTICA: O ESTADO, O PARTIDO E O DIREITO"
+    ]
+  },
+  {
+    "Antonio Cesar Pimentel Caldeira": [
+      "CIDADANIA, DIREITOS SOCIAIS E ESPAÇOS SÓCIO-POLÍTICOS"
+    ]
+  },
+  {
+    "Michely Jabala Mamede Vogel": [
+      "CIENTOMETRIA - DOCUMENTAÇÃO CIENTÍFICA E COMUNIDADES ACADÊMICAS"
+    ]
+  },
+  {
+    "Karla Holanda de Araujo": [
+      "CINEMA DOCUMENTÁRIO"
+    ]
+  },
+  {
+    "Gabriel Filipe Santiago Cruz": [
+      "CINEMA E ANTROPOLOGIA I"
+    ]
+  },
+  {
+    "Reinaldo Cardenuto Filho": [
+      "CINEMA E HISTORIA I",
+      "CINEMA E HISTORIA II"
+    ]
+  },
+  {
+    "Cezar Avila Migliorin": [
+      "CINEMA E PSICOLOGIA II"
+    ]
+  },
+  {
+    "Rafael de Luna Freire": [
+      "CINEMA MEMÓRIA E ARQUIVO"
+    ]
+  },
+  {
+    "Joao Marcos Meirelles da Silva": [
+      "CIRCUITOS DIGITAIS 1",
+      "CIRCUITOS DIGITAIS PARA CIÊNCIA DA COMPUTAÇÃO"
+    ]
+  },
+  {
+    "Taiane Alvarenga Menandro Garcia de Freitas": [
+      "CIRCUITOS DIGITAIS 1"
+    ]
+  },
+  {
+    "Wendel Alexandre Xavier de Melo": [
+      "CIRCUITOS DIGITAIS 1"
+    ]
+  },
+  {
+    "Alexandre Santos de La Vega": [
+      "CIRCUITOS DIGITAIS PARA CIÊNCIA DA COMPUTAÇÃO"
+    ]
+  },
+  {
+    "Vitor Hugo Ferreira": [
+      "CIRCUITOS ELÉTRICOS DE CORRENTE ALTERNADA"
+    ]
+  },
+  {
+    "Tiago Pires Abud": [
+      "CIRCUITOS ELÉTRICOS DE CORRENTE CONTÍNUA"
+    ]
+  },
+  {
+    "Jose Santo Guiscafre Panaro": [
+      "CIRCUITOS ELÉTRICOS NO DOMINIO DA FREQUÊNCIA I"
+    ]
+  },
+  {
+    "Jacqueline Silva Pereira": [
+      "CIRCUITOS ELÉTRICOS NO DOMINIO DO TEMPO I"
+    ]
+  },
+  {
+    "Bianca Bravim Bomfim": [
+      "CIRURGIA BUCO-MAXILO-FACIAL I"
+    ]
+  },
+  {
+    "Henrique Martins da Silveira": [
+      "CIRURGIA BUCO-MAXILO-FACIAL I",
+      "CIRURGIA BUCO-MAXILO-FACIAL II"
+    ]
+  },
+  {
+    "Aline Muniz de Oliveira": [
+      "CIRURGIA BUCO-MAXILO-FACIAL II"
+    ]
+  },
+  {
+    "Sergio Luiz Melo Goncalves": [
+      "CIRURGIA BUCO-MAXILO-FACIAL II"
+    ]
+  },
+  {
+    "Mohamed Chouky Kamar": [
+      "CIRURGIA DE URGÊNCIA I"
+    ]
+  },
+  {
+    "Antonio Carlos Accetta": [
+      "CIRURGIA ONCOLÓGICA GASTROINTESTINAL"
+    ]
+  },
+  {
+    "Vittorio Moraschini Filho": [
+      "CIRURGIA ORAL MENOR"
     ]
   }
 ]
