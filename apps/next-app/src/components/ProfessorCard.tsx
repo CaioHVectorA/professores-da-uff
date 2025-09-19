@@ -21,14 +21,14 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
   // Group subjects by name and collect semesters
   const subjectGroups = Array.isArray(professor.subjects) && typeof professor.subjects[0] === 'object'
     ? (professor.subjects as { id: number; name: string; semester?: string }[]).reduce((acc, subj) => {
-        if (!acc[subj.name]) {
-          acc[subj.name] = { semesters: [] }
-        }
-        if (subj.semester && !acc[subj.name].semesters.includes(subj.semester)) {
-          acc[subj.name].semesters.push(subj.semester)
-        }
-        return acc
-      }, {} as Record<string, { semesters: string[] }>)
+      if (!acc[subj.name]) {
+        acc[subj.name] = { semesters: [] }
+      }
+      if (subj.semester && !acc[subj.name].semesters.includes(subj.semester)) {
+        acc[subj.name].semesters.push(subj.semester)
+      }
+      return acc
+    }, {} as Record<string, { semesters: string[] }>)
     : {}
 
   // Get unique subjects with semester info
