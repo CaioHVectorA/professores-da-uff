@@ -18,12 +18,28 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
     ))
   }
 
-  // Deduplicate subjects by name
-  const uniqueSubjects = Array.isArray(professor.subjects) && typeof professor.subjects[0] === 'object'
-    ? (professor.subjects as { id: number; name: string; semester?: string }[]).filter((subject, index, self) =>
-      index === self.findIndex(s => s.name === subject.name)
-    )
-    : professor.subjects
+  // Group subjects by name and collect semesters
+  const subjectGroups = Array.isArray(professor.subjects) && typeof professor.subjects[0] === 'object'
+    ? (professor.subjects as { id: number; name: string; semester?: string }[]).reduce((acc, subj) => {
+        if (!acc[subj.name]) {
+          acc[subj.name] = { semesters: [] }
+        }
+        if (subj.semester && !acc[subj.name].semesters.includes(subj.semester)) {
+          acc[subj.name].semesters.push(subj.semester)
+        }
+        return acc
+      }, {} as Record<string, { semesters: string[] }>)
+    : {}
+
+  // Get unique subjects with semester info
+  const uniqueSubjects = Object.keys(subjectGroups).map(name => ({
+    name,
+    semesters: subjectGroups[name].semesters.sort()
+  }))
+
+  // Check if total semesters across all subjects is more than 3
+  const totalSemesters = uniqueSubjects.reduce((sum, subj) => sum + subj.semesters.length, 0)
+  const showSemesters = totalSemesters <= 3
 
   return (
     <Link
@@ -36,26 +52,20 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
           <span className="font-medium">Disciplinas:</span>
         </p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {Array.isArray(uniqueSubjects) && uniqueSubjects.length > 0 && (
-            typeof uniqueSubjects[0] === 'string'
-              ? (uniqueSubjects as string[]).slice(0, 3).map((subject, index) => (
-                <span
-                  key={index}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
-                >
-                  {subject}
+          {uniqueSubjects.slice(0, 3).map((subject, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+            >
+              {subject.name}
+              {showSemesters && subject.semesters.length > 0 && (
+                <span className="text-[10px] ml-1">
+                  ({subject.semesters.map(s => formatSemester(s)).join('/')})
                 </span>
-              ))
-              : (uniqueSubjects as { id: number; name: string; semester?: string }[]).slice(0, 3).map((subject) => (
-                <span
-                  key={subject.id}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
-                >
-                  {subject.name}{subject.semester ? <span className="text-[10px]"> ({formatSemester(subject.semester)})</span> : ''}
-                </span>
-              ))
-          )}
-          {Array.isArray(uniqueSubjects) && uniqueSubjects.length > 3 && (
+              )}
+            </span>
+          ))}
+          {uniqueSubjects.length > 3 && (
             <span className="text-xs text-gray-500">+{uniqueSubjects.length - 3} mais</span>
           )}
         </div>

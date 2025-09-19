@@ -31,7 +31,10 @@ export default function ProfessorClient({
             return data.data
         },
         initialData: initialReviews,
-        staleTime: 1000 * 60 * 5, // 5 minutes
+        staleTime: 1000 * 60 * 10, // 10 minutes
+        gcTime: 1000 * 60 * 30, // 30 minutes
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: true,
     })
 
     // Check if user has reviewed
@@ -40,26 +43,28 @@ export default function ProfessorClient({
     const handleReviewCreated = () => {
         setIsReviewModalOpen(false)
         // React Query will automatically refetch due to invalidation
+        // Also revalidate the page data
+        window.location.reload()
     }
 
     return (
         <div className="bg-gray-50 flex-1">
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-8">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                             <a
                                 href="/"
-                                className="text-blue-600 hover:text-blue-800 font-medium"
+                                className="text-blue-600 hover:text-blue-800 font-medium text-sm sm:text-base"
                             >
                                 ← Voltar para Home
                             </a>
-                            <h2 className="text-3xl font-bold text-gray-900">{initialProfessor.name}</h2>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 break-words">{initialProfessor.name}</h2>
                         </div>
                         {!hasUserReviewed && (
                             <button
                                 onClick={() => setIsReviewModalOpen(true)}
-                                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+                                className="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm sm:text-base whitespace-nowrap w-full sm:w-auto"
                             >
                                 {reviews.length === 0 ? 'Seja o primeiro a avaliar!' : 'FAÇA SUA AVALIAÇÃO'}
                             </button>
@@ -81,7 +86,7 @@ export default function ProfessorClient({
                                         key={subject.id}
                                         className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
                                     >
-                                        {subject.name}{subject.semester ? <span className="text-[10px]"> ({formatSemester(subject.semester)})</span> : ''}
+                                        {subject.name}{subject.semester ? <span className="text-[10px] ml-1"> ({formatSemester(subject.semester)})</span> : ''}
                                     </span>
                                 ))
                         )}
@@ -171,7 +176,7 @@ export default function ProfessorClient({
                                     <div className="mb-4">
                                         <p className="text-gray-900 mb-3 leading-relaxed">{review.review}</p>
                                         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                                            <span><strong>Disciplina:</strong> {review.subject_name}</span>
+                                            <span><strong>Disciplina:</strong> {review.subject_name} <span className="text-[10px]">({formatSemester(review.semester)})</span></span>
                                             <span><strong>Por:</strong> {review.user_id === user?.id ? 'Você' : review.anonymous ? 'Anônimo' : (review.user_name || 'Usuário')}</span>
                                             <span className="text-gray-500">{new Date(review.created_at).toLocaleDateString('pt-BR')}</span>
                                         </div>
@@ -257,14 +262,14 @@ export default function ProfessorClient({
 
                 {/* Review Modal */}
                 {isReviewModalOpen && (
-                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                        <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                            <div className="p-6">
-                                <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-xl font-bold text-gray-900">Criar Avaliação</h2>
+                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+                        <div className="bg-white rounded-lg w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+                            <div className="p-4 sm:p-6">
+                                <div className="flex justify-between items-center mb-4 sm:mb-6">
+                                    <h2 className="text-lg sm:text-xl font-bold text-gray-900">Criar Avaliação</h2>
                                     <button
                                         onClick={() => setIsReviewModalOpen(false)}
-                                        className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                                        className="text-gray-400 hover:text-gray-600 text-xl sm:text-2xl leading-none"
                                     >
                                         ×
                                     </button>

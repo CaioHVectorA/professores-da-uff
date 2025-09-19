@@ -109,14 +109,14 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                     Disciplina e Semestre
                 </label>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                     <select
                         value={formData.subjectId}
                         onChange={(e) => {
                             const subjectId = e.target.value
                             setFormData(prev => ({ ...prev, subjectId, semester: '' }))
                         }}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white text-sm sm:text-base"
                         required
                     >
                         <option value="">Selecione uma disciplina</option>
@@ -129,7 +129,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                         value={formData.semester}
                         onChange={(e) => setFormData(prev => ({ ...prev, semester: e.target.value }))}
                         disabled={availableSemesters.length <= 1}
-                        className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full sm:w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed text-sm sm:text-base"
                         required
                     >
                         <option value="">Semestre</option>
@@ -214,7 +214,7 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                 </select>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <label className="flex items-center">
                     <input
                         type="checkbox"

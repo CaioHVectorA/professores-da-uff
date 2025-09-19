@@ -158,7 +158,7 @@ export default function HomeClient({
                             </div>
                         )}
 
-                        {professors.length === 0 && !isLoading && (
+                        {professors.length === 0 && !isLoading && !searchQuery && !selectedSubject && (
                             <div className="text-center py-12">
                                 <p className="text-gray-600">Nenhum professor encontrado.</p>
                             </div>

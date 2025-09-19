@@ -30,6 +30,7 @@ export interface Review {
   anonymous: boolean
   approved: boolean
   subject_name: string
+  semester: string
   user_id?: number | null
   user_name?: string | null
 }

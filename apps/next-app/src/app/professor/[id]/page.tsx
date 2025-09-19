@@ -5,15 +5,19 @@ import type { Professor, Review } from '@/types'
 
 async function getProfessorData(id: string) {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000')
+  
+  // Ensure we have a proper base URL for server-side requests
+  const apiBaseUrl = baseUrl || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
+  
   try {
     const [professorResponse, reviewsResponse, subjectsResponse] = await Promise.all([
-      fetch(`${baseUrl}/api/professors?id=${id}`, {
+      fetch(`${apiBaseUrl}/api/professors?id=${id}`, {
         cache: 'no-store' // or 'force-cache' for static
       }),
-      fetch(`${baseUrl}/api/professors/${id}/reviews`, {
+      fetch(`${apiBaseUrl}/api/professors/${id}/reviews`, {
         cache: 'no-store'
       }),
-      fetch(`${baseUrl}/api/professors/${id}/subjects`, {
+      fetch(`${apiBaseUrl}/api/professors/${id}/subjects`, {
         cache: 'no-store'
       })
     ])

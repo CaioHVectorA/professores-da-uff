@@ -43,6 +43,7 @@ export async function GET(
       anonymous: review.anonymous,
       approved: review.approved,
       subject_name: review.professorSubject.subject.name,
+      semester: review.professorSubject.semester,
       user_id: (user && review.userId === user.id) ? review.userId : null,
       user_name: review.user ? review.user.email?.split('@')[0] : null
     }))
@@ -150,7 +151,8 @@ export async function POST(
         exam_method: newReview.examMethod,
         anonymous: newReview.anonymous,
         approved: newReview.approved,
-        subject_name: newReview.professorSubject.subject.name
+        subject_name: newReview.professorSubject.subject.name,
+        semester: newReview.professorSubject.semester
       }
     }, { status: 201 })
   } catch (error) {
