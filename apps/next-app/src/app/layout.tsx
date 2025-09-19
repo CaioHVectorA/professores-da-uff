@@ -5,6 +5,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Analytics } from "@vercel/analytics/react";
 import ConditionalLayout from "@/components/ConditionalLayout";
+import { QueryProvider } from "@/components/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({
       >
         <Suspense fallback={<div>Loading...</div>}>
           <AuthProvider>
-            <ConditionalLayout>{children}</ConditionalLayout>
+            <QueryProvider>
+              <ConditionalLayout>{children}</ConditionalLayout>
+            </QueryProvider>
           </AuthProvider>
         </Suspense>
         <Analytics />

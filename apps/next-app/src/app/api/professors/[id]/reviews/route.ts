@@ -41,6 +41,7 @@ export async function GET(
       requires_presence: review.requiresPresence,
       exam_method: review.examMethod,
       anonymous: review.anonymous,
+      approved: review.approved,
       subject_name: review.professorSubject.subject.name,
       user_id: (user && review.userId === user.id) ? review.userId : null,
       user_name: review.user ? review.user.email?.split('@')[0] : null
@@ -77,7 +78,8 @@ export async function POST(
       personality,
       requiresPresence,
       examMethod,
-      anonymous = false
+      anonymous = false,
+      approved = false
     } = body
 
     if (!anonymous && !user) {
@@ -123,7 +125,8 @@ export async function POST(
         personality,
         requiresPresence,
         examMethod,
-        anonymous
+        anonymous,
+        approved
       },
       include: {
         professorSubject: {
@@ -146,6 +149,7 @@ export async function POST(
         requires_presence: newReview.requiresPresence,
         exam_method: newReview.examMethod,
         anonymous: newReview.anonymous,
+        approved: newReview.approved,
         subject_name: newReview.professorSubject.subject.name
       }
     }, { status: 201 })

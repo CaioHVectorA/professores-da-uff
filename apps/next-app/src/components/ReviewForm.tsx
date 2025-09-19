@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Star } from 'lucide-react'
 import { formatSemester } from '../lib/utils'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface ReviewFormProps {
     professorId: number
@@ -21,9 +22,12 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
         personality: 0,
         requiresPresence: false,
         examMethod: '',
-        anonymous: true
+        anonymous: true,
+        approved: false
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const queryClient = useQueryClient()
 
     // Group subjects by name and collect semesters
     const subjectGroups = subjects.reduce((acc, subj) => {
@@ -70,33 +74,33 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
         ))
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setIsSubmitting(true)
-
-        try {
+    const createReviewMutation = useMutation({
+        mutationFn: async (reviewData: any) => {
             const response = await fetch(`/api/professors/${professorId}/reviews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    ...formData,
-                    subjectId: parseInt(formData.subjectId),
-                    semester: formData.semester // Include semester in the request body
-                }),
+                body: JSON.stringify(reviewData),
             })
-
-            if (response.ok) {
-                onReviewCreated()
-            } else {
-                console.error('Failed to create review')
+            if (!response.ok) {
+                const error = await response.json()
+                throw new Error(error.error || 'Failed to create review')
             }
-        } catch (error) {
-            console.error('Error creating review:', error)
-        } finally {
-            setIsSubmitting(false)
-        }
+            return response.json()
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['professor-reviews', professorId.toString()] })
+            onReviewCreated()
+        },
+    })
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        createReviewMutation.mutate({
+            ...formData,
+            subjectId: parseInt(formData.subjectId)
+        })
     }
 
     return (
@@ -224,6 +228,16 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                 <label className="flex items-center">
                     <input
                         type="checkbox"
+                        checked={formData.approved}
+                        onChange={(e) => setFormData(prev => ({ ...prev, approved: e.target.checked }))}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">Fui aprovado</span>
+                </label>
+
+                <label className="flex items-center">
+                    <input
+                        type="checkbox"
                         checked={formData.anonymous}
                         onChange={(e) => setFormData(prev => ({ ...prev, anonymous: e.target.checked }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
@@ -234,10 +248,10 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
 
             <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={createReviewMutation.isPending}
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                {isSubmitting ? 'Enviando...' : 'Enviar Avaliação'}
+                {createReviewMutation.isPending ? 'Enviando...' : 'Enviar Avaliação'}
             </button>
         </form>
     )

@@ -93,6 +93,7 @@ model Review {
   requiresPresence   Boolean?
   examMethod         String?
   anonymous          Boolean  @default(false)
+  approved           Boolean? @default(false)
 
   professorSubject Professor_Subject @relation(fields: [professorSubjectId], references: [id])
   user             User?             @relation(fields: [userId], references: [id])

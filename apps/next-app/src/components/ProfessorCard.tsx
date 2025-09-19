@@ -21,8 +21,8 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
   // Deduplicate subjects by name
   const uniqueSubjects = Array.isArray(professor.subjects) && typeof professor.subjects[0] === 'object'
     ? (professor.subjects as { id: number; name: string; semester?: string }[]).filter((subject, index, self) =>
-        index === self.findIndex(s => s.name === subject.name)
-      )
+      index === self.findIndex(s => s.name === subject.name)
+    )
     : professor.subjects
 
   return (
@@ -51,7 +51,7 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
                   key={subject.id}
                   className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
                 >
-                  {subject.name}{subject.semester ? ` (${formatSemester(subject.semester)})` : ''}
+                  {subject.name}{subject.semester ? <span className="text-[10px]"> ({formatSemester(subject.semester)})</span> : ''}
                 </span>
               ))
           )}

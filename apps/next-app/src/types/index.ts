@@ -28,6 +28,7 @@ export interface Review {
   requires_presence: boolean
   exam_method: string
   anonymous: boolean
+  approved: boolean
   subject_name: string
   user_id?: number | null
   user_name?: string | null
