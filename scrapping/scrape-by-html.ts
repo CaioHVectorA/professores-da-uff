@@ -7,7 +7,7 @@ const BROWSERS_NUM = 1;
 const headless = true
 const SCRAPING_DIR = './subjects-new-scrapping';
 
-async function scrapePage(page: Page, url: string, allProfessorsMap: Record<string, string[]>): Promise<number> {
+async function scrapePage(page: Page, url: string, allProfessorsMap: Record<string, string[]>, failedSubjects: { subject: string; href: string }[]): Promise<number> {
     console.log(`[${new Date().toISOString()}] Navigating to ${url}`);
     await page.goto(url, { waitUntil: 'networkidle2' });
     await new Promise(resolve => setTimeout(resolve, 500)); // Reduced wait time
@@ -47,44 +47,25 @@ async function scrapePage(page: Page, url: string, allProfessorsMap: Record<stri
 
     // Now process each subject by navigating to its page
     for (const { subject, href } of subjectsData) {
+        await page.goto(href, { waitUntil: 'networkidle2' });
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         let professorName = '';
-        let attempts = 0;
-        const maxAttempts = 3;
-
-        while (attempts < maxAttempts) {
-            await page.goto(href, { waitUntil: 'networkidle2' });
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Reduced wait time
-
-            try {
-                await page.waitForSelector('#tabela-alteracao-professores-turma tbody tr td:first-child', { timeout: 5000 });
-                const professor = await page.$('#tabela-alteracao-professores-turma tbody tr td:first-child');
-                professorName = professor ? await professor.evaluate((el: any) => el.textContent?.trim() || '') : '';
-
-                // Check if we got a valid professor name
-                if (professorName && professorName !== 'Sem professor alocado' && professorName !== '') {
-                    break; // Success, exit retry loop
-                } else {
-                    console.log(`[${new Date().toISOString()}] Invalid professor data for ${subject} (attempt ${attempts + 1}): "${professorName}". Retrying...`);
-                }
-            } catch (e) {
-                console.log(`[${new Date().toISOString()}] Error getting professor for ${subject} (attempt ${attempts + 1}): ${(e as Error).message}. Retrying...`);
-            }
-
-            // If not successful, re-login
-            if (attempts < maxAttempts - 1) {
-                console.log(`[${new Date().toISOString()}] Re-logging in for ${subject}...`);
-                await page.goto('https://app.uff.br/', { waitUntil: 'networkidle2' });
-                await new Promise(resolve => setTimeout(resolve, 500));
-                await signIn(page);
-                await page.goto(href, { waitUntil: 'networkidle2' });
-                await new Promise(resolve => setTimeout(resolve, 500));
-            }
-
-            attempts++;
+        try {
+            await page.waitForSelector('#tabela-alteracao-professores-turma tbody tr td:first-child', { timeout: 5000 });
+            const professor = await page.$('#tabela-alteracao-professores-turma tbody tr td:first-child');
+            professorName = professor ? await professor.evaluate((el: any) => el.textContent?.trim() || '') : '';
+        } catch (e) {
+            console.log(`[${new Date().toISOString()}] Error getting professor for ${subject}: ${(e as Error).message}`);
         }
 
+        // Check if we got a valid professor name
         if (!professorName || professorName === 'Sem professor alocado' || professorName === '') {
-            console.log(`[${new Date().toISOString()}] Failed to get professor for ${subject} after ${maxAttempts} attempts. Skipping.`);
+            console.log(`[${new Date().toISOString()}] No valid professor found for ${subject}. Saving to failed list.`);
+            failedSubjects.push({ subject, href });
+            // Go back to the list page
+            await page.goto(url, { waitUntil: 'networkidle2' });
+            await new Promise(resolve => setTimeout(resolve, 500));
             continue;
         }
 
@@ -123,7 +104,7 @@ async function getLastPage(page: Page): Promise<number> {
     return lastPage;
 }
 
-async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: number, baseUrl: string): Promise<{ map: Record<string, string[]>; pagesProcessed: number }> {
+async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: number, baseUrl: string): Promise<{ map: Record<string, string[]>; pagesProcessed: number; failedSubjects: { subject: string; href: string }[] }> {
     // Ensure directory exists
     if (!fs.existsSync(SCRAPING_DIR)) {
         fs.mkdirSync(SCRAPING_DIR, { recursive: true });
@@ -131,6 +112,7 @@ async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: num
 
     const mapFile = path.join(SCRAPING_DIR, `professors-subjects-${browserIndex + 1}.json`);
     const progressFile = path.join(SCRAPING_DIR, `progress-${browserIndex + 1}.json`);
+    const failedFile = path.join(SCRAPING_DIR, `failed-subjects-${browserIndex + 1}.json`);
 
     // Load existing map
     let allProfessorsMap: Record<string, string[]> = {};
@@ -146,6 +128,17 @@ async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: num
             console.log(`[${new Date().toISOString()}] Browser ${browserIndex + 1} loaded ${Object.keys(allProfessorsMap).length} existing professors.`);
         } catch (e) {
             console.log(`[${new Date().toISOString()}] Error loading map for browser ${browserIndex + 1}:`, e);
+        }
+    }
+
+    // Load existing failed subjects
+    let failedSubjects: { subject: string; href: string }[] = [];
+    if (fs.existsSync(failedFile)) {
+        try {
+            failedSubjects = JSON.parse(fs.readFileSync(failedFile, 'utf-8'));
+            console.log(`[${new Date().toISOString()}] Browser ${browserIndex + 1} loaded ${failedSubjects.length} existing failed subjects.`);
+        } catch (e) {
+            console.log(`[${new Date().toISOString()}] Error loading failed subjects for browser ${browserIndex + 1}:`, e);
         }
     }
 
@@ -166,13 +159,19 @@ async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: num
 
     for (let pageNum = Math.max(browserIndex + 1, lastProcessedPage + BROWSERS_NUM); pageNum <= lastPage; pageNum += BROWSERS_NUM) {
         const url = `${baseUrl}&page=${pageNum}`;
-        const newCount = await scrapePage(page, url, allProfessorsMap);
+        const newCount = await scrapePage(page, url, allProfessorsMap, failedSubjects);
         console.log(`[${new Date().toISOString()}] Browser ${browserIndex + 1} scraped page ${pageNum}, new professors: ${newCount}`);
         totalNewProfessors += newCount;
         pagesProcessed++;
 
         // Save progress
         fs.writeFileSync(progressFile, JSON.stringify({ lastPage: pageNum }, null, 2));
+
+        // Save failed subjects periodically
+        if (failedSubjects.length > 0 && failedSubjects.length % 10 === 0) {
+            fs.writeFileSync(failedFile, JSON.stringify(failedSubjects, null, 2));
+            console.log(`[${new Date().toISOString()}] Browser ${browserIndex + 1} saved ${failedSubjects.length} failed subjects.`);
+        }
 
         // Save every 20 new professors for this browser
         if (totalNewProfessors >= 20) {
@@ -193,8 +192,9 @@ async function scrapeWithBrowser(browserIndex: number, page: Page, lastPage: num
         [prof]: subjects
     }));
     fs.writeFileSync(mapFile, JSON.stringify(result, null, 2));
+    fs.writeFileSync(failedFile, JSON.stringify(failedSubjects, null, 2));
 
-    return { map: allProfessorsMap, pagesProcessed };
+    return { map: allProfessorsMap, pagesProcessed, failedSubjects };
 }
 
 async function scrapeProfessors() {
@@ -234,10 +234,11 @@ async function scrapeProfessors() {
         const promises = pages.map((page, index) => scrapeWithBrowser(index, page, lastPage, baseUrl));
         const results = await Promise.all(promises);
 
-        // Combine all maps
+        // Combine all maps and failed subjects
         const combinedMap: Record<string, string[]> = {};
+        const combinedFailedSubjects: { subject: string; href: string }[] = [];
         let totalPagesProcessed = 0;
-        for (const { map, pagesProcessed } of results) {
+        for (const { map, pagesProcessed, failedSubjects } of results) {
             for (const [prof, subjects] of Object.entries(map)) {
                 if (!combinedMap[prof]) {
                     combinedMap[prof] = [];
@@ -248,6 +249,7 @@ async function scrapeProfessors() {
                     }
                 }
             }
+            combinedFailedSubjects.push(...failedSubjects);
             totalPagesProcessed += pagesProcessed;
         }
 
@@ -257,8 +259,9 @@ async function scrapeProfessors() {
         }));
         const fs = await import('fs');
         fs.writeFileSync('./professors-subjects.json', JSON.stringify(result, null, 2));
+        fs.writeFileSync('./failed-subjects.json', JSON.stringify(combinedFailedSubjects, null, 2));
         const endTime = Date.now();
-        console.log(`[${new Date().toISOString()}] Scraping completed in ${(endTime - startTime) / 1000}s. Total professors: ${Object.keys(combinedMap).length}, pages: ${totalPagesProcessed}.`);
+        console.log(`[${new Date().toISOString()}] Scraping completed in ${(endTime - startTime) / 1000}s. Total professors: ${Object.keys(combinedMap).length}, pages: ${totalPagesProcessed}, failed subjects: ${combinedFailedSubjects.length}.`);
 
     } catch (error) {
         console.error(`[${new Date().toISOString()}] Error during scraping:`, error);

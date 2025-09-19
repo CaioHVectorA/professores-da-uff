@@ -1,0 +1,13 @@
+{
+    "YEAR": "20251",
+    "headless": true,
+    "MAX_RETRIES": 3,
+    "SESSION_CHECK_INTERVAL": 20,
+    "DELAY_BETWEEN_CLASSES": 1000,
+    "RETRY_DELAYS": [
+        2000,
+        5000,
+        10000
+    ],
+    "DELAY_MULTIPLIER": 0.5
+}
