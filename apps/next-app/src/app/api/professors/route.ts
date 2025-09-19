@@ -52,7 +52,11 @@ export async function GET(request: NextRequest) {
         personality: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.personality || 0), 0) / allReviews.length : 0
       };
 
-      const subjects = professor.professorSubjects.map(ps => ({ id: ps.subject.id, name: ps.subject.name }));
+      const subjects = professor.professorSubjects.map(ps => ({
+        id: ps.subject.id,
+        name: ps.subject.name,
+        semester: ps.semester
+      }));
 
       const transformedProfessor = {
         id: professor.id,
@@ -119,7 +123,11 @@ export async function GET(request: NextRequest) {
         personality: allReviews.length > 0 ? allReviews.reduce((sum, r) => sum + (r.personality || 0), 0) / allReviews.length : 0
       };
 
-      const subjects = prof.professorSubjects.map(ps => ({ id: ps.subject.id, name: ps.subject.name }));
+      const subjects = prof.professorSubjects.map(ps => ({
+        id: ps.subject.id,
+        name: ps.subject.name,
+        semester: ps.semester
+      }));
 
       return {
         id: prof.id,

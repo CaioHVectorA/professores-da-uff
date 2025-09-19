@@ -68,15 +68,16 @@ model Subject {
 }
 
 model Professor_Subject {
-  id          Int @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   professorId Int
   subjectId   Int
+  semester    String
 
   professor Professor @relation(fields: [professorId], references: [id])
   subject   Subject   @relation(fields: [subjectId], references: [id])
   reviews   Review[]
 
-  @@unique([professorId, subjectId])
+  @@unique([professorId, subjectId, semester])
 }
 
 model Review {
@@ -112,4 +113,10 @@ model Report {
   createdAt  DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model ApplicationEarlyAccess {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
 }

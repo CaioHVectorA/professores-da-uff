@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Professor } from '../types'
+import { formatSemester } from '../lib/utils'
 
 interface ProfessorCardProps {
   professor: Professor
@@ -17,6 +18,13 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
     ))
   }
 
+  // Deduplicate subjects by name
+  const uniqueSubjects = Array.isArray(professor.subjects) && typeof professor.subjects[0] === 'object'
+    ? (professor.subjects as { id: number; name: string; semester?: string }[]).filter((subject, index, self) =>
+        index === self.findIndex(s => s.name === subject.name)
+      )
+    : professor.subjects
+
   return (
     <Link
       href={`/professor/${professor.id}`}
@@ -28,9 +36,9 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
           <span className="font-medium">Disciplinas:</span>
         </p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {Array.isArray(professor.subjects) && professor.subjects.length > 0 && (
-            typeof professor.subjects[0] === 'string'
-              ? (professor.subjects as string[]).slice(0, 3).map((subject, index) => (
+          {Array.isArray(uniqueSubjects) && uniqueSubjects.length > 0 && (
+            typeof uniqueSubjects[0] === 'string'
+              ? (uniqueSubjects as string[]).slice(0, 3).map((subject, index) => (
                 <span
                   key={index}
                   className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
@@ -38,17 +46,17 @@ export default function ProfessorCard({ professor }: ProfessorCardProps) {
                   {subject}
                 </span>
               ))
-              : (professor.subjects as { id: number; name: string }[]).slice(0, 3).map((subject) => (
+              : (uniqueSubjects as { id: number; name: string; semester?: string }[]).slice(0, 3).map((subject) => (
                 <span
                   key={subject.id}
                   className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
                 >
-                  {subject.name}
+                  {subject.name}{subject.semester ? ` (${formatSemester(subject.semester)})` : ''}
                 </span>
               ))
           )}
-          {Array.isArray(professor.subjects) && professor.subjects.length > 3 && (
-            <span className="text-xs text-gray-500">+{professor.subjects.length - 3} mais</span>
+          {Array.isArray(uniqueSubjects) && uniqueSubjects.length > 3 && (
+            <span className="text-xs text-gray-500">+{uniqueSubjects.length - 3} mais</span>
           )}
         </div>
 

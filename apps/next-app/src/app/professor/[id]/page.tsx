@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import ReviewForm from '@/components/ReviewForm'
 import type { Professor, Review } from '@/types'
+import { formatSemester } from '@/lib/utils'
 
 export default function ProfessorPage() {
   const params = useParams()
@@ -116,12 +117,12 @@ export default function ProfessorPage() {
                         {subject}
                       </span>
                     ))
-                    : (professor.subjects as { id: number; name: string }[]).map((subject) => (
+                    : (professor.subjects as { id: number; name: string; semester?: string }[]).map((subject) => (
                       <span
                         key={subject.id}
                         className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700"
                       >
-                        {subject.name}
+                        {subject.name}{subject.semester ? ` (${formatSemester(subject.semester)})` : ''}
                       </span>
                     ))
                 )}
@@ -313,7 +314,7 @@ export default function ProfessorPage() {
                 </div>
                 <ReviewForm
                   professorId={professor.id}
-                  subjects={professor.subjects as { id: number; name: string }[]}
+                  subjects={professor.subjects as { id: number; name: string; semester: string }[]}
                   onReviewCreated={() => {
                     setIsReviewModalOpen(false)
                     window.location.reload()

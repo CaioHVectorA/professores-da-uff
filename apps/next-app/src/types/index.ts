@@ -1,6 +1,7 @@
 export interface Subject {
   id: number
   name: string
+  semester?: string
 }
 
 export interface Professor {

@@ -20,7 +20,8 @@ export async function GET(
 
         const transformedSubjects = subjects.map(ps => ({
             id: ps.subject.id,
-            name: ps.subject.name
+            name: ps.subject.name,
+            semester: ps.semester
         }))
 
         return NextResponse.json({

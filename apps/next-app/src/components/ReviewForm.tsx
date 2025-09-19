@@ -1,17 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Star } from 'lucide-react'
+import { formatSemester } from '../lib/utils'
 
 interface ReviewFormProps {
     professorId: number
-    subjects: { id: number; name: string }[]
+    subjects: { id: number; name: string; semester: string }[]
     onReviewCreated: () => void
 }
 
 export default function ReviewForm({ professorId, subjects, onReviewCreated }: ReviewFormProps) {
     const [formData, setFormData] = useState({
         subjectId: '',
+        semester: '',
         review: '',
         didaticQuality: 0,
         materialQuality: 0,
@@ -22,6 +24,31 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
         anonymous: true
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
+
+    // Group subjects by name and collect semesters
+    const subjectGroups = subjects.reduce((acc, subj) => {
+        if (!acc[subj.name]) {
+            acc[subj.name] = { id: subj.id, semesters: [] }
+        }
+        acc[subj.name].semesters.push(subj.semester)
+        return acc
+    }, {} as Record<string, { id: number; semesters: string[] }>)
+
+    const uniqueSubjects = Object.keys(subjectGroups).map(name => ({
+        name,
+        id: subjectGroups[name].id,
+        semesters: subjectGroups[name].semesters
+    }))
+
+    const selectedSubject = uniqueSubjects.find(s => s.id.toString() === formData.subjectId)
+    const availableSemesters = selectedSubject ? selectedSubject.semesters : []
+
+    // Auto-select semester if only one available
+    useEffect(() => {
+        if (availableSemesters.length === 1 && !formData.semester) {
+            setFormData(prev => ({ ...prev, semester: availableSemesters[0] }))
+        }
+    }, [availableSemesters, formData.semester])
 
     const handleStarClick = (field: string, rating: number) => {
         setFormData(prev => ({ ...prev, [field]: rating }))
@@ -55,7 +82,8 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                 },
                 body: JSON.stringify({
                     ...formData,
-                    subjectId: parseInt(formData.subjectId)
+                    subjectId: parseInt(formData.subjectId),
+                    semester: formData.semester // Include semester in the request body
                 }),
             })
 
@@ -75,20 +103,37 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
         <form onSubmit={handleSubmit} className="space-y-6">
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Disciplina
+                    Disciplina e Semestre
                 </label>
-                <select
-                    value={formData.subjectId}
-                    onChange={(e) => setFormData(prev => ({ ...prev, subjectId: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
-                    required
-                >
-                    <option value="">Selecione uma disciplina</option>
-                    {subjects.map((subject) => (
-                        <option key={subject.id} value={subject.id.toString()}>{subject.name}</option>
-                    ))}
-                    <option value="outro">Outro</option>
-                </select>
+                <div className="flex gap-4">
+                    <select
+                        value={formData.subjectId}
+                        onChange={(e) => {
+                            const subjectId = e.target.value
+                            setFormData(prev => ({ ...prev, subjectId, semester: '' }))
+                        }}
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
+                        required
+                    >
+                        <option value="">Selecione uma disciplina</option>
+                        {uniqueSubjects.map((subject) => (
+                            <option key={subject.id} value={subject.id.toString()}>{subject.name}</option>
+                        ))}
+                        <option value="outro">Outro</option>
+                    </select>
+                    <select
+                        value={formData.semester}
+                        onChange={(e) => setFormData(prev => ({ ...prev, semester: e.target.value }))}
+                        disabled={availableSemesters.length <= 1}
+                        className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        required
+                    >
+                        <option value="">Semestre</option>
+                        {availableSemesters.map((semester) => (
+                            <option key={semester} value={semester}>{formatSemester(semester)}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
             <div>

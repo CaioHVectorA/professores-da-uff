@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
-import LayoutWithSidebar from "@/components/LayoutWithSidebar";
 import { Analytics } from "@vercel/analytics/react";
+import ConditionalLayout from "@/components/ConditionalLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <Suspense fallback={<div>Loading...</div>}>
           <AuthProvider>
-            <LayoutWithSidebar>{children}</LayoutWithSidebar>
+            <ConditionalLayout>{children}</ConditionalLayout>
           </AuthProvider>
         </Suspense>
         <Analytics />

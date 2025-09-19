@@ -69,6 +69,7 @@ export async function POST(
 
     const {
       subjectId,
+      semester,
       review,
       didaticQuality,
       materialQuality,
@@ -87,7 +88,8 @@ export async function POST(
     const professorSubject = await prisma.professor_Subject.findFirst({
       where: {
         professorId,
-        subjectId
+        subjectId,
+        semester
       }
     })
 
