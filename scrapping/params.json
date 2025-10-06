@@ -2,6 +2,6 @@
     "YEAR": "20242",
     "INITIAL_PAGE": 1,
     "FINAL_PAGE": 419,
-    "headless": false,
+    "headless": true,
     "DELAY_MULTIPLIER": 1.0
 }

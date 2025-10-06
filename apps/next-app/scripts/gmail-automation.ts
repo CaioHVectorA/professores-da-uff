@@ -56,7 +56,7 @@ function parseFlags(): Flags {
         delayMs: get('--delay-ms') ? Number(get('--delay-ms')) : 4000,
         snapshots: args.includes('--snapshots'),
         skipExisting: args.includes('--skip-existing'),
-        link: get('--link') || process.env.EARLY_ACCESS_LINK || 'https://quadro.app'
+        link: get('--link') || process.env.EARLY_ACCESS_LINK || 'https://professoresdauff.vercel.app'
     };
 }
 
@@ -68,13 +68,69 @@ async function loadTemplate(flags: Flags) {
     return `Olá! Muito obrigado por se disponibilizar para o acesso antecipado do ProfessoresDaUff. Sua senha é {{password}} e você deve entrar com o seu email da uff.\n\nAcesse diretamente: {{link}}/acesso-antecipado`;
 }
 
+const rawEmails = `bfgomes@id.uff.br
+jhonatan_a@id.uff.br
+iuryf@id.uff.br
+efraimt@id.uff.br
+ana_romao@id.uff.br
+milenarosario@id.uff.br
+josuess@id.uff.br
+m_s_santos@id.uff.br
+test@id.uff.br
+elissaguimaraes@id.uff.br
+ana_a@id.uff.br
+Marinhomatheus@id.uff.br
+andreycouto@id.uff.br
+juliaezequiel@id.uff.br
+miranda_gabriel@id.uff.br
+mpinel@id.uff.br
+jpksantos@id.uff.br
+Nathanjbp@id.uff.br
+hellenbenites@id.uff.br
+acobarbosa@id.uff.br
+thainaj@id.uff.br
+ravinemariana@id.uff.br
+Janainasv@id.uff.br
+kkaram@id.uff.br
+estterf@id.uff.br 
+Thais_molina@id.uff.br
+ricardo_maues@id.uff.br
+sa_aba@id.uff.br
+bvignoli@id.uff.br
+pedroq@id.uff.br
+isabelagrola@id.uff.br
+lucioadalia@id.uff.br
+yasmimcas@id.uff.br
+laism@id.uff.br
+Weslleyleal@id.uff.br
+i_victoria@id.uff.br
+leandro_araujo@id.uff.br
+amanda_a@id.uff.br
+giovannaroque@id.uff.br
+kauanmedeiros@id.uff.br
+alanderson_santos@id.uff.br
+yispereira@id.uff.br`;
+
+function defaultEmailList(): string[] {
+    return Array.from(new Set(rawEmails.split(/\n|\r|,|;|\s+/)
+        .map(e => e.trim())
+        .filter(Boolean)
+        .map(e => e.toLowerCase())));
+}
+
 async function getUsers(flags: Flags): Promise<TargetUser[]> {
     if (flags.fromDb) {
         const rows = await prisma.applicationEarlyAccess.findMany({ take: flags.limit });
         return rows.map(r => ({ email: r.email, password: r.password }));
     }
-    const list = (flags.to || []).map(email => ({ email }));
-    return flags.limit ? list.slice(0, flags.limit) : list;
+    let list: string[] = [];
+    if (flags.to && flags.to.length > 0) {
+        list = flags.to;
+    } else {
+        list = defaultEmailList();
+    }
+    const users = list.map(email => ({ email }));
+    return flags.limit ? users.slice(0, flags.limit) : users;
 }
 
 function renderTemplate(tpl: string, user: TargetUser, link: string) {
@@ -260,7 +316,7 @@ async function run() {
         console.error('Nenhum destinatário');
         process.exit(1);
     }
-    const subject = flags.subject || 'ProfessoresDaUff acesso antecipado';
+    const subject = flags.subject || 'ProfessoresDaUff - Acesso Antecipado';
 
     // Garante/gera senha para cada usuário (sempre reutiliza se já existe)
     for (const u of users) {
