@@ -206,11 +206,11 @@ export default function ReviewForm({ professorId, subjects, onReviewCreated }: R
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 bg-white"
                 >
                     <option value="">Selecione</option>
-                    <option value="Prova escrita">Prova escrita</option>
-                    <option value="Prova oral">Prova oral</option>
-                    <option value="Trabalho">Trabalho</option>
-                    <option value="Projeto">Projeto</option>
-                    <option value="Outro">Outro</option>
+                    <option value="Prova escrita">Prova(s)</option>
+                    {/* <option value="Prova oral">Prova oral</option> */}
+                    <option value="Trabalho">Trabalho(s) contínuo(s)</option>
+                    <option value="Projeto">Seminário(s)</option>
+                    <option value="Outro">Prova(s) e Trbaa</option>
                 </select>
             </div>
 

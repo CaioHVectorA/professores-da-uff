@@ -57,7 +57,12 @@ function MagicLinkContent() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
             <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
                 {status === 'loading' && (
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <div className="relative">
+                        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto mb-4"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="animate-pulse text-blue-600 font-semibold">Carregando...</div>
+                        </div>
+                    </div>
                 )}
 
                 {status === 'success' && (

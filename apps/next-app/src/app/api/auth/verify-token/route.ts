@@ -45,6 +45,15 @@ export async function POST(request: NextRequest) {
             data: { verifiedAt: new Date() }
         })
 
+        // Revoke previous sessions for this user
+        await prisma.session.updateMany({
+            where: {
+                userId: magicToken.user.id,
+                revokedAt: null
+            },
+            data: { revokedAt: new Date() }
+        })
+
         // Create session
         const sessionToken = createHash('sha256').update(Math.random().toString()).digest('hex')
         const sessionTokenHash = createHash('sha256').update(sessionToken).digest('hex')

@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import LoginModal from './LoginModal'
 import ProfileModal from './ProfileModal'
 import { Users, FileText, BookOpen, LogOut, User, Settings, Menu, X } from 'lucide-react'
-
+import { useRouter } from 'next/navigation'
 interface LayoutWithSidebarProps {
     children: React.ReactNode
     showSearch?: boolean
@@ -23,7 +23,17 @@ export default function LayoutWithSidebar({
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const { user, isAuthenticated, logout, isLoading } = useAuth()
-
+    const router = useRouter()
+    useEffect(() => {
+        if (isLoginModalOpen) {
+            // import('next/navigation').then(({ useRouter }) => {
+            // const router = useRouter()
+            // router.push('/acesso-antecipado')
+            // })
+            router.push('/acesso-antecipado')
+            setIsLoginModalOpen(false)
+        }
+    }, [isLoginModalOpen])
     const navItems = [
         { name: 'Professores', href: '/', icon: Users, active: true },
         { name: 'Provas', href: '/provas', icon: FileText, disabled: true },

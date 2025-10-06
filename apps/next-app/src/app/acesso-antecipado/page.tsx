@@ -62,7 +62,7 @@ export default function AcessoAntecipadoPage() {
             })
 
             if (response.ok) {
-                router.push('/')
+                window.location.href = '/'
             } else {
                 const data = await response.json()
                 setError(data.error || 'Credenciais inválidas')
@@ -108,7 +108,7 @@ export default function AcessoAntecipadoPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Senha de Acesso (8 dígitos)
                         </label>
-                        <div className="flex gap-2 justify-center">
+                        <div className="flex gap-1 sm:gap-2 justify-center">
                             {Array.from({ length: 8 }, (_, index) => (
                                 <input
                                     key={index}
@@ -117,7 +117,7 @@ export default function AcessoAntecipadoPage() {
                                     inputMode="numeric"
                                     pattern="[0-9]"
                                     maxLength={1}
-                                    className="w-10 h-10 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-semibold"
+                                    className="w-8 h-8 sm:w-10 sm:h-10 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-lg font-semibold"
                                     value={password[index] || ''}
                                     onChange={(e) => handleOtpChange(index, e.target.value)}
                                     onKeyDown={(e) => handleOtpKeyDown(index, e)}

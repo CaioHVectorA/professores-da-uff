@@ -26,6 +26,31 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Senha de acesso incorreta' }, { status: 401 })
         }
 
+        // Find or create user based on early access email
+        const emailHash = createHash('sha256').update(email.toLowerCase()).digest('hex')
+        let user = await prisma.user.findUnique({
+            where: { emailHash }
+        })
+
+        if (!user) {
+            user = await prisma.user.create({
+                data: {
+                    emailHash,
+                    email: email.toLowerCase(),
+                    verifiedAt: new Date() // Mark as verified since they have early access
+                }
+            })
+        }
+
+        // Revoke previous sessions for this user
+        await prisma.session.updateMany({
+            where: {
+                userId: user.id,
+                revokedAt: null
+            },
+            data: { revokedAt: new Date() }
+        })
+
         // Create session
         const sessionToken = createHash('sha256').update(Math.random().toString()).digest('hex')
         const sessionTokenHash = createHash('sha256').update(sessionToken).digest('hex')
@@ -34,7 +59,7 @@ export async function POST(request: NextRequest) {
 
         await prisma.session.create({
             data: {
-                userId: 1, // Assuming a dummy user or need to create one
+                userId: user.id, // Use the correct user ID
                 sessionTokenHash,
                 expiresAt,
             }
